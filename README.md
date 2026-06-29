@@ -1,6 +1,6 @@
 # 🚀 CodeGenOpt
 
-An Intelligent Multi-Agent Framework for Programming Code Generation and Optimization using Private, Local Small Language Models (SLMs).
+An Intelligent Multi-Agent System for Programming Code Generation and Optimization using Private, Local Small Language Models (SLMs).
 
 <div align="center">
 
@@ -38,9 +38,9 @@ An Intelligent Multi-Agent Framework for Programming Code Generation and Optimiz
 
 ## 🎯 Overview
 
-**CodeGenOpt** is an automated, privacy-first multi-agent framework designed to generate, validate, and optimize Python source code starting from natural language problem descriptions.
+**CodeGenOpt** is an automated, privacy-first multi-agent system designed to generate, validate, and optimize Python source code starting from natural language problem descriptions.
 
-By utilizing local Small Language Models (SLMs) via **Ollama** and orchestrating them through **LangChain**, CodeGenOpt delivers state-of-the-art code synthesis. It eliminates dependencies on external commercial APIs, ensuring data privacy and zero API execution costs. The framework incorporates an automated post-generation optimization toolchain and validation pipeline, improving syntactic compliance and static typing correctness.
+By utilizing local Small Language Models (SLMs) via **Ollama** and orchestrating them through **LangChain**, CodeGenOpt delivers state-of-the-art code synthesis. It eliminates dependencies on external commercial APIs, ensuring data privacy and zero API execution costs. The system incorporates an automated post-generation optimization toolchain and validation pipeline, improving syntactic compliance and static typing correctness.
 
 ---
 
@@ -154,37 +154,106 @@ Input (Arabic/English NL)
 
 ---
 
-## 🚀 Usage Guide
+## 🚀 Usage & Execution Guide
 
-### Single Invocation via Coordinator
+The primary entry point of the CodeGenOpt system is the root-level `main.py` CLI script. It provides a robust, command-line interface to orchestrate the multi-agent generation pipeline, supporting single invocations, interactive shells, CPU overrides, and verbose logging of intermediate agent processes.
 
-You can run individual code generation trials by importing the `Coordinator` class:
+### 1. Command-Line Interface (CLI)
+
+Run `main.py` directly from the bash terminal. The system accepts a problem description and runs the complete orchestration pipeline:
+
+```bash
+python main.py --problem "اكتب دالة بلغة بايثون للتحقق من الأعداد الأولية" --verbose
+```
+
+#### CLI Arguments Reference
+
+| Argument | Shorthand | Type | Default | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| `--problem` | `-p` | `string` | *None* | Natural-language query or problem description to compile. (Mutually exclusive with `--interactive`) |
+| `--interactive` | `-i` | `flag` | `False` | Starts an interactive warm REPL session. |
+| `--model` | `-m` | `string` | `None` | Specifies the Ollama model to use locally (e.g., `llama3.2:3b`, `qwen3:0.6b`). |
+| `--cpu` | *None* | `flag` | `False` | Forces CPU inference via Ollama, bypassing CUDA runtimes. |
+| `--cloud` | *None* | `flag` | `False` | Routes requests to the cloud-hosted backend model (`qwen3-coder:480b-cloud`). |
+| `--no-translator`| *None* | `flag` | `False` | Bypasses the `TechnicalTranslator` agent, passing the raw input prompt to downstream modules. |
+| `--no-optimizer` | *None* | `flag` | `False` | Disables the `CodeOptimizer` pipeline, bypassing linting, type-checking, and formatting. |
+| `--verbose` | `-v` | `flag` | `False` | Outputs logs and results of all intermediate pipeline agent stages. |
+| `--debug` | *None* | `flag` | `False` | Enables low-level diagnostics and HTTP transport logging. |
+
+#### Generation Examples
+
+* **Standard Multilingual Code Generation (GPU Local llama3):**
+  ```bash
+  python main.py --problem "اكتب دالة بلغة بايثون للتحقق من الأعداد الأولية" --verbose
+  ```
+
+* **Targeting a lightweight model on CPU (No GPU/CUDA):**
+  ```bash
+  python main.py --problem "Write a Python function to sort a list of floats" --model llama3.2:3b --cpu --verbose
+  ```
+
+* **Baseline Study (Ablating Translator & Optimizer Agents):**
+  ```bash
+  python main.py --problem "Implement Dijkstra's algorithm" --no-translator --no-optimizer
+  ```
+
+---
+
+### 2. Interactive Shell (REPL Mode)
+
+To test multiple prompts back-to-back without incurring the overhead of reloading LLM model weights each time, start the interactive REPL shell:
+
+```bash
+python main.py --interactive --model llama3.2:3b --cpu -v
+```
+
+**Interactive Console:**
+```text
+============================================================
+               CodeGenOpt — Interactive REPL Mode
+   Provide engineering statements below. Type 'exit' to terminate.
+============================================================
+
+CodeGenOpt › Write a function to check if a word is palindrome.
+```
+
+---
+
+### 3. Programmatic API Integration
+
+You can also import and orchestrate the multi-agent pipeline inside custom Python scripts:
 
 ```python
 from core.agents.coordinator import Coordinator
 
-# Initialize central orchestrator
+# Initialize orchestrator with targeted config
 coordinator = Coordinator(
-    model_name="llama3", 
-    debug_mode=True
+    use_translator=True,
+    use_optimizer=True,
+    cloud_llm=False
 )
 
-prompt = "اكتب دالة بلغة بايثون للتحقق من الأعداد الأولية"
+# Run complete multi-agent pipeline
+result = coordinator.run("اكتب دالة للبحث الثنائي")
 
-# Run execution pipeline
-result = coordinator.run(prompt)
-print(result["final_code"])
+if not result["error"]:
+    print("Optimization complete!")
+    print(result["final_code"])
+else:
+    print(f"Error: {result['error']}")
 ```
 
-### Batch Evaluation and Execution
+---
 
-To replicate entire experimental runs:
+### 4. Experimental Run Replication
+
+To recreate batch evaluations across dataset matrices:
 
 ```bash
-# Run evaluations for all configurations
+# Run evaluations for all configurations (T1 - T6) on sample problems
 ./run_all_configs.sh
 
-# Run evaluation runner with automatic report aggregation
+# Run end-to-end evaluation runner with automated report generation
 ./run_evaluation_with_reports.sh
 ```
 
@@ -203,7 +272,7 @@ The repository contains the official dataset splits and log sheets representing 
 
 ## 📄 License
 
-This replication package and framework are licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+This replication package and system are licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
 ---
 
