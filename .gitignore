@@ -136,6 +136,7 @@ cython_debug/
 
 # IDEs and editors
 .idea/
+.qodo
 .vscode/
 *.swp
 *.swo
