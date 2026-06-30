@@ -136,10 +136,13 @@ cython_debug/
 
 # IDEs and editors
 .idea/
-.qodo
+.qodo/
 .vscode/
 *.swp
 *.swo
 *~
 .DS_Store
 Thumbs.db
+
+# Raw system-information screenshots may contain personal identifiers.
+docs/models/device_specs.png
