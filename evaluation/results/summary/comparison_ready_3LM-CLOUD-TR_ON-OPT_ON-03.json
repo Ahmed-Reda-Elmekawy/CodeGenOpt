@@ -1,0 +1,54 @@
+{
+  "metadata": {
+    "experiment_name": "3LM-CLOUD-TR_ON-OPT_ON-03",
+    "experiment_id": "3LM-CLOUD-TR_ON-OPT_ON-03",
+    "timestamp": "2026-04-18T23:02:40.923812+00:00",
+    "dataset": "3lm",
+    "config": {
+      "dataset": "3lm",
+      "sample_indices": null,
+      "num_tasks": 3,
+      "attempts_per_task": 1,
+      "use_translator": true,
+      "use_optimizer": true,
+      "shared_llm": false,
+      "cloud_llm": true
+    }
+  },
+  "aggregated": {
+    "pass_at_1_pct": 100.0,
+    "pass_at_k_pct": null,
+    "latency_mean": 62.383,
+    "latency_median": 37.0265,
+    "latency_p95": 37.0265,
+    "cpu_avg": 0.13,
+    "cpu_peak": 2.0,
+    "mem_peak_mb": 204.644352
+  },
+  "per_task": [
+    {
+      "task_id": "HumanEval/0",
+      "task_index": 0,
+      "passed": true,
+      "syntax_ok": true,
+      "error_type": null,
+      "duration_sec": 18.0141
+    },
+    {
+      "task_id": "HumanEval/1",
+      "task_index": 1,
+      "passed": true,
+      "syntax_ok": true,
+      "error_type": null,
+      "duration_sec": 132.1083
+    },
+    {
+      "task_id": "HumanEval/2",
+      "task_index": 2,
+      "passed": true,
+      "syntax_ok": true,
+      "error_type": null,
+      "duration_sec": 37.0265
+    }
+  ]
+}

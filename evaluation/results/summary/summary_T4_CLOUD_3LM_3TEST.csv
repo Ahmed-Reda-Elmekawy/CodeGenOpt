@@ -1,0 +1,2 @@
+timestamp,experiment_name,experiment_id,dataset,num_tasks,use_translator,use_optimizer,shared_llm,cloud_llm,latency_count,latency_mean,latency_median,latency_stdev,latency_p50,latency_p90,latency_p95,cpu_avg,cpu_peak,mem_avg_mb,mem_peak_mb,total_tasks,passed_at_1,pass_at_1_pct,git_commit,cpu_model,cpu_cores
+2026-04-18T18:23:15.671919+00:00,T4_CLOUD_3LM_3TEST,T4_CLOUD_3LM_3TEST,humaneval,3,True,True,False,True,9,38.3001,36.5213,9.5035,36.5213,45.0265,45.0265,0.14,2.0,190.197026,190.287872,3,3,100.0,4951a2d1,x86_64,12

@@ -1,0 +1,22 @@
+{
+  "task_id": "HumanEval/0",
+  "prompt": "from typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n",
+  "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.3) == True\n    assert candidate([1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.05) == False\n    assert candidate([1.0, 2.0, 5.9, 4.0, 5.0], 0.95) == True\n    assert candidate([1.0, 2.0, 5.9, 4.0, 5.0], 0.8) == False\n    assert candidate([1.0, 2.0, 3.0, 4.0, 5.0, 2.0], 0.1) == True\n    assert candidate([1.1, 2.2, 3.1, 4.1, 5.1], 1.0) == True\n    assert candidate([1.1, 2.2, 3.1, 4.1, 5.1], 0.5) == False\n\n",
+  "attempts": [
+    {
+      "attempt_idx": 0,
+      "duration_sec": 27.6843,
+      "resource_stats": {
+        "samples": 138,
+        "cpu_percent_avg": 1.12,
+        "cpu_percent_peak": 5.0,
+        "mem_rss_avg_bytes": 208075850,
+        "mem_rss_peak_bytes": 208076800
+      },
+      "final_code": "def generate_json(spec):\n    \"\"\"\n    Generate a JSON string from a structured specification.\n    \n    Args:\n        spec (dict): A dictionary containing the specification for JSON generation.\n                    Expected to have keys that define the structure and content\n                    of the desired JSON output.\n    \n    Returns:\n        str: A valid JSON string representation of the input specification.\n    \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If the specification cannot be converted to valid JSON.\n    \n    Examples:\n        >>> generate_json({\"name\": \"John\", \"age\": 30})\n        '{\"name\": \"John\", \"age\": 30}'\n        \n        >>> generate_json({\"items\": [1, 2, 3], \"count\": null})\n        '{\"items\": [1, 2, 3], \"count\": null}'\n        \n        >>> generate_json({})\n        '{}'\n    \"\"\"\n    import json\n    \n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    try:\n        return json.dumps(spec)\n    except (TypeError, ValueError) as e:\n        raise ValueError(f\"Failed to generate JSON: {str(e)}\")",
+      "syntax_ok": true,
+      "passed": true,
+      "error": null
+    }
+  ]
+}

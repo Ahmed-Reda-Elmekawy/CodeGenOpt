@@ -1,0 +1,121 @@
+{
+  "task_id": "HumanEval/3",
+  "dataset": "3lm",
+  "mode": "translate",
+  "prompt": "from typing import List\n\n\ndef below_zero(operations: List[int]) -> bool:\n    \"\"\" لديك قائمة من عمليات الإيداع والسحب في حساب بنكي يبدأ برصيد\n    صفري. مهمتك هي اكتشاف إذا في أي لحظة انخفض رصيد الحساب إلى ما دون الصفر،\n    وفي هذه اللحظة يجب أن تعيد الدالة True. وإلا فيجب أن تعيد False.\n    >>> below_zero([1, 2, 3])\n    False\n    >>> below_zero([1, 2, -4, 5])\n    True\n    \"\"\"\n\n",
+  "attempts": [
+    {
+      "attempt_idx": 0,
+      "duration_sec": 20.0019,
+      "resource_stats": {
+        "samples": 2,
+        "cpu_percent_avg": 0.95,
+        "cpu_percent_peak": 1.9,
+        "mem_rss_avg_bytes": 221278208,
+        "mem_rss_peak_bytes": 221278208
+      },
+      "generated_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    Args:\n        spec (dict): A dictionary containing the specification for JSON generation.\n        \n    Returns:\n        dict: A dictionary representing the generated JSON response.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If the spec is invalid or cannot be processed.\n        \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n        \n        >>> generate_json({\"message\": \"success\", \"data\": null})\n        {'message': 'success', 'data': None}\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    if not spec:\n        raise ValueError(\"spec cannot be empty\")\n    \n    # Return the spec as-is since it's already in the correct format\n    return {key: value if value != \"null\" else None for key, value in spec.items()}",
+      "optimized_code": {
+        "optimized_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n\n    Args:\n        spec (dict): A dictionary containing the specification for JSON generation.\n\n    Returns:\n        dict: A dictionary representing the generated JSON response.\n\n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If the spec is invalid or cannot be processed.\n\n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n\n        >>> generate_json({\"message\": \"success\", \"data\": null})\n        {'message': 'success', 'data': None}\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError('spec must be a dictionary')\n    if not spec:\n        raise ValueError('spec cannot be empty')\n    return {key: value if value != 'null' else None for key, value in spec.items()}",
+        "issues_found": [],
+        "success": true,
+        "improvements": [
+          "Applied autopep8 style fixes",
+          "Removed unused imports and variables with autoflake",
+          "Sorted imports with isort",
+          "Applied Python version upgrades with pyupgrade",
+          "Applied Black formatting (PEP8)",
+          "Fixed common coding issues",
+          "Applied performance optimizations",
+          "Enhanced type hints",
+          "Passed mypy type checking"
+        ],
+        "functionality_preserved": true,
+        "mypy_result": {
+          "passed": true,
+          "output": "Success: no issues found in 1 source file\n",
+          "errors": "",
+          "suggestions": []
+        },
+        "optimization_stats": {
+          "original_lines": 29,
+          "original_size": 1041,
+          "steps_completed": 9,
+          "tools_used": [
+            "autopep8",
+            "autoflake",
+            "isort",
+            "pyupgrade",
+            "black",
+            "mypy"
+          ],
+          "final_lines": 26,
+          "final_size": 926,
+          "size_reduction": 115,
+          "lines_changed": 3
+        },
+        "tools_used": [
+          "autopep8",
+          "autoflake",
+          "isort",
+          "pyupgrade",
+          "black",
+          "mypy"
+        ]
+      },
+      "final_code": {
+        "optimized_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n\n    Args:\n        spec (dict): A dictionary containing the specification for JSON generation.\n\n    Returns:\n        dict: A dictionary representing the generated JSON response.\n\n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If the spec is invalid or cannot be processed.\n\n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n\n        >>> generate_json({\"message\": \"success\", \"data\": null})\n        {'message': 'success', 'data': None}\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError('spec must be a dictionary')\n    if not spec:\n        raise ValueError('spec cannot be empty')\n    return {key: value if value != 'null' else None for key, value in spec.items()}",
+        "issues_found": [],
+        "success": true,
+        "improvements": [
+          "Applied autopep8 style fixes",
+          "Removed unused imports and variables with autoflake",
+          "Sorted imports with isort",
+          "Applied Python version upgrades with pyupgrade",
+          "Applied Black formatting (PEP8)",
+          "Fixed common coding issues",
+          "Applied performance optimizations",
+          "Enhanced type hints",
+          "Passed mypy type checking"
+        ],
+        "functionality_preserved": true,
+        "mypy_result": {
+          "passed": true,
+          "output": "Success: no issues found in 1 source file\n",
+          "errors": "",
+          "suggestions": []
+        },
+        "optimization_stats": {
+          "original_lines": 29,
+          "original_size": 1041,
+          "steps_completed": 9,
+          "tools_used": [
+            "autopep8",
+            "autoflake",
+            "isort",
+            "pyupgrade",
+            "black",
+            "mypy"
+          ],
+          "final_lines": 26,
+          "final_size": 926,
+          "size_reduction": 115,
+          "lines_changed": 3
+        },
+        "tools_used": [
+          "autopep8",
+          "autoflake",
+          "isort",
+          "pyupgrade",
+          "black",
+          "mypy"
+        ]
+      },
+      "syntax_ok": false,
+      "mypy_result": null,
+      "passed": false,
+      "test_output": null,
+      "error": null
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "task_id": "HumanEval/48",
+  "prompt": "\n\ndef is_palindrome(text: str):\n    \"\"\"\n    Checks if given string is a palindrome\n    >>> is_palindrome('')\n    True\n    >>> is_palindrome('aba')\n    True\n    >>> is_palindrome('aaaaa')\n    True\n    >>> is_palindrome('zbcd')\n    False\n    \"\"\"\n",
+  "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate('') == True\n    assert candidate('aba') == True\n    assert candidate('aaaaa') == True\n    assert candidate('zbcd') == False\n    assert candidate('xywyx') == True\n    assert candidate('xywyz') == False\n    assert candidate('xywzx') == False\n\n",
+  "attempts": [
+    {
+      "attempt_idx": 0,
+      "duration_sec": 12.8352,
+      "resource_stats": {
+        "samples": 64,
+        "cpu_percent_avg": 1.09,
+        "cpu_percent_peak": 10.0,
+        "mem_rss_avg_bytes": 208785408,
+        "mem_rss_peak_bytes": 208863232
+      },
+      "final_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    Args:\n        spec (dict): A dictionary containing the specification for JSON generation.\n        \n    Returns:\n        dict: A dictionary representing the generated JSON response.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If the spec is invalid or missing required fields.\n        \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n        \n        >>> generate_json({\"status\": \"success\", \"data\": {\"id\": 123}})\n        {'status': 'success', 'data': {'id': 123}}\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    if not spec:\n        raise ValueError(\"spec cannot be empty\")\n    \n    return spec",
+      "syntax_ok": true,
+      "passed": true,
+      "error": null
+    }
+  ]
+}

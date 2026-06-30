@@ -1,0 +1,22 @@
+{
+  "task_id": "HumanEval/11",
+  "prompt": "from typing import List\n\n\ndef string_xor(a: str, b: str) -> str:\n    \"\"\" Input are two strings a and b consisting only of 1s and 0s.\n    Perform binary XOR on these inputs and return result also as a string.\n    >>> string_xor('010', '110')\n    '100'\n    \"\"\"\n",
+  "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('111000', '101010') == '010010'\n    assert candidate('1', '1') == '0'\n    assert candidate('0101', '0000') == '0101'\n",
+  "attempts": [
+    {
+      "attempt_idx": 0,
+      "duration_sec": 24.6743,
+      "resource_stats": {
+        "samples": 123,
+        "cpu_percent_avg": 1.34,
+        "cpu_percent_peak": 5.0,
+        "mem_rss_avg_bytes": 208460425,
+        "mem_rss_peak_bytes": 208470016
+      },
+      "final_code": "def generate_json(spec: dict) -> str:\n    \"\"\"\n    Generate JSON string from structured specification.\n    \n    Args:\n        spec (dict): Function specification in JSON format containing function details.\n        \n    Returns:\n        str: Generated JSON string representation of the specification.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If spec contains invalid structure or missing required fields.\n        \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        '{\"error\": \"Failed to generate JSON after retries\"}'\n        \n        >>> generate_json({\"name\": \"test_func\", \"params\": [\"a\", \"b\"]})\n        '{\"name\": \"test_func\", \"params\": [\"a\", \"b\"]}'\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    if not spec:\n        raise ValueError(\"spec cannot be empty\")\n    \n    try:\n        import json\n        return json.dumps(spec, separators=(',', ': '))\n    except (TypeError, ValueError) as e:\n        raise ValueError(f\"Failed to serialize spec to JSON: {str(e)}\")",
+      "syntax_ok": true,
+      "passed": true,
+      "error": null
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "task_id": "HumanEval/13",
+  "prompt": "\n\ndef greatest_common_divisor(a: int, b: int) -> int:\n    \"\"\" Return a greatest common divisor of two integers a and b\n    >>> greatest_common_divisor(3, 5)\n    1\n    >>> greatest_common_divisor(25, 15)\n    5\n    \"\"\"\n",
+  "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate(3, 7) == 1\n    assert candidate(10, 15) == 5\n    assert candidate(49, 14) == 7\n    assert candidate(144, 60) == 12\n",
+  "attempts": [
+    {
+      "attempt_idx": 0,
+      "duration_sec": 14.6507,
+      "resource_stats": {
+        "samples": 73,
+        "cpu_percent_avg": 1.58,
+        "cpu_percent_peak": 5.0,
+        "mem_rss_avg_bytes": 208470016,
+        "mem_rss_peak_bytes": 208470016
+      },
+      "final_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    Args:\n        spec (dict): A dictionary containing the specification for JSON generation.\n        \n    Returns:\n        dict: A dictionary representing the generated JSON response.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If the spec contains invalid parameters.\n        \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n        \n        >>> generate_json({\"status\": \"success\", \"data\": null})\n        {'status': 'success', 'data': None}\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    # Handle the error case specifically mentioned\n    if \"error\" in spec:\n        return {\"error\": spec[\"error\"]}\n    \n    # For other cases, return the spec as-is\n    return spec",
+      "syntax_ok": true,
+      "passed": true,
+      "error": null
+    }
+  ]
+}

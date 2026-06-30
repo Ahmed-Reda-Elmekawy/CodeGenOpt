@@ -1,0 +1,22 @@
+{
+  "task_id": "HumanEval/22",
+  "prompt": "from typing import List, Any\n\n\ndef filter_integers(values: List[Any]) -> List[int]:\n    \"\"\" Filter given list of any python values only for integers\n    >>> filter_integers(['a', 3.14, 5])\n    [5]\n    >>> filter_integers([1, 2, 3, 'abc', {}, []])\n    [1, 2, 3]\n    \"\"\"\n",
+  "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([]) == []\n    assert candidate([4, {}, [], 23.2, 9, 'adasd']) == [4, 9]\n    assert candidate([3, 'c', 3, 3, 'a', 'b']) == [3, 3, 3]\n",
+  "attempts": [
+    {
+      "attempt_idx": 0,
+      "duration_sec": 24.8757,
+      "resource_stats": {
+        "samples": 124,
+        "cpu_percent_avg": 1.01,
+        "cpu_percent_peak": 10.0,
+        "mem_rss_avg_bytes": 208601088,
+        "mem_rss_peak_bytes": 208601088
+      },
+      "final_code": "def generate_json(spec):\n    \"\"\"\n    Generate a JSON string from a structured specification.\n    \n    Args:\n        spec (dict): A dictionary containing the specification for JSON generation.\n                    Expected to have keys that define the structure and content\n                    of the desired JSON output.\n    \n    Returns:\n        str: A valid JSON string representation of the input specification.\n    \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If the specification cannot be converted to valid JSON.\n    \n    Examples:\n        >>> generate_json({\"name\": \"John\", \"age\": 30})\n        '{\"name\": \"John\", \"age\": 30}'\n        \n        >>> generate_json({\"items\": [1, 2, 3], \"count\": null})\n        '{\"items\": [1, 2, 3], \"count\": null}'\n        \n        >>> generate_json({})\n        '{}'\n    \"\"\"\n    import json\n    \n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    try:\n        return json.dumps(spec)\n    except (TypeError, ValueError) as e:\n        raise ValueError(f\"Failed to generate JSON: {str(e)}\")",
+      "syntax_ok": true,
+      "passed": true,
+      "error": null
+    }
+  ]
+}

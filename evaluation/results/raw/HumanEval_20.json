@@ -1,0 +1,22 @@
+{
+  "task_id": "HumanEval/20",
+  "prompt": "from typing import List, Tuple\n\n\ndef find_closest_elements(numbers: List[float]) -> Tuple[float, float]:\n    \"\"\" From a supplied list of numbers (of length at least two) select and return two that are the closest to each\n    other and return them in order (smaller number, larger number).\n    >>> find_closest_elements([1.0, 2.0, 3.0, 4.0, 5.0, 2.2])\n    (2.0, 2.2)\n    >>> find_closest_elements([1.0, 2.0, 3.0, 4.0, 5.0, 2.0])\n    (2.0, 2.0)\n    \"\"\"\n",
+  "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([1.0, 2.0, 3.9, 4.0, 5.0, 2.2]) == (3.9, 4.0)\n    assert candidate([1.0, 2.0, 5.9, 4.0, 5.0]) == (5.0, 5.9)\n    assert candidate([1.0, 2.0, 3.0, 4.0, 5.0, 2.2]) == (2.0, 2.2)\n    assert candidate([1.0, 2.0, 3.0, 4.0, 5.0, 2.0]) == (2.0, 2.0)\n    assert candidate([1.1, 2.2, 3.1, 4.1, 5.1]) == (2.2, 3.1)\n\n",
+  "attempts": [
+    {
+      "attempt_idx": 0,
+      "duration_sec": 37.1085,
+      "resource_stats": {
+        "samples": 185,
+        "cpu_percent_avg": 1.05,
+        "cpu_percent_peak": 5.0,
+        "mem_rss_avg_bytes": 208470016,
+        "mem_rss_peak_bytes": 208470016
+      },
+      "final_code": "def generate_json(spec):\n    \"\"\"\n    Generate a JSON string from a structured specification.\n    \n    Args:\n        spec (dict): A dictionary containing the function specification with keys:\n                    - name (str): The function name\n                    - parameters (list): List of parameter dictionaries\n                    - return_type (str): The return type description\n                    \n    Returns:\n        str: A JSON string representation of the specification\n        \n    Raises:\n        TypeError: If spec is not a dictionary or contains invalid types\n        ValueError: If required fields are missing or empty\n        \n    Examples:\n        >>> generate_json({\n        ...     \"name\": \"process_data\",\n        ...     \"parameters\": [\n        ...         {\"name\": \"data\", \"type\": \"list\", \"required\": True},\n        ...         {\"name\": \"options\", \"type\": \"dict\", \"required\": False}\n        ...     ],\n        ...     \"return_type\": \"dict\"\n        ... })\n        '{\"name\": \"process_data\", \"parameters\": [{\"name\": \"data\", \"type\": \"list\", \"required\": true}, {\"name\": \"options\", \"type\": \"dict\", \"required\": false}], \"return_type\": \"dict\"}'\n        \n        >>> generate_json({\n        ...     \"name\": \"calculate\",\n        ...     \"parameters\": null,\n        ...     \"return_type\": \"int\"\n        ... })\n        '{\"name\": \"calculate\", \"parameters\": null, \"return_type\": \"int\"}'\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    if not spec:\n        raise ValueError(\"spec cannot be empty\")\n    \n    required_fields = [\"name\", \"return_type\"]\n    for field in required_fields:\n        if field not in spec:\n            raise ValueError(f\"Missing required field: {field}\")\n        if not isinstance(spec[field], str):\n            raise TypeError(f\"{field} must be a string\")\n        if not spec[field].strip():\n            raise ValueError(f\"{field} cannot be empty\")\n    \n    if spec.get(\"parameters\") is not None:\n        if not isinstance(spec[\"parameters\"], list):\n            raise TypeError(\"parameters must be a list or null\")\n        \n        for i, param in enumerate(spec[\"parameters\"]):\n            if not isinstance(param, dict):\n                raise TypeError(f\"parameter at index {i} must be a dictionary\")\n            \n            if \"name\" not in param:\n                raise ValueError(f\"parameter at index {i} missing required field",
+      "syntax_ok": false,
+      "passed": false,
+      "error": null
+    }
+  ]
+}

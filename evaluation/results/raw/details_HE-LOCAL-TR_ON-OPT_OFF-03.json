@@ -1,0 +1,175 @@
+{
+  "summary": {
+    "timestamp": "2026-04-18T22:54:25.286910+00:00",
+    "experiment_name": "HE-LOCAL-TR_ON-OPT_OFF-03",
+    "experiment_id": "HE-LOCAL-TR_ON-OPT_OFF-03",
+    "test_config": {
+      "dataset": "humaneval",
+      "sample_indices": null,
+      "num_tasks": 3,
+      "attempts_per_task": 1,
+      "use_translator": true,
+      "use_optimizer": false,
+      "shared_llm": true,
+      "cloud_llm": false
+    },
+    "model_config": null,
+    "latency": {
+      "count": 3,
+      "mean": 104.2513,
+      "median": 93.567,
+      "stdev": 19.4859,
+      "p50": 93.567,
+      "p90": 93.567,
+      "p95": 93.567
+    },
+    "resource": {
+      "cpu_percent_avg_mean": 0.14,
+      "cpu_percent_peak_max": 2.0,
+      "mem_rss_avg_mean_bytes": 190113272,
+      "mem_rss_peak_max_bytes": 190197760
+    },
+    "pass_stats": {
+      "total_tasks": 3,
+      "passed_at_1": 0,
+      "pass_at_1_pct": 0.0
+    },
+    "env_info": {
+      "timestamp": "2026-04-18T22:54:25.286901Z",
+      "git_commit": "5ca6e85cf0dabd0dc99de575bfa76627e3caad9a",
+      "git_branch": "eval-run/HE-LOCAL-TR_OFF-OPT_OFF-03_20260419_004904",
+      "cpu_model": "x86_64",
+      "cpu_cores": 12,
+      "dependencies": [
+        "autoflake==2.3.1",
+        "autopep8==2.3.2",
+        "black==25.9.0",
+        "dirtyjson==1.0.8",
+        "fire==0.7.1",
+        "isort==7.0.0",
+        "json_repair==0.52.3",
+        "langchain==1.0.2",
+        "langchain_core==1.0.1",
+        "langchain_ollama==1.0.0",
+        "matplotlib==3.10.7",
+        "mypy==1.18.2",
+        "numpy==2.3.4",
+        "psutil==7.1.0",
+        "pydantic==2.12.3",
+        "pytest==8.4.2",
+        "pyupgrade==3.20.0",
+        "PyYAML==6.0.2",
+        "PyYAML==6.0.3",
+        "setuptools==80.9.0",
+        "tqdm==4.67.1"
+      ]
+    }
+  },
+  "results": [
+    {
+      "task_id": "HumanEval/0",
+      "task_index": 0,
+      "prompt": "from typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.3) == True\n    assert candidate([1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.05) == False\n    assert candidate([1.0, 2.0, 5.9, 4.0, 5.0], 0.95) == True\n    assert candidate([1.0, 2.0, 5.9, 4.0, 5.0], 0.8) == False\n    assert candidate([1.0, 2.0, 3.0, 4.0, 5.0, 2.0], 0.1) == True\n    assert candidate([1.1, 2.2, 3.1, 4.1, 5.1], 1.0) == True\n    assert candidate([1.1, 2.2, 3.1, 4.1, 5.1], 0.5) == False\n\n",
+      "canonical_solution": "    for idx, elem in enumerate(numbers):\n        for idx2, elem2 in enumerate(numbers):\n            if idx != idx2:\n                distance = abs(elem - elem2)\n                if distance < threshold:\n                    return True\n\n    return False\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 93.567,
+          "total_pipeline_time_sec": 93.5670793056488,
+          "resource_stats": {
+            "samples": 187,
+            "cpu_percent_avg": 0.15,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190019375,
+            "mem_rss_peak_bytes": 190087168
+          },
+          "final_code": null,
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/1",
+      "task_index": 1,
+      "prompt": "from typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(())', '(()())']\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('(()()) ((())) () ((())()())') == [\n        '(()())', '((()))', '()', '((())()())'\n    ]\n    assert candidate('() (()) ((())) (((())))') == [\n        '()', '(())', '((()))', '(((())))'\n    ]\n    assert candidate('(()(())((())))') == [\n        '(()(())((())))'\n    ]\n    assert candidate('( ) (( )) (( )( ))') == ['()', '(())', '(()())']\n",
+      "canonical_solution": "    result = []\n    current_string = []\n    current_depth = 0\n\n    for c in paren_string:\n        if c == '(':\n            current_depth += 1\n            current_string.append(c)\n        elif c == ')':\n            current_depth -= 1\n            current_string.append(c)\n\n            if current_depth == 0:\n                result.append(''.join(current_string))\n                current_string.clear()\n\n    return result\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 131.5919,
+          "total_pipeline_time_sec": 131.5920066833496,
+          "resource_stats": {
+            "samples": 263,
+            "cpu_percent_avg": 0.13,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190127318,
+            "mem_rss_peak_bytes": 190156800
+          },
+          "final_code": "```\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\"\n    Input to this function is a string containing multiple groups of nested parentheses.\n    Your goal is to separate those groups into separate strings and return the list of those.\n\n    Constraints:\n        Separate groups are balanced (each open brace is properly closed) and not nested within each other\n\n    Examples:\n        >>> separate_paren_groups(paren_string=\"( ) (( )) (( )( ))\")\n        [\"()\", \"(())\", \"(()())\"]\n\n    Exceptions: None\n    \"\"\"\n    def find_next_open(parens, start):\n        for i in range(start, len(parens)):\n            if parens[i] == '(':\n                return i\n        return -1\n\n    def find_next_close(parens, start):\n        count = 0\n        for i in range(start, len(parens)):\n            if parens[i] == '(':\n                count += 1\n            elif parens[i] == ')':\n                count -= 1\n                if count == 0:\n                    return i\n        return -1\n\n    result = []\n    start = 0\n    while start < len(paren_string):\n        open_pos = find_next_open(paren_string, start)\n        close_pos = find_next_close(paren_string, open_pos + 1)\n        result.append(paren_string[start:open_pos+1] + paren_string[open_pos+1:close_pos+1])\n        start = close_pos + 1\n    return result",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/2",
+      "task_index": 2,
+      "prompt": "\n\ndef truncate_number(number: float) -> float:\n    \"\"\" Given a positive floating point number, it can be decomposed into\n    and integer part (largest integer smaller than given number) and decimals\n    (leftover part always smaller than 1).\n\n    Return the decimal part of the number.\n    >>> truncate_number(3.5)\n    0.5\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate(3.5) == 0.5\n    assert abs(candidate(1.33) - 0.33) < 1e-6\n    assert abs(candidate(123.456) - 0.456) < 1e-6\n",
+      "canonical_solution": "    return number % 1.0\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 87.5949,
+          "total_pipeline_time_sec": 87.59501814842224,
+          "resource_stats": {
+            "samples": 175,
+            "cpu_percent_avg": 0.13,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190193125,
+            "mem_rss_peak_bytes": 190197760
+          },
+          "final_code": "```\ndef truncate_number(number: float) -> float:\n    \"\"\"\n    Given a positive floating point number, it can be decomposed into an integer part \n    (largest integer smaller than given number) and decimals (leftover part always \n    smaller than 1). Return the decimal part of the number.\n\n    Constraints:\n    >>> truncate_number(3.5)\n\n    Examples:\n    >>> truncate_number(input={'number': 3.5})\n    0.5\n\n    Exceptions: None\n    \"\"\"\n    return number - int(number)\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    }
+  ]
+}

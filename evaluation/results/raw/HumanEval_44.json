@@ -1,0 +1,22 @@
+{
+  "task_id": "HumanEval/44",
+  "prompt": "\n\ndef change_base(x: int, base: int):\n    \"\"\"Change numerical base of input number x to base.\n    return string representation after the conversion.\n    base numbers are less than 10.\n    >>> change_base(8, 3)\n    '22'\n    >>> change_base(8, 2)\n    '1000'\n    >>> change_base(7, 2)\n    '111'\n    \"\"\"\n",
+  "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(8, 3) == \"22\"\n    assert candidate(9, 3) == \"100\"\n    assert candidate(234, 2) == \"11101010\"\n    assert candidate(16, 2) == \"10000\"\n    assert candidate(8, 2) == \"1000\"\n    assert candidate(7, 2) == \"111\"\n    for x in range(2, 8):\n        assert candidate(x, x + 1) == str(x)\n\n",
+  "attempts": [
+    {
+      "attempt_idx": 0,
+      "duration_sec": 14.4454,
+      "resource_stats": {
+        "samples": 72,
+        "cpu_percent_avg": 1.46,
+        "cpu_percent_peak": 5.0,
+        "mem_rss_avg_bytes": 208732160,
+        "mem_rss_peak_bytes": 208732160
+      },
+      "final_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    Args:\n        spec (dict): A dictionary containing the function specification.\n        \n    Returns:\n        dict: A dictionary representing the generated JSON.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        KeyError: If required keys are missing from spec.\n        \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n        \n        >>> generate_json({\"name\": \"test\", \"type\": \"function\"})\n        {'name': 'test', 'type': 'function'}\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    return spec.copy()",
+      "syntax_ok": true,
+      "passed": true,
+      "error": null
+    }
+  ]
+}

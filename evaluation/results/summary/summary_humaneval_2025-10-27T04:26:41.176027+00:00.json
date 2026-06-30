@@ -1,0 +1,87 @@
+{
+  "summary": {
+    "timestamp": "2025-10-27T04:26:41.176027+00:00",
+    "dataset": "humaneval",
+    "num_tasks": 1,
+    "attempts_per_task": 1,
+    "latency": {
+      "count": 1,
+      "mean": 17.0183,
+      "median": 17.0183,
+      "stdev": 0.0,
+      "p50": 17.0183,
+      "p90": 17.0183,
+      "p95": 17.0183
+    },
+    "resource": {
+      "cpu_percent_avg_mean": 1.41,
+      "cpu_percent_peak_max": 4.0,
+      "mem_rss_avg_mean_bytes": 190595312,
+      "mem_rss_peak_max_bytes": 190730240
+    },
+    "pass_stats": {
+      "total_tasks": 1,
+      "passed_at_1": 1,
+      "pass_at_1_pct": 100.0
+    },
+    "model_config": null,
+    "use_translator": true,
+    "use_optimizer": true,
+    "shared_llm": false,
+    "cloud_llm": true,
+    "env_info": {
+      "timestamp": "2025-10-27T04:26:41.175993Z",
+      "git_commit": "067e5767eb2b01a4c5301d2b6d122568e413487d",
+      "git_branch": "eval-run/humaneval_20251027_072435",
+      "cpu_model": "x86_64",
+      "cpu_cores": 12,
+      "dependencies": [
+        "autoflake==2.3.1",
+        "autopep8==2.3.2",
+        "black==25.9.0",
+        "dirtyjson==1.0.8",
+        "fire==0.7.1",
+        "isort==7.0.0",
+        "json_repair==0.52.3",
+        "langchain==1.0.2",
+        "langchain_core==1.0.1",
+        "langchain_ollama==1.0.0",
+        "matplotlib==3.10.7",
+        "mypy==1.18.2",
+        "numpy==2.3.4",
+        "psutil==7.1.0",
+        "pydantic==2.12.3",
+        "pytest==8.4.2",
+        "pyupgrade==3.20.0",
+        "PyYAML==6.0.2",
+        "PyYAML==6.0.3",
+        "setuptools==80.9.0",
+        "tqdm==4.67.1"
+      ]
+    }
+  },
+  "results": [
+    {
+      "task_id": "HumanEval/0",
+      "prompt": "from typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.3) == True\n    assert candidate([1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.05) == False\n    assert candidate([1.0, 2.0, 5.9, 4.0, 5.0], 0.95) == True\n    assert candidate([1.0, 2.0, 5.9, 4.0, 5.0], 0.8) == False\n    assert candidate([1.0, 2.0, 3.0, 4.0, 5.0, 2.0], 0.1) == True\n    assert candidate([1.1, 2.2, 3.1, 4.1, 5.1], 1.0) == True\n    assert candidate([1.1, 2.2, 3.1, 4.1, 5.1], 0.5) == False\n\n",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 17.0183,
+          "resource_stats": {
+            "samples": 34,
+            "cpu_percent_avg": 1.41,
+            "cpu_percent_peak": 4.0,
+            "mem_rss_avg_bytes": 190595312,
+            "mem_rss_peak_bytes": 190730240
+          },
+          "final_code": "def has_close_elements(numbers: list[float], threshold: float) -> bool:\n    \"\"\"\n    Check if in given list of numbers, are any two numbers closer to each other than given threshold.\n\n    Constraints:\n    - The function should handle empty lists gracefully\n    - The function should handle lists with only one element\n    - The threshold can be zero or positive\n    - Numbers in the list can be positive, negative, or zero\n    - The function should compare absolute differences between numbers\n    - If any two numbers have a difference less than the threshold, return True\n    - If no two numbers have a difference less than the threshold, return False\n\n    Examples:\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    >>> has_close_elements([], 1.0)\n    False\n    >>> has_close_elements([5.0], 0.1)\n    False\n    >>> has_close_elements([1.0, 1.1, 2.0], 0.2)\n    True\n    \"\"\"\n    # Handle edge cases\n    if len(numbers) < 2:\n        return False\n\n    # Check all pairs of numbers\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if abs(numbers[i] - numbers[j]) < threshold:\n                return True\n\n    return False\n",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    }
+  ]
+}

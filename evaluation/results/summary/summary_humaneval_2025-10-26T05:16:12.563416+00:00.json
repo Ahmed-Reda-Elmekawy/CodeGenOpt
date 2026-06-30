@@ -1,0 +1,83 @@
+{
+  "summary": {
+    "timestamp": "2025-10-26T05:16:12.563416+00:00",
+    "dataset": "humaneval",
+    "num_tasks": 1,
+    "attempts_per_task": 1,
+    "model_config": null,
+    "latency": {
+      "count": 1,
+      "mean": 34.5392,
+      "median": 34.5392,
+      "stdev": 0.0,
+      "p50": 34.5392,
+      "p90": 34.5392,
+      "p95": 34.5392
+    },
+    "resource": {
+      "cpu_percent_avg_mean": 0.87,
+      "cpu_percent_peak_max": 4.0,
+      "mem_rss_avg_mean_bytes": 209279124,
+      "mem_rss_peak_max_bytes": 209281024
+    },
+    "pass_stats": {
+      "total_tasks": 1,
+      "passed_at_1": 1,
+      "pass_at_1_pct": 100.0
+    },
+    "env": {
+      "timestamp": "2025-10-26T05:16:12.549421Z",
+      "git_commit": "0ae26eb234bac9a88849f6814dd802c47f8cb9df",
+      "git_branch": "env-snapshot/20251026_050810",
+      "cpu_model": "x86_64",
+      "cpu_cores": 12,
+      "dependencies": [
+        "autoflake==2.3.1",
+        "autopep8==2.3.2",
+        "black==25.9.0",
+        "dirtyjson==1.0.8",
+        "fire==0.7.1",
+        "isort==7.0.0",
+        "json_repair==0.52.3",
+        "langchain==1.0.2",
+        "langchain_core==1.0.1",
+        "langchain_ollama==1.0.0",
+        "matplotlib==3.10.7",
+        "mypy==1.18.2",
+        "numpy==2.3.4",
+        "psutil==7.1.0",
+        "pydantic==2.12.3",
+        "pytest==8.4.2",
+        "pyupgrade==3.20.0",
+        "PyYAML==6.0.2",
+        "PyYAML==6.0.3",
+        "setuptools==80.9.0",
+        "tqdm==4.67.1"
+      ]
+    }
+  },
+  "results": [
+    {
+      "task_id": "HumanEval/0",
+      "prompt": "from typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.3) == True\n    assert candidate([1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.05) == False\n    assert candidate([1.0, 2.0, 5.9, 4.0, 5.0], 0.95) == True\n    assert candidate([1.0, 2.0, 5.9, 4.0, 5.0], 0.8) == False\n    assert candidate([1.0, 2.0, 3.0, 4.0, 5.0, 2.0], 0.1) == True\n    assert candidate([1.1, 2.2, 3.1, 4.1, 5.1], 1.0) == True\n    assert candidate([1.1, 2.2, 3.1, 4.1, 5.1], 0.5) == False\n\n",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 34.5392,
+          "resource_stats": {
+            "samples": 69,
+            "cpu_percent_avg": 0.87,
+            "cpu_percent_peak": 4.0,
+            "mem_rss_avg_bytes": 209279124,
+            "mem_rss_peak_bytes": 209281024
+          },
+          "final_code": "def generate_json(retries: int = 3, timeout: float = 5.0, validate: bool = True) -> dict:\n    \"\"\"\n    Generate a JSON response with retry logic and validation.\n    \n    Args:\n        retries (int): Number of retry attempts. Must be non-negative.\n        timeout (float): Timeout in seconds for each attempt. Must be positive.\n        validate (bool): Whether to validate the generated JSON.\n        \n    Returns:\n        dict: A dictionary containing the generated JSON data.\n        \n    Raises:\n        ValueError: If retries is negative or timeout is not positive.\n        RuntimeError: If all retry attempts fail.\n        \n    Examples:\n        >>> generate_json({\"retries\": 2, \"timeout\": 3.0, \"validate\": true})\n        {'status': 'success', 'data': {'message': 'Generated JSON'}}\n        \n        >>> generate_json({\"retries\": 0, \"timeout\": 1.0, \"validate\": null})\n        {'status': 'success', 'data': {'message': 'Generated JSON'}}\n    \"\"\"\n    if not isinstance(retries, int) or retries < 0:\n        raise ValueError(\"retries must be a non-negative integer\")\n    if not isinstance(timeout, (int, float)) or timeout <= 0:\n        raise ValueError(\"timeout must be a positive number\")\n    if validate is not None and not isinstance(validate, bool):\n        raise ValueError(\"validate must be a boolean or None\")\n    \n    # Simulate JSON generation with retry logic\n    for attempt in range(retries + 1):\n        try:\n            # Simulate some work\n            import time\n            time.sleep(0.1)\n            \n            result = {\n                \"status\": \"success\",\n                \"data\": {\n                    \"message\": \"Generated JSON\",\n                    \"attempt\": attempt + 1\n                }\n            }\n            \n            if validate:\n                # Simple validation\n                if not isinstance(result, dict):\n                    raise ValueError(\"Invalid JSON format\")\n                    \n            return result\n            \n        except Exception as e:\n            if attempt == retries:\n                raise RuntimeError(f\"Failed to generate JSON after {retries + 1} attempts\") from e\n    \n    # This should never be reached\n    raise RuntimeError(\"Unexpected error in JSON generation\")",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "task_id": "HumanEval/1",
+  "dataset": "3lm",
+  "mode": "native",
+  "prompt": "from typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" المدخل لهذه الدالة هو نص يحتوي على مجموعات متعددة من الأقواس المتداخلة. هدفك هو\n    فصل هذه المجموعات إلى نصوص منفصلة وإرجاع القائمة من تلك المجموعات.\n    المجموعات المنفصلة متوازنة (كل قوس مفتوح مغلق بشكل صحيح) وغير متداخلة داخل بعضها.\n    تجاهل أي مسافات في النص المدخل.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(())', '(()())']\n    \"\"\"\n\n",
+  "attempts": [
+    {
+      "attempt_idx": 0,
+      "duration_sec": 20.0031,
+      "resource_stats": {
+        "samples": 2,
+        "cpu_percent_avg": 0.9,
+        "cpu_percent_peak": 1.8,
+        "mem_rss_avg_bytes": 220491776,
+        "mem_rss_peak_bytes": 220491776
+      },
+      "generated_code": "def generate_json(spec: dict) -> str:\n    \"\"\"\n    Generate JSON string from structured specification.\n    \n    Args:\n        spec (dict): Function specification in JSON format containing function details.\n        \n    Returns:\n        str: Generated JSON string representation of the specification.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If spec contains invalid structure or missing required fields.\n        \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        '{\"error\": \"Failed to generate JSON after retries\"}'\n        \n        >>> generate_json({\"name\": \"test\", \"params\": [\"a\", \"b\"]})\n        '{\"name\": \"test\", \"params\": [\"a\", \"b\"]}'\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    if not spec:\n        raise ValueError(\"spec cannot be empty\")\n    \n    try:\n        import json\n        return json.dumps(spec, separators=(',', ':'))\n    except (TypeError, ValueError) as e:\n        raise ValueError(f\"Invalid spec structure: {str(e)}\")",
+      "optimized_code": {
+        "optimized_code": "def generate_json(spec: dict) -> str:\n    \"\"\"\n    Generate JSON string from structured specification.\n\n    Args:\n        spec (dict): Function specification in JSON format containing function details.\n\n    Returns:\n        str: Generated JSON string representation of the specification.\n\n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If spec contains invalid structure or missing required fields.\n\n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        '{\"error\": \"Failed to generate JSON after retries\"}'\n\n        >>> generate_json({\"name\": \"test\", \"params\": [\"a\", \"b\"]})\n        '{\"name\": \"test\", \"params\": [\"a\", \"b\"]}'\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError('spec must be a dictionary')\n    if not spec:\n        raise ValueError('spec cannot be empty')\n    try:\n        import json\n        return json.dumps(spec, separators=(',', ':'))\n    except (TypeError, ValueError) as e:\n        raise ValueError(f'Invalid spec structure: {str(e)}')",
+        "issues_found": [],
+        "success": true,
+        "improvements": [
+          "Applied autopep8 style fixes",
+          "Removed unused imports and variables with autoflake",
+          "Sorted imports with isort",
+          "Applied Python version upgrades with pyupgrade",
+          "Applied Black formatting (PEP8)",
+          "Fixed common coding issues",
+          "Applied performance optimizations",
+          "Enhanced type hints",
+          "Passed mypy type checking"
+        ],
+        "functionality_preserved": true,
+        "mypy_result": {
+          "passed": true,
+          "output": "Success: no issues found in 1 source file\n",
+          "errors": "",
+          "suggestions": []
+        },
+        "optimization_stats": {
+          "original_lines": 32,
+          "original_size": 1095,
+          "steps_completed": 9,
+          "tools_used": [
+            "autopep8",
+            "autoflake",
+            "isort",
+            "pyupgrade",
+            "black",
+            "mypy"
+          ],
+          "final_lines": 30,
+          "final_size": 1049,
+          "size_reduction": 46,
+          "lines_changed": 2
+        },
+        "tools_used": [
+          "autopep8",
+          "autoflake",
+          "isort",
+          "pyupgrade",
+          "black",
+          "mypy"
+        ]
+      },
+      "final_code": {
+        "optimized_code": "def generate_json(spec: dict) -> str:\n    \"\"\"\n    Generate JSON string from structured specification.\n\n    Args:\n        spec (dict): Function specification in JSON format containing function details.\n\n    Returns:\n        str: Generated JSON string representation of the specification.\n\n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If spec contains invalid structure or missing required fields.\n\n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        '{\"error\": \"Failed to generate JSON after retries\"}'\n\n        >>> generate_json({\"name\": \"test\", \"params\": [\"a\", \"b\"]})\n        '{\"name\": \"test\", \"params\": [\"a\", \"b\"]}'\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError('spec must be a dictionary')\n    if not spec:\n        raise ValueError('spec cannot be empty')\n    try:\n        import json\n        return json.dumps(spec, separators=(',', ':'))\n    except (TypeError, ValueError) as e:\n        raise ValueError(f'Invalid spec structure: {str(e)}')",
+        "issues_found": [],
+        "success": true,
+        "improvements": [
+          "Applied autopep8 style fixes",
+          "Removed unused imports and variables with autoflake",
+          "Sorted imports with isort",
+          "Applied Python version upgrades with pyupgrade",
+          "Applied Black formatting (PEP8)",
+          "Fixed common coding issues",
+          "Applied performance optimizations",
+          "Enhanced type hints",
+          "Passed mypy type checking"
+        ],
+        "functionality_preserved": true,
+        "mypy_result": {
+          "passed": true,
+          "output": "Success: no issues found in 1 source file\n",
+          "errors": "",
+          "suggestions": []
+        },
+        "optimization_stats": {
+          "original_lines": 32,
+          "original_size": 1095,
+          "steps_completed": 9,
+          "tools_used": [
+            "autopep8",
+            "autoflake",
+            "isort",
+            "pyupgrade",
+            "black",
+            "mypy"
+          ],
+          "final_lines": 30,
+          "final_size": 1049,
+          "size_reduction": 46,
+          "lines_changed": 2
+        },
+        "tools_used": [
+          "autopep8",
+          "autoflake",
+          "isort",
+          "pyupgrade",
+          "black",
+          "mypy"
+        ]
+      },
+      "syntax_ok": false,
+      "mypy_result": null,
+      "passed": false,
+      "test_output": null,
+      "error": null
+    }
+  ]
+}

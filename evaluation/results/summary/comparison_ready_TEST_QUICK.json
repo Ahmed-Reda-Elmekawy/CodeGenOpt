@@ -1,0 +1,38 @@
+{
+  "metadata": {
+    "experiment_name": "TEST_QUICK",
+    "experiment_id": "TEST_QUICK",
+    "timestamp": "2026-04-18T18:15:30.029279+00:00",
+    "dataset": "humaneval",
+    "config": {
+      "dataset": "humaneval",
+      "sample_indices": null,
+      "num_tasks": 1,
+      "attempts_per_task": 1,
+      "use_translator": false,
+      "use_optimizer": true,
+      "shared_llm": false,
+      "cloud_llm": true
+    }
+  },
+  "aggregated": {
+    "pass_at_1_pct": 100.0,
+    "pass_at_k_pct": null,
+    "latency_mean": 42.0226,
+    "latency_median": 42.0226,
+    "latency_p95": 42.0226,
+    "cpu_avg": 0.1,
+    "cpu_peak": 2.0,
+    "mem_peak_mb": 190.23872
+  },
+  "per_task": [
+    {
+      "task_id": "HumanEval/0",
+      "task_index": 0,
+      "passed": true,
+      "syntax_ok": true,
+      "error_type": null,
+      "duration_sec": 42.0226
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "task_id": "HumanEval/23",
+  "prompt": "\n\ndef strlen(string: str) -> int:\n    \"\"\" Return length of given string\n    >>> strlen('')\n    0\n    >>> strlen('abc')\n    3\n    \"\"\"\n",
+  "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('') == 0\n    assert candidate('x') == 1\n    assert candidate('asdasnakj') == 9\n",
+  "attempts": [
+    {
+      "attempt_idx": 0,
+      "duration_sec": 24.4742,
+      "resource_stats": {
+        "samples": 122,
+        "cpu_percent_avg": 1.07,
+        "cpu_percent_peak": 10.0,
+        "mem_rss_avg_bytes": 208601088,
+        "mem_rss_peak_bytes": 208601088
+      },
+      "final_code": "def generate_json(retries: int = 3, timeout: float = 5.0, validate: bool = True) -> dict:\n    \"\"\"\n    Generate a JSON response with retry logic and validation.\n    \n    Args:\n        retries (int): Number of retry attempts. Must be non-negative.\n        timeout (float): Timeout in seconds for each attempt. Must be positive.\n        validate (bool): Whether to validate the generated JSON.\n        \n    Returns:\n        dict: A dictionary containing the generated JSON data.\n        \n    Raises:\n        ValueError: If retries is negative or timeout is not positive.\n        RuntimeError: If all retry attempts fail.\n        \n    Examples:\n        >>> generate_json({\"retries\": 2, \"timeout\": 3.0, \"validate\": true})\n        {'status': 'success', 'data': {'message': 'Generated JSON'}}\n        \n        >>> generate_json({\"retries\": 0, \"timeout\": 1.0, \"validate\": false})\n        {'status': 'success', 'data': {'message': 'Generated JSON'}}\n        \n        >>> generate_json({\"retries\": null, \"timeout\": null, \"validate\": null})\n        {'status': 'success', 'data': {'message': 'Generated JSON'}}\n    \"\"\"\n    if retries is not None and (not isinstance(retries, int) or retries < 0):\n        raise ValueError(\"retries must be a non-negative integer\")\n    \n    if timeout is not None and (not isinstance(timeout, (int, float)) or timeout <= 0):\n        raise ValueError(\"timeout must be a positive number\")\n    \n    if retries is None:\n        retries = 3\n        \n    if timeout is None:\n        timeout = 5.0\n        \n    if validate is None:\n        validate = True\n    \n    attempt = 0\n    while attempt <= retries:\n        try:\n            # Simulate JSON generation\n            result = {\n                \"status\": \"success\",\n                \"data\": {\n                    \"message\": \"Generated JSON\"\n                }\n            }\n            \n            if validate:\n                # Simulate validation\n                if not isinstance(result, dict):\n                    raise ValueError(\"Invalid JSON format\")\n                    \n            return result\n            \n        except Exception as e:\n            attempt += 1\n            if attempt > retries:\n                raise RuntimeError(f\"Failed to generate JSON after {retries + 1} attempts\") from e\n    \n    raise RuntimeError(f\"Failed to generate JSON after {retries + 1} attempts\")",
+      "syntax_ok": true,
+      "passed": true,
+      "error": null
+    }
+  ]
+}

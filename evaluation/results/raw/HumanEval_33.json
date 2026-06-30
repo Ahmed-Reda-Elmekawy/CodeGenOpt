@@ -1,0 +1,22 @@
+{
+  "task_id": "HumanEval/33",
+  "prompt": "\n\ndef sort_third(l: list):\n    \"\"\"This function takes a list l and returns a list l' such that\n    l' is identical to l in the indicies that are not divisible by three, while its values at the indicies that are divisible by three are equal\n    to the values of the corresponding indicies of l, but sorted.\n    >>> sort_third([1, 2, 3])\n    [1, 2, 3]\n    >>> sort_third([5, 6, 3, 4, 8, 9, 2])\n    [2, 6, 3, 4, 8, 9, 5]\n    \"\"\"\n",
+  "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert tuple(candidate([1, 2, 3])) == tuple(sort_third([1, 2, 3]))\n    assert tuple(candidate([5, 3, -5, 2, -3, 3, 9, 0, 123, 1, -10])) == tuple(sort_third([5, 3, -5, 2, -3, 3, 9, 0, 123, 1, -10]))\n    assert tuple(candidate([5, 8, -12, 4, 23, 2, 3, 11, 12, -10])) == tuple(sort_third([5, 8, -12, 4, 23, 2, 3, 11, 12, -10]))\n    assert tuple(candidate([5, 6, 3, 4, 8, 9, 2])) == tuple([2, 6, 3, 4, 8, 9, 5])\n    assert tuple(candidate([5, 8, 3, 4, 6, 9, 2])) == tuple([2, 8, 3, 4, 6, 9, 5])\n    assert tuple(candidate([5, 6, 9, 4, 8, 3, 2])) == tuple([2, 6, 9, 4, 8, 3, 5])\n    assert tuple(candidate([5, 6, 3, 4, 8, 9, 2, 1])) == tuple([2, 6, 3, 4, 8, 9, 5, 1])\n\n",
+  "attempts": [
+    {
+      "attempt_idx": 0,
+      "duration_sec": 20.4623,
+      "resource_stats": {
+        "samples": 102,
+        "cpu_percent_avg": 1.52,
+        "cpu_percent_peak": 5.0,
+        "mem_rss_avg_bytes": 208601088,
+        "mem_rss_peak_bytes": 208601088
+      },
+      "final_code": "def generate_json(retries: int = 3, timeout: float = 5.0, validate: bool = True) -> dict:\n    \"\"\"\n    Generate a JSON response with retry logic and validation.\n    \n    Args:\n        retries (int): Number of retry attempts. Must be >= 0.\n        timeout (float): Timeout in seconds. Must be > 0.\n        validate (bool): Whether to validate the generated JSON.\n        \n    Returns:\n        dict: Generated JSON response.\n        \n    Raises:\n        ValueError: If retries < 0 or timeout <= 0.\n        TimeoutError: If operation times out after all retries.\n        \n    Examples:\n        >>> generate_json({\"retries\": 2, \"timeout\": 3.0, \"validate\": true})\n        {'status': 'success', 'data': {}}\n        \n        >>> generate_json({\"retries\": 0, \"timeout\": 1.0, \"validate\": null})\n        {'status': 'success', 'data': {}}\n    \"\"\"\n    if not isinstance(retries, int) or retries < 0:\n        raise ValueError(\"retries must be a non-negative integer\")\n    if not isinstance(timeout, (int, float)) or timeout <= 0:\n        raise ValueError(\"timeout must be a positive number\")\n    if validate is not None and not isinstance(validate, bool):\n        raise ValueError(\"validate must be a boolean or None\")\n    \n    # Simulate JSON generation with retry logic\n    import time\n    import random\n    \n    for attempt in range(retries + 1):\n        try:\n            # Simulate work\n            time.sleep(0.1)\n            # Simulate random failure\n            if random.random() < 0.3 and attempt < retries:\n                raise TimeoutError(\"Operation timed out\")\n            return {\"status\": \"success\", \"data\": {}}\n        except TimeoutError:\n            if attempt == retries:\n                raise TimeoutError(\"Failed to generate JSON after retries\")\n            time.sleep(min(0.5 * (2 ** attempt), timeout))\n    \n    return {\"status\": \"success\", \"data\": {}}",
+      "syntax_ok": true,
+      "passed": true,
+      "error": null
+    }
+  ]
+}

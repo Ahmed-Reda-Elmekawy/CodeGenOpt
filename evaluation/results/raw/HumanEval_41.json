@@ -1,0 +1,22 @@
+{
+  "task_id": "HumanEval/41",
+  "prompt": "\n\ndef car_race_collision(n: int):\n    \"\"\"\n    Imagine a road that's a perfectly straight infinitely long line.\n    n cars are driving left to right;  simultaneously, a different set of n cars\n    are driving right to left.   The two sets of cars start out being very far from\n    each other.  All cars move in the same speed.  Two cars are said to collide\n    when a car that's moving left to right hits a car that's moving right to left.\n    However, the cars are infinitely sturdy and strong; as a result, they continue moving\n    in their trajectory as if they did not collide.\n\n    This function outputs the number of such collisions.\n    \"\"\"\n",
+  "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(2) == 4\n    assert candidate(3) == 9\n    assert candidate(4) == 16\n    assert candidate(8) == 64\n    assert candidate(10) == 100\n\n",
+  "attempts": [
+    {
+      "attempt_idx": 0,
+      "duration_sec": 15.4499,
+      "resource_stats": {
+        "samples": 77,
+        "cpu_percent_avg": 1.62,
+        "cpu_percent_peak": 10.0,
+        "mem_rss_avg_bytes": 208732160,
+        "mem_rss_peak_bytes": 208732160
+      },
+      "final_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    Args:\n        spec (dict): A dictionary containing the specification for JSON generation.\n                    Expected to contain keys like 'error', 'data', etc.\n    \n    Returns:\n        dict: A dictionary representing the generated JSON response.\n    \n    Raises:\n        TypeError: If spec is not a dictionary.\n        KeyError: If required keys are missing from spec.\n    \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n        \n        >>> generate_json({\"data\": {\"name\": \"John\", \"age\": 30}})\n        {'data': {'name': 'John', 'age': 30}}\n        \n        >>> generate_json({\"error\": null, \"result\": \"success\"})\n        {'error': None, 'result': 'success'}\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    return spec.copy()",
+      "syntax_ok": true,
+      "passed": true,
+      "error": null
+    }
+  ]
+}

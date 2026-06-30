@@ -1,0 +1,22 @@
+{
+  "task_id": "HumanEval/49",
+  "prompt": "\n\ndef modp(n: int, p: int):\n    \"\"\"Return 2^n modulo p (be aware of numerics).\n    >>> modp(3, 5)\n    3\n    >>> modp(1101, 101)\n    2\n    >>> modp(0, 101)\n    1\n    >>> modp(3, 11)\n    8\n    >>> modp(100, 101)\n    1\n    \"\"\"\n",
+  "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(3, 5) == 3\n    assert candidate(1101, 101) == 2\n    assert candidate(0, 101) == 1\n    assert candidate(3, 11) == 8\n    assert candidate(100, 101) == 1\n    assert candidate(30, 5) == 4\n    assert candidate(31, 5) == 3\n\n",
+  "attempts": [
+    {
+      "attempt_idx": 0,
+      "duration_sec": 29.2773,
+      "resource_stats": {
+        "samples": 146,
+        "cpu_percent_avg": 1.13,
+        "cpu_percent_peak": 10.0,
+        "mem_rss_avg_bytes": 208863232,
+        "mem_rss_peak_bytes": 208863232
+      },
+      "final_code": "def generate_json(spec: dict) -> str:\n    \"\"\"\n    Generate JSON string from a structured specification dictionary.\n    \n    Args:\n        spec (dict): A dictionary containing the function specification with keys:\n                    - name (str): Function name\n                    - parameters (list): List of parameter dictionaries\n                    - return_type (str): Return type annotation\n    \n    Returns:\n        str: Generated JSON string representation of the specification\n    \n    Raises:\n        TypeError: If spec is not a dictionary or contains invalid types\n        ValueError: If required keys are missing from the specification\n    \n    Examples:\n        >>> generate_json({\n        ...     \"name\": \"add\",\n        ...     \"parameters\": [\n        ...         {\"name\": \"a\", \"type\": \"int\"},\n        ...         {\"name\": \"b\", \"type\": \"int\"}\n        ...     ],\n        ...     \"return_type\": \"int\"\n        ... })\n        '{\"name\": \"add\", \"parameters\": [{\"name\": \"a\", \"type\": \"int\"}, {\"name\": \"b\", \"type\": \"int\"}], \"return_type\": \"int\"}'\n        \n        >>> generate_json({\n        ...     \"name\": \"greet\",\n        ...     \"parameters\": [\n        ...         {\"name\": \"name\", \"type\": \"str\", \"default\": \"World\"}\n        ...     ],\n        ...     \"return_type\": \"str\"\n        ... })\n        '{\"name\": \"greet\", \"parameters\": [{\"name\": \"name\", \"type\": \"str\", \"default\": \"World\"}], \"return_type\": \"str\"}'\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    required_keys = [\"name\", \"parameters\", \"return_type\"]\n    for key in required_keys:\n        if key not in spec:\n            raise ValueError(f\"Missing required key: {key}\")\n    \n    if not isinstance(spec[\"name\"], str):\n        raise TypeError(\"name must be a string\")\n    \n    if not isinstance(spec[\"parameters\"], list):\n        raise TypeError(\"parameters must be a list\")\n    \n    if not isinstance(spec[\"return_type\"], str):\n        raise TypeError(\"return_type must be a string\")\n    \n    for param in spec[\"parameters\"]:\n        if not isinstance(param, dict):\n            raise TypeError(\"Each parameter must be a dictionary\")\n        if \"name\" not in param or \"type\" not in param:\n            raise ValueError(\"Each parameter must have name and type keys",
+      "syntax_ok": false,
+      "passed": false,
+      "error": null
+    }
+  ]
+}

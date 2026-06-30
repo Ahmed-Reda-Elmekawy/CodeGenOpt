@@ -1,0 +1,18 @@
+{
+  "experiment_id": "3A.4-C4-Neither-CLOUD-164",
+  "description": "C4 configuration with BOTH Translator and Optimizer DISABLED (Neither) - PLACEHOLDER",
+  "status": "PENDING",
+  "expected_metrics": {
+    "pass_at_1": 0.02,
+    "pass_at_1_pct": 1.2,
+    "latency_mean": 18.5,
+    "latency_median": 16.2,
+    "latency_std": 8.3,
+    "cpu_avg": 0.22,
+    "cpu_peak": 8.0,
+    "mem_avg_mb": 182.5,
+    "mem_peak_mb": 183.2
+  },
+  "note": "This is a placeholder. Run the actual experiment with: python evaluation/run_evaluation.py --dataset humaneval --sample_file evaluation/samples/humaneval_164_tasks.jsonl --num_tasks 164 --output_name 3A.4-C4-Neither-CLOUD-164 --disable_translator --disable_optimizer",
+  "results": []
+}

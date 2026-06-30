@@ -1,0 +1,22 @@
+{
+  "task_id": "HumanEval/5",
+  "prompt": "from typing import List\n\n\ndef intersperse(numbers: List[int], delimeter: int) -> List[int]:\n    \"\"\" Insert a number 'delimeter' between every two consecutive elements of input list `numbers'\n    >>> intersperse([], 4)\n    []\n    >>> intersperse([1, 2, 3], 4)\n    [1, 4, 2, 4, 3]\n    \"\"\"\n",
+  "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([], 7) == []\n    assert candidate([5, 6, 3, 2], 8) == [5, 8, 6, 8, 3, 8, 2]\n    assert candidate([2, 2, 2], 2) == [2, 2, 2, 2, 2]\n",
+  "attempts": [
+    {
+      "attempt_idx": 0,
+      "duration_sec": 11.2387,
+      "resource_stats": {
+        "samples": 56,
+        "cpu_percent_avg": 1.79,
+        "cpu_percent_peak": 10.0,
+        "mem_rss_avg_bytes": 208338944,
+        "mem_rss_peak_bytes": 208338944
+      },
+      "final_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    Args:\n        spec (dict): A dictionary containing the function specification.\n        \n    Returns:\n        dict: A dictionary representing the generated JSON response.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        KeyError: If required keys are missing from spec.\n        \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n        \n        >>> generate_json({\"function\": \"test\", \"parameters\": {\"x\": 1}})\n        {'function': 'test', 'parameters': {'x': 1}}\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    return spec",
+      "syntax_ok": true,
+      "passed": true,
+      "error": null
+    }
+  ]
+}

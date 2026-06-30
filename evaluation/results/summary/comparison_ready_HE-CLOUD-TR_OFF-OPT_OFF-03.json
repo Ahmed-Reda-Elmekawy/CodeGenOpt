@@ -1,0 +1,54 @@
+{
+  "metadata": {
+    "experiment_name": "HE-CLOUD-TR_OFF-OPT_OFF-03",
+    "experiment_id": "HE-CLOUD-TR_OFF-OPT_OFF-03",
+    "timestamp": "2026-04-18T22:26:59.145430+00:00",
+    "dataset": "humaneval",
+    "config": {
+      "dataset": "humaneval",
+      "sample_indices": null,
+      "num_tasks": 3,
+      "attempts_per_task": 1,
+      "use_translator": false,
+      "use_optimizer": false,
+      "shared_llm": false,
+      "cloud_llm": true
+    }
+  },
+  "aggregated": {
+    "pass_at_1_pct": 0.0,
+    "pass_at_k_pct": null,
+    "latency_mean": 23.6825,
+    "latency_median": 14.0084,
+    "latency_p95": 14.0084,
+    "cpu_avg": 0.18,
+    "cpu_peak": 4.0,
+    "mem_peak_mb": 189.681664
+  },
+  "per_task": [
+    {
+      "task_id": "HumanEval/0",
+      "task_index": 0,
+      "passed": false,
+      "syntax_ok": false,
+      "error_type": "syntax_error",
+      "duration_sec": 14.0084
+    },
+    {
+      "task_id": "HumanEval/1",
+      "task_index": 1,
+      "passed": false,
+      "syntax_ok": false,
+      "error_type": "syntax_error",
+      "duration_sec": 9.0073
+    },
+    {
+      "task_id": "HumanEval/2",
+      "task_index": 2,
+      "passed": false,
+      "syntax_ok": false,
+      "error_type": "syntax_error",
+      "duration_sec": 48.0318
+    }
+  ]
+}

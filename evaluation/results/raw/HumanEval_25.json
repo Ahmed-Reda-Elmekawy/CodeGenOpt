@@ -1,0 +1,22 @@
+{
+  "task_id": "HumanEval/25",
+  "prompt": "from typing import List\n\n\ndef factorize(n: int) -> List[int]:\n    \"\"\" Return list of prime factors of given integer in the order from smallest to largest.\n    Each of the factors should be listed number of times corresponding to how many times it appeares in factorization.\n    Input number should be equal to the product of all factors\n    >>> factorize(8)\n    [2, 2, 2]\n    >>> factorize(25)\n    [5, 5]\n    >>> factorize(70)\n    [2, 5, 7]\n    \"\"\"\n",
+  "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate(2) == [2]\n    assert candidate(4) == [2, 2]\n    assert candidate(8) == [2, 2, 2]\n    assert candidate(3 * 19) == [3, 19]\n    assert candidate(3 * 19 * 3 * 19) == [3, 3, 19, 19]\n    assert candidate(3 * 19 * 3 * 19 * 3 * 19) == [3, 3, 3, 19, 19, 19]\n    assert candidate(3 * 19 * 19 * 19) == [3, 19, 19, 19]\n    assert candidate(3 * 2 * 3) == [2, 3, 3]\n",
+  "attempts": [
+    {
+      "attempt_idx": 0,
+      "duration_sec": 17.0546,
+      "resource_stats": {
+        "samples": 85,
+        "cpu_percent_avg": 1.53,
+        "cpu_percent_peak": 5.0,
+        "mem_rss_avg_bytes": 208601088,
+        "mem_rss_peak_bytes": 208601088
+      },
+      "final_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    This function processes a structured JSON specification and returns\n    a valid Python dictionary representation.\n    \n    Args:\n        spec (dict): A dictionary containing the JSON specification\n                    with keys defining the structure and requirements.\n    \n    Returns:\n        dict: A valid Python dictionary representing the processed JSON.\n    \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If the specification is invalid or cannot be processed.\n    \n    Examples:\n        >>> generate_json({\"name\": \"test\", \"type\": \"string\"})\n        {'name': 'test', 'type': 'string'}\n        \n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n        \n        >>> generate_json(None)\n        Traceback (most recent call last):\n            ...\n        TypeError: spec must be a dictionary\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    if not spec:\n        return {}\n    \n    # Handle the specific error case mentioned in the example\n    if \"error\" in spec and spec[\"error\"] == \"Failed to generate JSON after retries\":\n        return {\"error\": \"Failed to generate JSON after retries\"}\n    \n    # Return the spec as-is for valid cases\n    return spec",
+      "syntax_ok": true,
+      "passed": true,
+      "error": null
+    }
+  ]
+}

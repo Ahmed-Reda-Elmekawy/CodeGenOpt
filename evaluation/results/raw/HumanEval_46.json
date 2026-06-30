@@ -1,0 +1,22 @@
+{
+  "task_id": "HumanEval/46",
+  "prompt": "\n\ndef fib4(n: int):\n    \"\"\"The Fib4 number sequence is a sequence similar to the Fibbonacci sequnece that's defined as follows:\n    fib4(0) -> 0\n    fib4(1) -> 0\n    fib4(2) -> 2\n    fib4(3) -> 0\n    fib4(n) -> fib4(n-1) + fib4(n-2) + fib4(n-3) + fib4(n-4).\n    Please write a function to efficiently compute the n-th element of the fib4 number sequence.  Do not use recursion.\n    >>> fib4(5)\n    4\n    >>> fib4(6)\n    8\n    >>> fib4(7)\n    14\n    \"\"\"\n",
+  "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(5) == 4\n    assert candidate(8) == 28\n    assert candidate(10) == 104\n    assert candidate(12) == 386\n\n",
+  "attempts": [
+    {
+      "attempt_idx": 0,
+      "duration_sec": 20.8617,
+      "resource_stats": {
+        "samples": 104,
+        "cpu_percent_avg": 1.15,
+        "cpu_percent_peak": 10.0,
+        "mem_rss_avg_bytes": 208732160,
+        "mem_rss_peak_bytes": 208732160
+      },
+      "final_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    Args:\n        spec (dict): A dictionary containing the function specification.\n        \n    Returns:\n        dict: A dictionary representing the generated JSON response.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        KeyError: If required keys are missing from spec.\n        \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n        \n        >>> generate_json({\"function\": \"test\", \"parameters\": {\"x\": 1}})\n        {'function': 'test', 'parameters': {'x': 1}}\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    return spec",
+      "syntax_ok": true,
+      "passed": true,
+      "error": null
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+timestamp,experiment_name,experiment_id,dataset,num_tasks,use_translator,use_optimizer,shared_llm,cloud_llm,latency_count,latency_mean,latency_median,latency_stdev,latency_p50,latency_p90,latency_p95,cpu_avg,cpu_peak,mem_avg_mb,mem_peak_mb,total_tasks,passed_at_1,pass_at_1_pct,git_commit,cpu_model,cpu_cores
+2026-04-21T11:30:12.905102+00:00,2.4-C12-CLOUD-164,2.4-C12-CLOUD-164,3lm,164,True,True,False,True,164,33.503,24.7676,21.6711,25.0166,67.0503,71.0654,0.19,5.9,231.180879,238.006272,164,152,92.683,b44b33f4,x86_64,12

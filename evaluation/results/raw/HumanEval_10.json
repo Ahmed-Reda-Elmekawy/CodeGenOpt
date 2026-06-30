@@ -1,0 +1,22 @@
+{
+  "task_id": "HumanEval/10",
+  "prompt": "\n\ndef is_palindrome(string: str) -> bool:\n    \"\"\" Test if given string is a palindrome \"\"\"\n    return string == string[::-1]\n\n\ndef make_palindrome(string: str) -> str:\n    \"\"\" Find the shortest palindrome that begins with a supplied string.\n    Algorithm idea is simple:\n    - Find the longest postfix of supplied string that is a palindrome.\n    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.\n    >>> make_palindrome('')\n    ''\n    >>> make_palindrome('cat')\n    'catac'\n    >>> make_palindrome('cata')\n    'catac'\n    \"\"\"\n",
+  "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('') == ''\n    assert candidate('x') == 'x'\n    assert candidate('xyz') == 'xyzyx'\n    assert candidate('xyx') == 'xyx'\n    assert candidate('jerry') == 'jerryrrej'\n",
+  "attempts": [
+    {
+      "attempt_idx": 0,
+      "duration_sec": 13.8448,
+      "resource_stats": {
+        "samples": 69,
+        "cpu_percent_avg": 1.59,
+        "cpu_percent_peak": 10.0,
+        "mem_rss_avg_bytes": 208338944,
+        "mem_rss_peak_bytes": 208338944
+      },
+      "final_code": "def generate_json(spec: dict) -> str:\n    \"\"\"\n    Generate JSON string from structured specification.\n    \n    Args:\n        spec (dict): Function specification in JSON format containing function details.\n        \n    Returns:\n        str: Generated JSON string representation of the specification.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If spec contains invalid structure or missing required fields.\n        \n    Examples:\n        >>> generate_json({\"name\": \"test\", \"parameters\": []})\n        '{\"name\": \"test\", \"parameters\": []}'\n        \n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        '{\"error\": \"Failed to generate JSON after retries\"}'\n        \n        >>> generate_json(None)\n        Traceback (most recent call last):\n            ...\n        TypeError: spec must be a dictionary\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    import json\n    try:\n        return json.dumps(spec)\n    except (TypeError, ValueError) as e:\n        raise ValueError(f\"Invalid spec structure: {str(e)}\")",
+      "syntax_ok": true,
+      "passed": true,
+      "error": null
+    }
+  ]
+}

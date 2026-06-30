@@ -1,0 +1,22 @@
+{
+  "task_id": "HumanEval/21",
+  "prompt": "from typing import List\n\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n    \"\"\" Given list of numbers (of at least two elements), apply a linear transform to that list,\n    such that the smallest number will become 0 and the largest will become 1\n    >>> rescale_to_unit([1.0, 2.0, 3.0, 4.0, 5.0])\n    [0.0, 0.25, 0.5, 0.75, 1.0]\n    \"\"\"\n",
+  "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([2.0, 49.9]) == [0.0, 1.0]\n    assert candidate([100.0, 49.9]) == [1.0, 0.0]\n    assert candidate([1.0, 2.0, 3.0, 4.0, 5.0]) == [0.0, 0.25, 0.5, 0.75, 1.0]\n    assert candidate([2.0, 1.0, 5.0, 3.0, 4.0]) == [0.25, 0.0, 1.0, 0.5, 0.75]\n    assert candidate([12.0, 11.0, 15.0, 13.0, 14.0]) == [0.25, 0.0, 1.0, 0.5, 0.75]\n",
+  "attempts": [
+    {
+      "attempt_idx": 0,
+      "duration_sec": 29.4922,
+      "resource_stats": {
+        "samples": 147,
+        "cpu_percent_avg": 1.36,
+        "cpu_percent_peak": 10.0,
+        "mem_rss_avg_bytes": 208470016,
+        "mem_rss_peak_bytes": 208470016
+      },
+      "final_code": "def generate_json(spec):\n    \"\"\"\n    Generate a JSON string from a structured specification.\n    \n    Args:\n        spec (dict): A dictionary containing the function specification with keys:\n                    - name (str): The function name\n                    - parameters (list): List of parameter dictionaries\n                    - return_type (str): The return type description\n                    \n    Returns:\n        str: A JSON string representation of the specification\n        \n    Raises:\n        TypeError: If spec is not a dictionary or contains invalid types\n        ValueError: If required keys are missing from the specification\n        \n    Examples:\n        >>> generate_json({\n        ...     \"name\": \"example_func\",\n        ...     \"parameters\": [{\"name\": \"x\", \"type\": \"int\"}, {\"name\": \"y\", \"type\": \"str\"}],\n        ...     \"return_type\": \"bool\"\n        ... })\n        '{\"name\": \"example_func\", \"parameters\": [{\"name\": \"x\", \"type\": \"int\"}, {\"name\": \"y\", \"type\": \"str\"}], \"return_type\": \"bool\"}'\n        \n        >>> generate_json({\n        ...     \"name\": \"simple_func\",\n        ...     \"parameters\": [],\n        ...     \"return_type\": \"None\"\n        ... })\n        '{\"name\": \"simple_func\", \"parameters\": [], \"return_type\": \"None\"}'\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    required_keys = [\"name\", \"parameters\", \"return_type\"]\n    for key in required_keys:\n        if key not in spec:\n            raise ValueError(f\"Missing required key: {key}\")\n    \n    if not isinstance(spec[\"name\"], str):\n        raise TypeError(\"name must be a string\")\n    \n    if not isinstance(spec[\"parameters\"], list):\n        raise TypeError(\"parameters must be a list\")\n    \n    if not isinstance(spec[\"return_type\"], str):\n        raise TypeError(\"return_type must be a string\")\n    \n    for param in spec[\"parameters\"]:\n        if not isinstance(param, dict):\n            raise TypeError(\"Each parameter must be a dictionary\")\n        if \"name\" not in param or \"type\" not in param:\n            raise ValueError(\"Each parameter must have 'name' and 'type' keys\")\n    \n    import json\n    return json.dumps(spec, separators=(',', ': '))",
+      "syntax_ok": true,
+      "passed": true,
+      "error": null
+    }
+  ]
+}

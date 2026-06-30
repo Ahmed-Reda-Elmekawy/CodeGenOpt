@@ -1,0 +1,22 @@
+{
+  "task_id": "HumanEval/47",
+  "prompt": "\n\ndef median(l: list):\n    \"\"\"Return median of elements in the list l.\n    >>> median([3, 1, 2, 4, 5])\n    3\n    >>> median([-10, 4, 6, 1000, 10, 20])\n    15.0\n    \"\"\"\n",
+  "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate([3, 1, 2, 4, 5]) == 3\n    assert candidate([-10, 4, 6, 1000, 10, 20]) == 8.0\n    assert candidate([5]) == 5\n    assert candidate([6, 5]) == 5.5\n    assert candidate([8, 1, 3, 9, 9, 2, 7]) == 7 \n\n",
+  "attempts": [
+    {
+      "attempt_idx": 0,
+      "duration_sec": 24.6844,
+      "resource_stats": {
+        "samples": 123,
+        "cpu_percent_avg": 1.06,
+        "cpu_percent_peak": 10.0,
+        "mem_rss_avg_bytes": 208732160,
+        "mem_rss_peak_bytes": 208732160
+      },
+      "final_code": "def generate_json(spec: dict) -> str:\n    \"\"\"\n    Generate JSON string from structured specification.\n    \n    Args:\n        spec (dict): Function specification in JSON format containing function details.\n        \n    Returns:\n        str: Valid JSON string representation of the specification.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If spec contains invalid JSON structure.\n        \n    Examples:\n        >>> generate_json({\"name\": \"test\", \"parameters\": []})\n        '{\"name\": \"test\", \"parameters\": []}'\n        \n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        '{\"error\": \"Failed to generate JSON after retries\"}'\n        \n        >>> generate_json({})\n        '{}'\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    try:\n        import json\n        return json.dumps(spec)\n    except (TypeError, ValueError) as e:\n        raise ValueError(f\"Invalid JSON structure: {str(e)}\")",
+      "syntax_ok": true,
+      "passed": true,
+      "error": null
+    }
+  ]
+}

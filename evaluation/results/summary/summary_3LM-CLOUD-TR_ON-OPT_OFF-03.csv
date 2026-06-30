@@ -1,0 +1,2 @@
+timestamp,experiment_name,experiment_id,dataset,num_tasks,use_translator,use_optimizer,shared_llm,cloud_llm,latency_count,latency_mean,latency_median,latency_stdev,latency_p50,latency_p90,latency_p95,cpu_avg,cpu_peak,mem_avg_mb,mem_peak_mb,total_tasks,passed_at_1,pass_at_1_pct,git_commit,cpu_model,cpu_cores
+2026-04-18T23:04:55.632998+00:00,3LM-CLOUD-TR_ON-OPT_OFF-03,3LM-CLOUD-TR_ON-OPT_OFF-03,3lm,3,True,False,False,True,3,32.0275,27.0249,11.5837,27.0249,27.0249,27.0249,0.19,4.0,201.528426,201.609216,3,0,0.0,a4c762e0,x86_64,12

@@ -1,0 +1,22 @@
+{
+  "task_id": "HumanEval/24",
+  "prompt": "\n\ndef largest_divisor(n: int) -> int:\n    \"\"\" For a given number n, find the largest number that divides n evenly, smaller than n\n    >>> largest_divisor(15)\n    5\n    \"\"\"\n",
+  "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate(3) == 1\n    assert candidate(7) == 1\n    assert candidate(10) == 5\n    assert candidate(100) == 50\n    assert candidate(49) == 7\n",
+  "attempts": [
+    {
+      "attempt_idx": 0,
+      "duration_sec": 19.8542,
+      "resource_stats": {
+        "samples": 99,
+        "cpu_percent_avg": 0.96,
+        "cpu_percent_peak": 5.0,
+        "mem_rss_avg_bytes": 208601088,
+        "mem_rss_peak_bytes": 208601088
+      },
+      "final_code": "def generate_json(spec):\n    \"\"\"\n    Generate a JSON string from a structured specification.\n    \n    Args:\n        spec (dict): A dictionary containing the specification for JSON generation.\n                    Expected to have keys that define the structure and content\n                    of the desired JSON output.\n    \n    Returns:\n        str: A valid JSON string representation of the input specification.\n    \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If the specification cannot be converted to valid JSON.\n    \n    Examples:\n        >>> generate_json({\"name\": \"John\", \"age\": 30})\n        '{\"name\": \"John\", \"age\": 30}'\n        \n        >>> generate_json({\"items\": [1, 2, 3], \"count\": null})\n        '{\"items\": [1, 2, 3], \"count\": null}'\n        \n        >>> generate_json({})\n        '{}'\n    \"\"\"\n    import json\n    \n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    try:\n        return json.dumps(spec)\n    except (TypeError, ValueError) as e:\n        raise ValueError(f\"Failed to generate JSON: {str(e)}\")",
+      "syntax_ok": true,
+      "passed": true,
+      "error": null
+    }
+  ]
+}

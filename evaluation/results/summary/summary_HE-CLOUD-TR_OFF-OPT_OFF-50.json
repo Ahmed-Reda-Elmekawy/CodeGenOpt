@@ -1,0 +1,1820 @@
+{
+  "summary": {
+    "timestamp": "2026-04-19T02:08:41.018060+00:00",
+    "experiment_name": "HE-CLOUD-TR_OFF-OPT_OFF-50",
+    "experiment_id": "HE-CLOUD-TR_OFF-OPT_OFF-50",
+    "test_config": {
+      "dataset": "humaneval",
+      "sample_indices": null,
+      "num_tasks": 50,
+      "attempts_per_task": 1,
+      "use_translator": false,
+      "use_optimizer": false,
+      "shared_llm": false,
+      "cloud_llm": true
+    },
+    "model_config": null,
+    "latency": {
+      "count": 50,
+      "mean": 18.686,
+      "median": 15.2615,
+      "stdev": 14.5527,
+      "p50": 16.0118,
+      "p90": 36.0308,
+      "p95": 48.0356
+    },
+    "resource": {
+      "cpu_percent_avg_mean": 0.24,
+      "cpu_percent_peak_max": 4.0,
+      "mem_rss_avg_mean_bytes": 190691015,
+      "mem_rss_peak_max_bytes": 190926848
+    },
+    "pass_stats": {
+      "total_tasks": 50,
+      "passed_at_1": 0,
+      "pass_at_1_pct": 0.0
+    },
+    "env_info": {
+      "timestamp": "2026-04-19T02:08:41.018048Z",
+      "git_commit": "7cd822de39b1b275f173041530e54999c7664732",
+      "git_branch": "eval-run/HE-CLOUD-TR_OFF-OPT_ON-50_20260419_035253",
+      "cpu_model": "x86_64",
+      "cpu_cores": 12,
+      "dependencies": [
+        "autoflake==2.3.1",
+        "autopep8==2.3.2",
+        "black==25.9.0",
+        "dirtyjson==1.0.8",
+        "fire==0.7.1",
+        "isort==7.0.0",
+        "json_repair==0.52.3",
+        "langchain==1.0.2",
+        "langchain_core==1.0.1",
+        "langchain_ollama==1.0.0",
+        "matplotlib==3.10.7",
+        "mypy==1.18.2",
+        "numpy==2.3.4",
+        "psutil==7.1.0",
+        "pydantic==2.12.3",
+        "pytest==8.4.2",
+        "pyupgrade==3.20.0",
+        "PyYAML==6.0.2",
+        "PyYAML==6.0.3",
+        "setuptools==80.9.0",
+        "tqdm==4.67.1"
+      ]
+    }
+  },
+  "results": [
+    {
+      "task_id": "HumanEval/0",
+      "task_index": 0,
+      "prompt": "from typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.3) == True\n    assert candidate([1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.05) == False\n    assert candidate([1.0, 2.0, 5.9, 4.0, 5.0], 0.95) == True\n    assert candidate([1.0, 2.0, 5.9, 4.0, 5.0], 0.8) == False\n    assert candidate([1.0, 2.0, 3.0, 4.0, 5.0, 2.0], 0.1) == True\n    assert candidate([1.1, 2.2, 3.1, 4.1, 5.1], 1.0) == True\n    assert candidate([1.1, 2.2, 3.1, 4.1, 5.1], 0.5) == False\n\n",
+      "canonical_solution": "    for idx, elem in enumerate(numbers):\n        for idx2, elem2 in enumerate(numbers):\n            if idx != idx2:\n                distance = abs(elem - elem2)\n                if distance < threshold:\n                    return True\n\n    return False\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 16.0137,
+          "total_pipeline_time_sec": 16.01387357711792,
+          "resource_stats": {
+            "samples": 32,
+            "cpu_percent_avg": 0.19,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190270208,
+            "mem_rss_peak_bytes": 190324736
+          },
+          "final_code": "```python\ndef has_close_elements(numbers: list[float], threshold: float) -> bool:\n    \"\"\"\n    Check if in given list of numbers, are any two numbers closer to each other than given threshold.\n    \n    Constraints:\n    - The function should handle empty lists gracefully\n    - The function should handle lists with only one element\n    - The threshold can be zero or positive\n    - The function should compare absolute differences between all pairs of numbers\n    - The function should return False for empty list or single element list\n    \n    Examples:\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    >>> has_close_elements([], 0.1)\n    False\n    >>> has_close_elements([5.0], 0.1)\n    False\n    \n    Exceptions:\n    - None\n    \"\"\"\n    # Handle empty list or single element list\n    if len(numbers) <= 1:\n        return False\n    \n    # Compare all pairs of numbers\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if abs(numbers[i] - numbers[j]) < threshold:\n                return True\n    \n    return False\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/1",
+      "task_index": 1,
+      "prompt": "from typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(())', '(()())']\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('(()()) ((())) () ((())()())') == [\n        '(()())', '((()))', '()', '((())()())'\n    ]\n    assert candidate('() (()) ((())) (((())))') == [\n        '()', '(())', '((()))', '(((())))'\n    ]\n    assert candidate('(()(())((())))') == [\n        '(()(())((())))'\n    ]\n    assert candidate('( ) (( )) (( )( ))') == ['()', '(())', '(()())']\n",
+      "canonical_solution": "    result = []\n    current_string = []\n    current_depth = 0\n\n    for c in paren_string:\n        if c == '(':\n            current_depth += 1\n            current_string.append(c)\n        elif c == ')':\n            current_depth -= 1\n            current_string.append(c)\n\n            if current_depth == 0:\n                result.append(''.join(current_string))\n                current_string.clear()\n\n    return result\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 20.517,
+          "total_pipeline_time_sec": 20.517134428024292,
+          "resource_stats": {
+            "samples": 41,
+            "cpu_percent_avg": 0.1,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190350510,
+            "mem_rss_peak_bytes": 190357504
+          },
+          "final_code": "```python\ndef separate_paren_groups(paren_string: str) -> list[str]:\n    \"\"\"\n    Separates a string containing multiple groups of nested parentheses into individual balanced groups and returns them as a list of strings.\n    \n    Constraints:\n    - Input string contains multiple groups of nested parentheses\n    - Groups are balanced (each opening parenthesis is properly closed)\n    - Groups are not nested within each other\n    - Spaces in the input string should be ignored\n    - Each returned group should be a complete balanced parenthesis group\n    \n    Examples:\n    >>> separate_paren_groups({\"paren_string\": \"( ) (( )) (( )( ))\"})\n    ['()', '(())', '(()())']\n    \n    Exceptions:\n    None\n    \"\"\"\n    # Remove spaces from the input string\n    paren_string = paren_string.replace(\" \", \"\")\n    \n    result = []\n    current_group = \"\"\n    balance = 0\n    \n    for char in paren_string:\n        if char == '(':\n            current_group += char\n            balance += 1\n        elif char == ')':\n            current_group += char\n            balance -= 1\n            \n            # When balance reaches zero, we have a complete group\n            if balance == 0:\n                result.append(current_group)\n                current_group = \"\"\n    \n    return result\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/2",
+      "task_index": 2,
+      "prompt": "\n\ndef truncate_number(number: float) -> float:\n    \"\"\" Given a positive floating point number, it can be decomposed into\n    and integer part (largest integer smaller than given number) and decimals\n    (leftover part always smaller than 1).\n\n    Return the decimal part of the number.\n    >>> truncate_number(3.5)\n    0.5\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate(3.5) == 0.5\n    assert abs(candidate(1.33) - 0.33) < 1e-6\n    assert abs(candidate(123.456) - 0.456) < 1e-6\n",
+      "canonical_solution": "    return number % 1.0\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 16.5148,
+          "total_pipeline_time_sec": 16.514930486679077,
+          "resource_stats": {
+            "samples": 33,
+            "cpu_percent_avg": 0.12,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190374012,
+            "mem_rss_peak_bytes": 190398464
+          },
+          "final_code": "```python\ndef truncate_number(number: float) -> float:\n    \"\"\"\n    Given a positive floating point number, decompose it into an integer part (largest integer smaller than given number) and decimals (leftover part always smaller than 1). Return the decimal part of the number.\n    \n    Constraints:\n    - The input must be a positive floating point number\n    - The function should return only the decimal part of the number\n    - The decimal part should always be less than 1\n    - The integer part should be the largest integer smaller than the given number\n    \n    Examples:\n    >>> truncate_number({\"number\": 3.5})\n    0.5\n    >>> truncate_number({\"number\": 4.75})\n    0.75\n    >>> truncate_number({\"number\": 10.0})\n    0.0\n    >>> truncate_number({\"number\": 0.99})\n    0.99\n    \n    Exceptions:\n    - None specified\n    \"\"\"\n    # Get the integer part using floor division\n    integer_part = int(number)\n    \n    # Calculate the decimal part\n    decimal_part = number - integer_part\n    \n    return decimal_part\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/3",
+      "task_index": 3,
+      "prompt": "from typing import List\n\n\ndef below_zero(operations: List[int]) -> bool:\n    \"\"\" You're given a list of deposit and withdrawal operations on a bank account that starts with\n    zero balance. Your task is to detect if at any point the balance of account fallls below zero, and\n    at that point function should return True. Otherwise it should return False.\n    >>> below_zero([1, 2, 3])\n    False\n    >>> below_zero([1, 2, -4, 5])\n    True\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([]) == False\n    assert candidate([1, 2, -3, 1, 2, -3]) == False\n    assert candidate([1, 2, -4, 5, 6]) == True\n    assert candidate([1, -1, 2, -2, 5, -5, 4, -4]) == False\n    assert candidate([1, -1, 2, -2, 5, -5, 4, -5]) == True\n    assert candidate([1, -2, 2, -2, 5, -5, 4, -4]) == True\n",
+      "canonical_solution": "    balance = 0\n\n    for op in operations:\n        balance += op\n        if balance < 0:\n            return True\n\n    return False\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 30.0236,
+          "total_pipeline_time_sec": 30.023717403411865,
+          "resource_stats": {
+            "samples": 60,
+            "cpu_percent_avg": 0.13,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190424883,
+            "mem_rss_peak_bytes": 190435328
+          },
+          "final_code": "```python\ndef below_zero(operations: list[int]) -> bool:\n    \"\"\"\n    Detects if the balance of a bank account falls below zero during a sequence of deposit and withdrawal operations starting from zero balance.\n\n    Constraints:\n    - The account starts with a balance of zero\n    - Positive integers represent deposits\n    - Negative integers represent withdrawals\n    - The function must return True immediately when balance goes below zero\n    - The function must return False if balance never goes below zero\n    - Operations are processed in the order they appear in the list\n\n    Examples:\n    >>> below_zero([1, 2, 3])\n    False\n    >>> below_zero([1, 2, -4, 5])\n    True\n\n    Exceptions:\n    None\n    \"\"\"\n    balance = 0\n    for operation in operations:\n        balance += operation\n        if balance < 0:\n            return True\n    return False\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/4",
+      "task_index": 4,
+      "prompt": "from typing import List\n\n\ndef mean_absolute_deviation(numbers: List[float]) -> float:\n    \"\"\" For a given list of input numbers, calculate Mean Absolute Deviation\n    around the mean of this dataset.\n    Mean Absolute Deviation is the average absolute difference between each\n    element and a centerpoint (mean in this case):\n    MAD = average | x - x_mean |\n    >>> mean_absolute_deviation([1.0, 2.0, 3.0, 4.0])\n    1.0\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert abs(candidate([1.0, 2.0, 3.0]) - 2.0/3.0) < 1e-6\n    assert abs(candidate([1.0, 2.0, 3.0, 4.0]) - 1.0) < 1e-6\n    assert abs(candidate([1.0, 2.0, 3.0, 4.0, 5.0]) - 6.0/5.0) < 1e-6\n\n",
+      "canonical_solution": "    mean = sum(numbers) / len(numbers)\n    return sum(abs(x - mean) for x in numbers) / len(numbers)\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 10.0098,
+          "total_pipeline_time_sec": 10.009944677352905,
+          "resource_stats": {
+            "samples": 20,
+            "cpu_percent_avg": 0.3,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190437785,
+            "mem_rss_peak_bytes": 190439424
+          },
+          "final_code": "```python\nfrom typing import List\n\ndef mean_absolute_deviation(numbers: List[float]) -> float:\n    \"\"\"\n    Calculate the Mean Absolute Deviation (MAD) of a list of numbers. MAD is the average of the absolute differences between each element and the mean of the dataset.\n    \n    Constraints:\n    - Input must be a list of floats\n    - List must contain at least one element\n    - Output should be a float representing the mean absolute deviation\n    \n    Examples:\n    >>> mean_absolute_deviation([1.0, 2.0, 3.0, 4.0])\n    1.0\n    >>> mean_absolute_deviation([2.0, 4.0, 6.0, 8.0])\n    2.0\n    >>> mean_absolute_deviation([1.0])\n    0.0\n    \n    Exceptions:\n    - ZeroDivisionError: The input list is empty (division by zero when calculating mean)\n    - TypeError: Input is not a list or contains non-numeric elements\n    \"\"\"\n    if not isinstance(numbers, list):\n        raise TypeError(\"Input must be a list\")\n    \n    if len(numbers) == 0:\n        raise ZeroDivisionError(\"The input list is empty (division by zero when calculating mean)\")\n    \n    for num in numbers:\n        if not isinstance(num, (int, float)):\n            raise TypeError(\"Input contains non-numeric elements\")\n    \n    # Calculate the mean\n    mean = sum(numbers) / len(numbers)\n    \n    # Calculate the absolute deviations from the mean\n    absolute_deviations = [abs(x - mean) for x in numbers]\n    \n    # Return the mean of the absolute deviations\n    return sum(absolute_deviations) / len(absolute_deviations)\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/5",
+      "task_index": 5,
+      "prompt": "from typing import List\n\n\ndef intersperse(numbers: List[int], delimeter: int) -> List[int]:\n    \"\"\" Insert a number 'delimeter' between every two consecutive elements of input list `numbers'\n    >>> intersperse([], 4)\n    []\n    >>> intersperse([1, 2, 3], 4)\n    [1, 4, 2, 4, 3]\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([], 7) == []\n    assert candidate([5, 6, 3, 2], 8) == [5, 8, 6, 8, 3, 8, 2]\n    assert candidate([2, 2, 2], 2) == [2, 2, 2, 2, 2]\n",
+      "canonical_solution": "    if not numbers:\n        return []\n\n    result = []\n\n    for n in numbers[:-1]:\n        result.append(n)\n        result.append(delimeter)\n\n    result.append(numbers[-1])\n\n    return result\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 8.509,
+          "total_pipeline_time_sec": 8.509162425994873,
+          "resource_stats": {
+            "samples": 17,
+            "cpu_percent_avg": 0.35,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190450507,
+            "mem_rss_peak_bytes": 190451712
+          },
+          "final_code": "```python\ndef intersperse(numbers: list[int], delimeter: int) -> list[int]:\n    \"\"\"\n    Insert a number 'delimeter' between every two consecutive elements of input list `numbers`\n    \n    Constraints:\n    - If the input list is empty, return an empty list\n    - The delimeter should be inserted between each pair of consecutive elements\n    - The function should preserve the order of original elements\n    - The function should work with any integer values including negative numbers\n    \n    Examples:\n    >>> intersperse([], 4)\n    []\n    >>> intersperse([1, 2, 3], 4)\n    [1, 4, 2, 4, 3]\n    >>> intersperse([5], 0)\n    [5]\n    >>> intersperse([-1, -2, -3], -9)\n    [-1, -9, -2, -9, -3]\n    \n    Exceptions:\n    - None expected\n    \"\"\"\n    if not numbers:\n        return []\n    \n    result = []\n    for i, num in enumerate(numbers):\n        result.append(num)\n        # Add delimiter after each element except the last one\n        if i < len(numbers) - 1:\n            result.append(delimeter)\n    \n    return result\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/6",
+      "task_index": 6,
+      "prompt": "from typing import List\n\n\ndef parse_nested_parens(paren_string: str) -> List[int]:\n    \"\"\" Input to this function is a string represented multiple groups for nested parentheses separated by spaces.\n    For each of the group, output the deepest level of nesting of parentheses.\n    E.g. (()()) has maximum two levels of nesting while ((())) has three.\n\n    >>> parse_nested_parens('(()()) ((())) () ((())()())')\n    [2, 3, 1, 3]\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('(()()) ((())) () ((())()())') == [2, 3, 1, 3]\n    assert candidate('() (()) ((())) (((())))') == [1, 2, 3, 4]\n    assert candidate('(()(())((())))') == [4]\n",
+      "canonical_solution": "    def parse_paren_group(s):\n        depth = 0\n        max_depth = 0\n        for c in s:\n            if c == '(':\n                depth += 1\n                max_depth = max(depth, max_depth)\n            else:\n                depth -= 1\n\n        return max_depth\n\n    return [parse_paren_group(x) for x in paren_string.split(' ') if x]\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 16.5147,
+          "total_pipeline_time_sec": 16.514812231063843,
+          "resource_stats": {
+            "samples": 33,
+            "cpu_percent_avg": 0.24,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190460400,
+            "mem_rss_peak_bytes": 190468096
+          },
+          "final_code": "```python\nfrom typing import List\n\ndef parse_nested_parens(paren_string: str) -> List[int]:\n    \"\"\"\n    This function takes a string containing multiple groups of nested parentheses separated by spaces and returns a list of integers representing the maximum nesting depth for each group.\n    \n    Constraints:\n    - Input string contains only parentheses characters '(' and ')' and spaces\n    - Each group of parentheses is well-formed (balanced)\n    - Groups are separated by single spaces\n    - Empty groups are not allowed\n    - Return type must be a List[int]\n    \n    Examples:\n    >>> parse_nested_parens(\"(()()) ((())) () ((())()())\")\n    [2, 3, 1, 3]\n    >>> parse_nested_parens(\"() (()) ((()))\")\n    [1, 2, 3]\n    >>> parse_nested_parens(\"(((()))))\")\n    [5]\n    \n    Exceptions:\n    - None specified\n    \"\"\"\n    if not paren_string:\n        return []\n        \n    groups = paren_string.split()\n    result = []\n    \n    for group in groups:\n        max_depth = 0\n        current_depth = 0\n        \n        for char in group:\n            if char == '(':\n                current_depth += 1\n                max_depth = max(max_depth, current_depth)\n            elif char == ')':\n                current_depth -= 1\n                \n        result.append(max_depth)\n        \n    return result\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/7",
+      "task_index": 7,
+      "prompt": "from typing import List\n\n\ndef filter_by_substring(strings: List[str], substring: str) -> List[str]:\n    \"\"\" Filter an input list of strings only for ones that contain given substring\n    >>> filter_by_substring([], 'a')\n    []\n    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')\n    ['abc', 'bacd', 'array']\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([], 'john') == []\n    assert candidate(['xxx', 'asd', 'xxy', 'john doe', 'xxxAAA', 'xxx'], 'xxx') == ['xxx', 'xxxAAA', 'xxx']\n    assert candidate(['xxx', 'asd', 'aaaxxy', 'john doe', 'xxxAAA', 'xxx'], 'xx') == ['xxx', 'aaaxxy', 'xxxAAA', 'xxx']\n    assert candidate(['grunt', 'trumpet', 'prune', 'gruesome'], 'run') == ['grunt', 'prune']\n",
+      "canonical_solution": "    return [x for x in strings if substring in x]\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 11.0103,
+          "total_pipeline_time_sec": 11.01043176651001,
+          "resource_stats": {
+            "samples": 22,
+            "cpu_percent_avg": 0.18,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190479266,
+            "mem_rss_peak_bytes": 190484480
+          },
+          "final_code": "```python\ndef filter_by_substring(strings: list[str], substring: str) -> list[str]:\n    \"\"\"\n    Filter an input list of strings only for ones that contain given substring\n    \n    Constraints:\n    - Return an empty list if input list is empty\n    - Return only strings that contain the specified substring\n    - Substring matching should be case-sensitive\n    - Order of results should match the order of input strings\n    \n    Examples:\n    >>> filter_by_substring([], \"a\")\n    []\n    >>> filter_by_substring([\"abc\", \"bacd\", \"cde\", \"array\"], \"a\")\n    ['abc', 'bacd', 'array']\n    \n    Exceptions:\n    - None\n    \"\"\"\n    if not strings:\n        return []\n    \n    result = []\n    for string in strings:\n        if substring in string:\n            result.append(string)\n    \n    return result\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/8",
+      "task_index": 8,
+      "prompt": "from typing import List, Tuple\n\n\ndef sum_product(numbers: List[int]) -> Tuple[int, int]:\n    \"\"\" For a given list of integers, return a tuple consisting of a sum and a product of all the integers in a list.\n    Empty sum should be equal to 0 and empty product should be equal to 1.\n    >>> sum_product([])\n    (0, 1)\n    >>> sum_product([1, 2, 3, 4])\n    (10, 24)\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([]) == (0, 1)\n    assert candidate([1, 1, 1]) == (3, 1)\n    assert candidate([100, 0]) == (100, 0)\n    assert candidate([3, 5, 7]) == (3 + 5 + 7, 3 * 5 * 7)\n    assert candidate([10]) == (10, 10)\n",
+      "canonical_solution": "    sum_value = 0\n    prod_value = 1\n\n    for n in numbers:\n        sum_value += n\n        prod_value *= n\n    return sum_value, prod_value\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 5.5063,
+          "total_pipeline_time_sec": 5.50638747215271,
+          "resource_stats": {
+            "samples": 11,
+            "cpu_percent_avg": 0.36,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190493044,
+            "mem_rss_peak_bytes": 190500864
+          },
+          "final_code": "```python\nfrom typing import List, Tuple\n\ndef sum_product(numbers: List[int]) -> Tuple[int, int]:\n    \"\"\"\n    For a given list of integers, return a tuple consisting of a sum and a product of all the integers in a list.\n    \n    Constraints:\n    - Empty sum should be equal to 0\n    - Empty product should be equal to 1\n    - Input is a list of integers\n    - Output is a tuple of two integers (sum, product)\n    \n    Examples:\n    >>> sum_product([])\n    (0, 1)\n    >>> sum_product([1, 2, 3, 4])\n    (10, 24)\n    \"\"\"\n    if not numbers:\n        return (0, 1)\n    \n    total_sum = sum(numbers)\n    total_product = 1\n    for num in numbers:\n        total_product *= num\n    \n    return (total_sum, total_product)\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/9",
+      "task_index": 9,
+      "prompt": "from typing import List, Tuple\n\n\ndef rolling_max(numbers: List[int]) -> List[int]:\n    \"\"\" From a given list of integers, generate a list of rolling maximum element found until given moment\n    in the sequence.\n    >>> rolling_max([1, 2, 3, 2, 3, 4, 2])\n    [1, 2, 3, 3, 3, 4, 4]\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([]) == []\n    assert candidate([1, 2, 3, 4]) == [1, 2, 3, 4]\n    assert candidate([4, 3, 2, 1]) == [4, 4, 4, 4]\n    assert candidate([3, 2, 3, 100, 3]) == [3, 3, 3, 100, 100]\n",
+      "canonical_solution": "    running_max = None\n    result = []\n\n    for n in numbers:\n        if running_max is None:\n            running_max = n\n        else:\n            running_max = max(running_max, n)\n\n        result.append(running_max)\n\n    return result\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 23.5212,
+          "total_pipeline_time_sec": 23.52129817008972,
+          "resource_stats": {
+            "samples": 47,
+            "cpu_percent_avg": 0.09,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190513064,
+            "mem_rss_peak_bytes": 190517248
+          },
+          "final_code": "```python\ndef rolling_max(numbers: list[int]) -> list[int]:\n    \"\"\"\n    From a given list of integers, generate a list of rolling maximum element found until given moment in the sequence.\n    \n    Constraints:\n    - Input must be a list of integers\n    - Output list length equals input list length\n    - Each element in output represents the maximum value encountered up to that position in the input\n    - For empty input list, return empty list\n    \n    Examples:\n    >>> rolling_max([1, 2, 3, 2, 3, 4, 2])\n    [1, 2, 3, 3, 3, 4, 4]\n    >>> rolling_max([])\n    []\n    >>> rolling_max([5])\n    [5]\n    >>> rolling_max([3, 1, 2])\n    [3, 3, 3]\n    \"\"\"\n    if not numbers:\n        return []\n    \n    result = []\n    current_max = numbers[0]\n    \n    for num in numbers:\n        if num > current_max:\n            current_max = num\n        result.append(current_max)\n    \n    return result\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/10",
+      "task_index": 10,
+      "prompt": "\n\ndef is_palindrome(string: str) -> bool:\n    \"\"\" Test if given string is a palindrome \"\"\"\n    return string == string[::-1]\n\n\ndef make_palindrome(string: str) -> str:\n    \"\"\" Find the shortest palindrome that begins with a supplied string.\n    Algorithm idea is simple:\n    - Find the longest postfix of supplied string that is a palindrome.\n    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.\n    >>> make_palindrome('')\n    ''\n    >>> make_palindrome('cat')\n    'catac'\n    >>> make_palindrome('cata')\n    'catac'\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('') == ''\n    assert candidate('x') == 'x'\n    assert candidate('xyz') == 'xyzyx'\n    assert candidate('xyx') == 'xyx'\n    assert candidate('jerry') == 'jerryrrej'\n",
+      "canonical_solution": "    if not string:\n        return ''\n\n    beginning_of_suffix = 0\n\n    while not is_palindrome(string[beginning_of_suffix:]):\n        beginning_of_suffix += 1\n\n    return string + string[:beginning_of_suffix][::-1]\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 35.5326,
+          "total_pipeline_time_sec": 35.53273057937622,
+          "resource_stats": {
+            "samples": 71,
+            "cpu_percent_avg": 0.11,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190524574,
+            "mem_rss_peak_bytes": 190533632
+          },
+          "final_code": "```python\ndef make_palindrome(string: str) -> str:\n    \"\"\"\n    Find the shortest palindrome that begins with a supplied string by finding the longest palindromic suffix and appending the reverse of the remaining prefix.\n    \n    Constraints:\n    - Input string can be empty\n    - Input string contains only printable ASCII characters\n    - Output must be a palindrome that starts with the input string\n    - Algorithm should find the minimal length palindrome\n    \n    Examples:\n    >>> make_palindrome(\"\")\n    ''\n    >>> make_palindrome(\"cat\")\n    'catac'\n    >>> make_palindrome(\"cata\")\n    'catac'\n    \n    Exceptions:\n    - None\n    \"\"\"\n    if not string:\n        return \"\"\n    \n    # Find the longest palindromic suffix\n    for i in range(len(string)):\n        # Check if string[i:] is a palindrome\n        suffix = string[i:]\n        if suffix == suffix[::-1]:\n            # Found the longest palindromic suffix\n            # Append the reverse of the prefix to make palindrome\n            prefix = string[:i]\n            return string + prefix[::-1]\n    \n    # If no palindromic suffix found (shouldn't happen for valid input)\n    return string + string[:-1][::-1]\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/11",
+      "task_index": 11,
+      "prompt": "from typing import List\n\n\ndef string_xor(a: str, b: str) -> str:\n    \"\"\" Input are two strings a and b consisting only of 1s and 0s.\n    Perform binary XOR on these inputs and return result also as a string.\n    >>> string_xor('010', '110')\n    '100'\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('111000', '101010') == '010010'\n    assert candidate('1', '1') == '0'\n    assert candidate('0101', '0000') == '0101'\n",
+      "canonical_solution": "    def xor(i, j):\n        if i == j:\n            return '0'\n        else:\n            return '1'\n\n    return ''.join(xor(x, y) for x, y in zip(a, b))\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 52.0476,
+          "total_pipeline_time_sec": 52.047699213027954,
+          "resource_stats": {
+            "samples": 104,
+            "cpu_percent_avg": 0.08,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190547456,
+            "mem_rss_peak_bytes": 190558208
+          },
+          "final_code": "```python\ndef string_xor(a: str, b: str) -> str:\n    \"\"\"\n    Perform binary XOR operation on two binary strings and return the result as a binary string.\n\n    Constraints:\n    - Input strings a and b must contain only '0' and '1' characters\n    - Input strings a and b must have the same length\n    - Return value is a string containing only '0' and '1' characters\n\n    Examples:\n    >>> string_xor(\"010\", \"110\")\n    '100'\n    >>> string_xor(\"1010\", \"0101\")\n    '1111'\n    >>> string_xor(\"0000\", \"1111\")\n    '1111'\n    >>> string_xor(\"1111\", \"1111\")\n    '0000'\n\n    Exceptions:\n    - ValueError: If input strings contain characters other than '0' and '1'\n    - ValueError: If input strings have different lengths\n    \"\"\"\n    if len(a) != len(b):\n        raise ValueError(\"Input strings have different lengths\")\n    \n    if not all(c in '01' for c in a) or not all(c in '01' for c in b):\n        raise ValueError(\"Input strings contain characters other than '0' and '1'\")\n    \n    result = \"\"\n    for i in range(len(a)):\n        if a[i] == b[i]:\n            result += \"0\"\n        else:\n            result += \"1\"\n    \n    return result\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/12",
+      "task_index": 12,
+      "prompt": "from typing import List, Optional\n\n\ndef longest(strings: List[str]) -> Optional[str]:\n    \"\"\" Out of list of strings, return the longest one. Return the first one in case of multiple\n    strings of the same length. Return None in case the input list is empty.\n    >>> longest([])\n\n    >>> longest(['a', 'b', 'c'])\n    'a'\n    >>> longest(['a', 'bb', 'ccc'])\n    'ccc'\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([]) == None\n    assert candidate(['x', 'y', 'z']) == 'x'\n    assert candidate(['x', 'yyy', 'zzzz', 'www', 'kkkk', 'abc']) == 'zzzz'\n",
+      "canonical_solution": "    if not strings:\n        return None\n\n    maxlen = max(len(x) for x in strings)\n    for s in strings:\n        if len(s) == maxlen:\n            return s\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 4.5053,
+          "total_pipeline_time_sec": 4.505384683609009,
+          "resource_stats": {
+            "samples": 9,
+            "cpu_percent_avg": 0.44,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190573681,
+            "mem_rss_peak_bytes": 190578688
+          },
+          "final_code": "```python\nfrom typing import List, Optional\n\ndef longest(strings: List[str]) -> Optional[str]:\n    \"\"\"\n    Returns the longest string from a list of strings. In case of multiple strings with the same maximum length, returns the first one encountered. Returns None if the input list is empty.\n    \n    Constraints:\n    - Return the first string in case of multiple strings of the same maximum length\n    - Return None when the input list is empty\n    - Input parameter is a list of strings\n    - Output is either a string or None\n    \n    Examples:\n    >>> longest([])\n    None\n    >>> longest([\"a\", \"b\", \"c\"])\n    'a'\n    >>> longest([\"a\", \"bb\", \"ccc\"])\n    'ccc'\n    \n    Exceptions:\n    - None\n    \"\"\"\n    if not strings:\n        return None\n    \n    longest_str = strings[0]\n    for string in strings:\n        if len(string) > len(longest_str):\n            longest_str = string\n    \n    return longest_str\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/13",
+      "task_index": 13,
+      "prompt": "\n\ndef greatest_common_divisor(a: int, b: int) -> int:\n    \"\"\" Return a greatest common divisor of two integers a and b\n    >>> greatest_common_divisor(3, 5)\n    1\n    >>> greatest_common_divisor(25, 15)\n    5\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate(3, 7) == 1\n    assert candidate(10, 15) == 5\n    assert candidate(49, 14) == 7\n    assert candidate(144, 60) == 12\n",
+      "canonical_solution": "    while b:\n        a, b = b, a % b\n    return a\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 10.5097,
+          "total_pipeline_time_sec": 10.509800672531128,
+          "resource_stats": {
+            "samples": 21,
+            "cpu_percent_avg": 0.29,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190589805,
+            "mem_rss_peak_bytes": 190599168
+          },
+          "final_code": "```python\ndef greatest_common_divisor(a: int, b: int) -> int:\n    \"\"\"\n    Return a greatest common divisor of two integers a and b\n    \n    Constraints:\n    - Both inputs must be integers\n    - The function should handle positive and negative integers\n    - The function should return a positive integer as the GCD\n    \n    Examples:\n    >>> greatest_common_divisor(3, 5)\n    1\n    >>> greatest_common_divisor(25, 15)\n    5\n    >>> greatest_common_divisor(-12, 8)\n    4\n    >>> greatest_common_divisor(0, 5)\n    5\n    \n    Exceptions:\n    - No specific exceptions raised\n    \"\"\"\n    # Handle the case where both numbers are zero\n    if a == 0 and b == 0:\n        raise ValueError(\"GCD of 0 and 0 is undefined\")\n    \n    # Work with absolute values to ensure positive result\n    a, b = abs(a), abs(b)\n    \n    # Euclidean algorithm\n    while b:\n        a, b = b, a % b\n    \n    return a\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/14",
+      "task_index": 14,
+      "prompt": "from typing import List\n\n\ndef all_prefixes(string: str) -> List[str]:\n    \"\"\" Return list of all prefixes from shortest to longest of the input string\n    >>> all_prefixes('abc')\n    ['a', 'ab', 'abc']\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('') == []\n    assert candidate('asdfgh') == ['a', 'as', 'asd', 'asdf', 'asdfg', 'asdfgh']\n    assert candidate('WWW') == ['W', 'WW', 'WWW']\n",
+      "canonical_solution": "    result = []\n\n    for i in range(len(string)):\n        result.append(string[:i+1])\n    return result\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 36.0308,
+          "total_pipeline_time_sec": 36.0309317111969,
+          "resource_stats": {
+            "samples": 72,
+            "cpu_percent_avg": 0.08,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190609749,
+            "mem_rss_peak_bytes": 190619648
+          },
+          "final_code": "```python\nfrom typing import List\n\ndef all_prefixes(string: str) -> List[str]:\n    \"\"\"\n    Return list of all prefixes from shortest to longest of the input string\n    \n    Constraints:\n    - Input must be a string\n    - Return empty list for empty string input\n    - Prefixes should be ordered from shortest to longest\n    - Each prefix should be a substring starting from index 0\n    \n    Examples:\n    >>> all_prefixes({\"string\": \"abc\"})\n    ['a', 'ab', 'abc']\n    >>> all_prefixes({\"string\": \"\"})\n    []\n    >>> all_prefixes({\"string\": \"a\"})\n    ['a']\n    >>> all_prefixes({\"string\": \"hello\"})\n    ['h', 'he', 'hel', 'hell', 'hello']\n    \n    Exceptions:\n    - None\n    \"\"\"\n    if not isinstance(string, str):\n        raise TypeError(\"Input must be a string\")\n    \n    if string == \"\":\n        return []\n    \n    return [string[:i] for i in range(1, len(string) + 1)]\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/15",
+      "task_index": 15,
+      "prompt": "\n\ndef string_sequence(n: int) -> str:\n    \"\"\" Return a string containing space-delimited numbers starting from 0 upto n inclusive.\n    >>> string_sequence(0)\n    '0'\n    >>> string_sequence(5)\n    '0 1 2 3 4 5'\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate(0) == '0'\n    assert candidate(3) == '0 1 2 3'\n    assert candidate(10) == '0 1 2 3 4 5 6 7 8 9 10'\n",
+      "canonical_solution": "    return ' '.join([str(x) for x in range(n + 1)])\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 11.0098,
+          "total_pipeline_time_sec": 11.009868383407593,
+          "resource_stats": {
+            "samples": 22,
+            "cpu_percent_avg": 0.18,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190631005,
+            "mem_rss_peak_bytes": 190631936
+          },
+          "final_code": "```python\ndef string_sequence(n: int) -> str:\n    \"\"\"\n    Return a string containing space-delimited numbers starting from 0 upto n inclusive.\n\n    Constraints:\n    - n must be a non-negative integer\n    - output should contain numbers from 0 to n separated by spaces\n    - if n is 0, output should be '0'\n    - numbers should be in ascending order\n\n    Examples:\n    >>> string_sequence(0)\n    '0'\n    >>> string_sequence(5)\n    '0 1 2 3 4 5'\n\n    Exceptions:\n    - None\n    \"\"\"\n    if not isinstance(n, int) or n < 0:\n        raise ValueError(\"n must be a non-negative integer\")\n    \n    return \" \".join(str(i) for i in range(n + 1))\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/16",
+      "task_index": 16,
+      "prompt": "\n\ndef count_distinct_characters(string: str) -> int:\n    \"\"\" Given a string, find out how many distinct characters (regardless of case) does it consist of\n    >>> count_distinct_characters('xyzXYZ')\n    3\n    >>> count_distinct_characters('Jerry')\n    4\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('') == 0\n    assert candidate('abcde') == 5\n    assert candidate('abcde' + 'cade' + 'CADE') == 5\n    assert candidate('aaaaAAAAaaaa') == 1\n    assert candidate('Jerry jERRY JeRRRY') == 5\n",
+      "canonical_solution": "    return len(set(string.lower()))\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 8.5085,
+          "total_pipeline_time_sec": 8.508612155914307,
+          "resource_stats": {
+            "samples": 17,
+            "cpu_percent_avg": 0.24,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190638200,
+            "mem_rss_peak_bytes": 190640128
+          },
+          "final_code": "```python\ndef count_distinct_characters(string: str) -> int:\n    \"\"\"\n    Given a string, find out how many distinct characters (regardless of case) does it consist of.\n    \n    Constraints:\n    - The function should treat uppercase and lowercase letters as the same character\n    - The input string can contain any printable ASCII characters\n    - The function should return an integer representing the count of distinct characters\n    - Empty string should return 0 distinct characters\n    \n    Examples:\n    >>> count_distinct_characters(string=\"xyzXYZ\")\n    3\n    >>> count_distinct_characters(string=\"Jerry\")\n    4\n    >>> count_distinct_characters(string=\"\")\n    0\n    >>> count_distinct_characters(string=\"aaa\")\n    1\n    \n    Exceptions:\n    - None\n    \"\"\"\n    # Convert string to lowercase to treat uppercase and lowercase as same\n    # Use set to get unique characters\n    # Return the length of the set\n    return len(set(string.lower()))\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/17",
+      "task_index": 17,
+      "prompt": "from typing import List\n\n\ndef parse_music(music_string: str) -> List[int]:\n    \"\"\" Input to this function is a string representing musical notes in a special ASCII format.\n    Your task is to parse this string and return list of integers corresponding to how many beats does each\n    not last.\n\n    Here is a legend:\n    'o' - whole note, lasts four beats\n    'o|' - half note, lasts two beats\n    '.|' - quater note, lasts one beat\n\n    >>> parse_music('o o| .| o| o| .| .| .| .| o o')\n    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('') == []\n    assert candidate('o o o o') == [4, 4, 4, 4]\n    assert candidate('.| .| .| .|') == [1, 1, 1, 1]\n    assert candidate('o| o| .| .| o o o o') == [2, 2, 1, 1, 4, 4, 4, 4]\n    assert candidate('o| .| o| .| o o| o o|') == [2, 1, 2, 1, 4, 2, 4, 2]\n",
+      "canonical_solution": "    note_map = {'o': 4, 'o|': 2, '.|': 1}\n    return [note_map[x] for x in music_string.split(' ') if x]\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 11.0092,
+          "total_pipeline_time_sec": 11.00927996635437,
+          "resource_stats": {
+            "samples": 22,
+            "cpu_percent_avg": 0.27,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190648133,
+            "mem_rss_peak_bytes": 190652416
+          },
+          "final_code": "```python\nfrom typing import List\n\ndef parse_music(music_string: str) -> List[int]:\n    \"\"\"\n    Parses a string representing musical notes in ASCII format and returns a list of integers corresponding to the duration in beats of each note.\n    \n    Constraints:\n    - Input string contains musical notes separated by spaces\n    - Valid note formats are: 'o' (whole note, 4 beats), 'o|' (half note, 2 beats), '.|' (quarter note, 1 beat)\n    - Notes are separated by single spaces\n    - Empty strings or strings with invalid note formats should be handled appropriately\n    \n    Examples:\n    >>> parse_music(\"o o| .| o| o| .| .| .| .| o o\")\n    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]\n    \n    Exceptions:\n    - No specific exceptions raised; invalid notes are ignored\n    \"\"\"\n    if not music_string:\n        return []\n    \n    note_map = {\n        'o': 4,   # whole note\n        'o|': 2,  # half note\n        '.|': 1   # quarter note\n    }\n    \n    notes = music_string.split(' ')\n    result = []\n    \n    for note in notes:\n        if note in note_map:\n            result.append(note_map[note])\n    \n    return result\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/18",
+      "task_index": 18,
+      "prompt": "\n\ndef how_many_times(string: str, substring: str) -> int:\n    \"\"\" Find how many times a given substring can be found in the original string. Count overlaping cases.\n    >>> how_many_times('', 'a')\n    0\n    >>> how_many_times('aaa', 'a')\n    3\n    >>> how_many_times('aaaa', 'aa')\n    3\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('', 'x') == 0\n    assert candidate('xyxyxyx', 'x') == 4\n    assert candidate('cacacacac', 'cac') == 4\n    assert candidate('john doe', 'john') == 1\n",
+      "canonical_solution": "    times = 0\n\n    for i in range(len(string) - len(substring) + 1):\n        if string[i:i+len(substring)] == substring:\n            times += 1\n\n    return times\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 26.0245,
+          "total_pipeline_time_sec": 26.02462124824524,
+          "resource_stats": {
+            "samples": 52,
+            "cpu_percent_avg": 0.15,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190654621,
+            "mem_rss_peak_bytes": 190656512
+          },
+          "final_code": "```python\ndef how_many_times(string: str, substring: str) -> int:\n    \"\"\"\n    Find how many times a given substring can be found in the original string. Count overlapping cases.\n    \n    Constraints:\n    - Count overlapping occurrences of the substring\n    - Handle empty string inputs appropriately\n    - Return 0 when substring is not found\n    - Work with any string and substring combination\n    \n    Examples:\n    >>> how_many_times(\"\", \"a\")\n    0\n    >>> how_many_times(\"aaa\", \"a\")\n    3\n    >>> how_many_times(\"aaaa\", \"aa\")\n    3\n    \n    Exceptions:\n    - None\n    \"\"\"\n    if not isinstance(string, str) or not isinstance(substring, str):\n        raise TypeError(\"Both arguments must be strings\")\n    \n    if not substring:\n        return 0\n    \n    count = 0\n    start = 0\n    \n    while True:\n        pos = string.find(substring, start)\n        if pos == -1:\n            break\n        count += 1\n        start = pos + 1\n    \n    return count\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/19",
+      "task_index": 19,
+      "prompt": "from typing import List\n\n\ndef sort_numbers(numbers: str) -> str:\n    \"\"\" Input is a space-delimited string of numberals from 'zero' to 'nine'.\n    Valid choices are 'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight' and 'nine'.\n    Return the string with numbers sorted from smallest to largest\n    >>> sort_numbers('three one five')\n    'one three five'\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('') == ''\n    assert candidate('three') == 'three'\n    assert candidate('three five nine') == 'three five nine'\n    assert candidate('five zero four seven nine eight') == 'zero four five seven eight nine'\n    assert candidate('six five four three two one zero') == 'zero one two three four five six'\n",
+      "canonical_solution": "    value_map = {\n        'zero': 0,\n        'one': 1,\n        'two': 2,\n        'three': 3,\n        'four': 4,\n        'five': 5,\n        'six': 6,\n        'seven': 7,\n        'eight': 8,\n        'nine': 9\n    }\n    return ' '.join(sorted([x for x in numbers.split(' ') if x], key=lambda x: value_map[x]))\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 58.5479,
+          "total_pipeline_time_sec": 58.54797434806824,
+          "resource_stats": {
+            "samples": 117,
+            "cpu_percent_avg": 0.1,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190662848,
+            "mem_rss_peak_bytes": 190668800
+          },
+          "final_code": "```python\ndef sort_numbers(numbers: str) -> str:\n    \"\"\"\n    Takes a space-delimited string of numberals from 'zero' to 'nine' and returns the string with numbers sorted from smallest to largest.\n    \n    Constraints:\n    - Input string contains only valid numberals: 'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'\n    - Input string is space-delimited\n    - Return string should maintain the same format as input (space-delimited)\n    - Sorting should be done based on numeric value (zero < one < two < ... < nine)\n    \n    Examples:\n    >>> sort_numbers(\"three one five\")\n    'one three five'\n    >>> sort_numbers(\"nine eight seven\")\n    'seven eight nine'\n    >>> sort_numbers(\"zero\")\n    'zero'\n    >>> sort_numbers(\"five five five\")\n    'five five five'\n    \n    Exceptions:\n    - None specified\n    \"\"\"\n    # Mapping of numeral strings to their numeric values\n    numeral_to_value = {\n        'zero': 0,\n        'one': 1,\n        'two': 2,\n        'three': 3,\n        'four': 4,\n        'five': 5,\n        'six': 6,\n        'seven': 7,\n        'eight': 8,\n        'nine': 9\n    }\n    \n    # Split the input string into individual numerals\n    numeral_list = numbers.split()\n    \n    # Sort the numerals based on their numeric values\n    sorted_numerals = sorted(numeral_list, key=lambda x: numeral_to_value[x])\n    \n    # Join the sorted numerals back into a space-delimited string\n    return ' '.join(sorted_numerals)\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/20",
+      "task_index": 20,
+      "prompt": "from typing import List, Tuple\n\n\ndef find_closest_elements(numbers: List[float]) -> Tuple[float, float]:\n    \"\"\" From a supplied list of numbers (of length at least two) select and return two that are the closest to each\n    other and return them in order (smaller number, larger number).\n    >>> find_closest_elements([1.0, 2.0, 3.0, 4.0, 5.0, 2.2])\n    (2.0, 2.2)\n    >>> find_closest_elements([1.0, 2.0, 3.0, 4.0, 5.0, 2.0])\n    (2.0, 2.0)\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([1.0, 2.0, 3.9, 4.0, 5.0, 2.2]) == (3.9, 4.0)\n    assert candidate([1.0, 2.0, 5.9, 4.0, 5.0]) == (5.0, 5.9)\n    assert candidate([1.0, 2.0, 3.0, 4.0, 5.0, 2.2]) == (2.0, 2.2)\n    assert candidate([1.0, 2.0, 3.0, 4.0, 5.0, 2.0]) == (2.0, 2.0)\n    assert candidate([1.1, 2.2, 3.1, 4.1, 5.1]) == (2.2, 3.1)\n\n",
+      "canonical_solution": "    closest_pair = None\n    distance = None\n\n    for idx, elem in enumerate(numbers):\n        for idx2, elem2 in enumerate(numbers):\n            if idx != idx2:\n                if distance is None:\n                    distance = abs(elem - elem2)\n                    closest_pair = tuple(sorted([elem, elem2]))\n                else:\n                    new_distance = abs(elem - elem2)\n                    if new_distance < distance:\n                        distance = new_distance\n                        closest_pair = tuple(sorted([elem, elem2]))\n\n    return closest_pair\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 16.0118,
+          "total_pipeline_time_sec": 16.011908769607544,
+          "resource_stats": {
+            "samples": 32,
+            "cpu_percent_avg": 0.25,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190679552,
+            "mem_rss_peak_bytes": 190681088
+          },
+          "final_code": "```python\nfrom typing import List, Tuple\n\ndef find_closest_elements(numbers: List[float]) -> Tuple[float, float]:\n    \"\"\"\n    From a supplied list of numbers (of length at least two) select and return two that are the closest to each other and return them in order (smaller number, larger number).\n    \n    Constraints:\n    - The input list must contain at least two elements\n    - The input list contains only float values\n    - Return the pair with the smallest absolute difference\n    - If multiple pairs have the same minimum difference, return any one of them\n    - The returned tuple must be ordered as (smaller number, larger number)\n    \n    Examples:\n    >>> find_closest_elements([1.0, 2.0, 3.0, 4.0, 5.0, 2.2])\n    (2.0, 2.2)\n    >>> find_closest_elements([1.0, 2.0, 3.0, 4.0, 5.0, 2.0])\n    (2.0, 2.0)\n    \n    Exceptions:\n    - ValueError: The input list contains fewer than two elements\n    \"\"\"\n    if len(numbers) < 2:\n        raise ValueError(\"The input list contains fewer than two elements\")\n    \n    min_diff = float('inf')\n    closest_pair = (0.0, 0.0)\n    \n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            diff = abs(numbers[i] - numbers[j])\n            if diff < min_diff:\n                min_diff = diff\n                # Order the pair as (smaller, larger)\n                smaller = min(numbers[i], numbers[j])\n                larger = max(numbers[i], numbers[j])\n                closest_pair = (smaller, larger)\n    \n    return closest_pair\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/21",
+      "task_index": 21,
+      "prompt": "from typing import List\n\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n    \"\"\" Given list of numbers (of at least two elements), apply a linear transform to that list,\n    such that the smallest number will become 0 and the largest will become 1\n    >>> rescale_to_unit([1.0, 2.0, 3.0, 4.0, 5.0])\n    [0.0, 0.25, 0.5, 0.75, 1.0]\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([2.0, 49.9]) == [0.0, 1.0]\n    assert candidate([100.0, 49.9]) == [1.0, 0.0]\n    assert candidate([1.0, 2.0, 3.0, 4.0, 5.0]) == [0.0, 0.25, 0.5, 0.75, 1.0]\n    assert candidate([2.0, 1.0, 5.0, 3.0, 4.0]) == [0.25, 0.0, 1.0, 0.5, 0.75]\n    assert candidate([12.0, 11.0, 15.0, 13.0, 14.0]) == [0.25, 0.0, 1.0, 0.5, 0.75]\n",
+      "canonical_solution": "    min_number = min(numbers)\n    max_number = max(numbers)\n    return [(x - min_number) / (max_number - min_number) for x in numbers]\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 18.0131,
+          "total_pipeline_time_sec": 18.013164520263672,
+          "resource_stats": {
+            "samples": 36,
+            "cpu_percent_avg": 0.28,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190685525,
+            "mem_rss_peak_bytes": 190689280
+          },
+          "final_code": "```python\nfrom typing import List\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n    \"\"\"\n    Applies a linear transformation to a list of numbers such that the minimum value becomes 0 and the maximum value becomes 1, with all other values scaled proportionally within this range.\n\n    Constraints:\n    - Input list must contain at least two elements\n    - All elements in the list must be numeric (float)\n    - If all elements are identical, the result should be a list of zeros\n    - The transformation preserves the relative ordering of elements\n\n    Examples:\n    >>> rescale_to_unit([1.0, 2.0, 3.0, 4.0, 5.0])\n    [0.0, 0.25, 0.5, 0.75, 1.0]\n    >>> rescale_to_unit([0.0, 10.0])\n    [0.0, 1.0]\n    >>> rescale_to_unit([5.0, 5.0, 5.0])\n    [0.0, 0.0, 0.0]\n    >>> rescale_to_unit([-2.0, 0.0, 2.0])\n    [0.0, 0.5, 1.0]\n\n    Exceptions:\n    - ValueError: If input list contains fewer than 2 elements\n    \"\"\"\n    if len(numbers) < 2:\n        raise ValueError(\"Input list must contain at least two elements\")\n    \n    min_val = min(numbers)\n    max_val = max(numbers)\n    \n    # If all elements are identical\n    if min_val == max_val:\n        return [0.0] * len(numbers)\n    \n    # Apply linear transformation: (x - min) / (max - min)\n    range_val = max_val - min_val\n    return [(x - min_val) / range_val for x in numbers]\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/22",
+      "task_index": 22,
+      "prompt": "from typing import List, Any\n\n\ndef filter_integers(values: List[Any]) -> List[int]:\n    \"\"\" Filter given list of any python values only for integers\n    >>> filter_integers(['a', 3.14, 5])\n    [5]\n    >>> filter_integers([1, 2, 3, 'abc', {}, []])\n    [1, 2, 3]\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([]) == []\n    assert candidate([4, {}, [], 23.2, 9, 'adasd']) == [4, 9]\n    assert candidate([3, 'c', 3, 3, 'a', 'b']) == [3, 3, 3]\n",
+      "canonical_solution": "    return [x for x in values if isinstance(x, int)]\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 5.0043,
+          "total_pipeline_time_sec": 5.004362344741821,
+          "resource_stats": {
+            "samples": 10,
+            "cpu_percent_avg": 0.2,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190692147,
+            "mem_rss_peak_bytes": 190693376
+          },
+          "final_code": "```python\nfrom typing import List, Any\n\ndef filter_integers(values: List[Any]) -> List[int]:\n    \"\"\"\n    Filter given list of any python values only for integers\n    \n    Constraints:\n    - Return only integer values from the input list\n    - Preserve the order of integers as they appear in the input list\n    - Ignore all non-integer values including floats, strings, lists, dictionaries, etc.\n    - Handle empty lists by returning an empty list\n    - Handle lists with no integers by returning an empty list\n    \n    Examples:\n    >>> filter_integers([\"a\", 3.14, 5])\n    [5]\n    >>> filter_integers([1, 2, 3, \"abc\", {}, []])\n    [1, 2, 3]\n    \n    Exceptions:\n    None\n    \"\"\"\n    return [value for value in values if isinstance(value, int) and not isinstance(value, bool)]\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/23",
+      "task_index": 23,
+      "prompt": "\n\ndef strlen(string: str) -> int:\n    \"\"\" Return length of given string\n    >>> strlen('')\n    0\n    >>> strlen('abc')\n    3\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('') == 0\n    assert candidate('x') == 1\n    assert candidate('asdasnakj') == 9\n",
+      "canonical_solution": "    return len(string)\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 21.5181,
+          "total_pipeline_time_sec": 21.518238067626953,
+          "resource_stats": {
+            "samples": 43,
+            "cpu_percent_avg": 0.09,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190700329,
+            "mem_rss_peak_bytes": 190701568
+          },
+          "final_code": "```python\ndef strlen(string: str) -> int:\n    \"\"\"\n    Return length of given string\n    \n    Constraints:\n    - Input must be a string type\n    - Return integer representing the number of characters in the string\n    - Empty string should return 0\n    - Function should handle Unicode characters correctly\n    \n    Examples:\n    >>> strlen({\"string\": \"\"})\n    0\n    >>> strlen({\"string\": \"abc\"})\n    3\n    \n    Exceptions:\n    None\n    \"\"\"\n    if not isinstance(string, str):\n        raise TypeError(\"Input must be a string type\")\n    \n    return len(string)\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/24",
+      "task_index": 24,
+      "prompt": "\n\ndef largest_divisor(n: int) -> int:\n    \"\"\" For a given number n, find the largest number that divides n evenly, smaller than n\n    >>> largest_divisor(15)\n    5\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate(3) == 1\n    assert candidate(7) == 1\n    assert candidate(10) == 5\n    assert candidate(100) == 50\n    assert candidate(49) == 7\n",
+      "canonical_solution": "    for i in reversed(range(n)):\n        if n % i == 0:\n            return i\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 5.0052,
+          "total_pipeline_time_sec": 5.005282402038574,
+          "resource_stats": {
+            "samples": 10,
+            "cpu_percent_avg": 0.6,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190707302,
+            "mem_rss_peak_bytes": 190713856
+          },
+          "final_code": "```python\ndef largest_divisor(n: int) -> int:\n    \"\"\"\n    For a given number n, find the largest number that divides n evenly, smaller than n\n    \n    Constraints:\n    - n must be a positive integer greater than 1\n    - The divisor must be smaller than n\n    - The divisor must divide n evenly (no remainder)\n    - Return the largest such divisor\n    \n    Examples:\n    >>> largest_divisor(n=15)\n    5\n    >>> largest_divisor(n=12)\n    6\n    >>> largest_divisor(n=7)\n    1\n    >>> largest_divisor(n=100)\n    50\n    \n    Exceptions:\n    - ValueError: when n is less than or equal to 1\n    \"\"\"\n    if not isinstance(n, int) or n <= 1:\n        raise ValueError(\"n must be a positive integer greater than 1\")\n    \n    # Start checking from n-1 down to 1\n    for i in range(n - 1, 0, -1):\n        if n % i == 0:\n            return i\n    \n    # This should never be reached for valid inputs\n    return 1\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/25",
+      "task_index": 25,
+      "prompt": "from typing import List\n\n\ndef factorize(n: int) -> List[int]:\n    \"\"\" Return list of prime factors of given integer in the order from smallest to largest.\n    Each of the factors should be listed number of times corresponding to how many times it appeares in factorization.\n    Input number should be equal to the product of all factors\n    >>> factorize(8)\n    [2, 2, 2]\n    >>> factorize(25)\n    [5, 5]\n    >>> factorize(70)\n    [2, 5, 7]\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate(2) == [2]\n    assert candidate(4) == [2, 2]\n    assert candidate(8) == [2, 2, 2]\n    assert candidate(3 * 19) == [3, 19]\n    assert candidate(3 * 19 * 3 * 19) == [3, 3, 19, 19]\n    assert candidate(3 * 19 * 3 * 19 * 3 * 19) == [3, 3, 3, 19, 19, 19]\n    assert candidate(3 * 19 * 19 * 19) == [3, 19, 19, 19]\n    assert candidate(3 * 2 * 3) == [2, 3, 3]\n",
+      "canonical_solution": "    import math\n    fact = []\n    i = 2\n    while i <= int(math.sqrt(n) + 1):\n        if n % i == 0:\n            fact.append(i)\n            n //= i\n        else:\n            i += 1\n\n    if n > 1:\n        fact.append(n)\n    return fact\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 26.5239,
+          "total_pipeline_time_sec": 26.5239896774292,
+          "resource_stats": {
+            "samples": 53,
+            "cpu_percent_avg": 0.15,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190719729,
+            "mem_rss_peak_bytes": 190726144
+          },
+          "final_code": "```python\nfrom typing import List\n\ndef factorize(n: int) -> List[int]:\n    \"\"\"\n    Return list of prime factors of given integer in the order from smallest to largest. Each of the factors should be listed number of times corresponding to how many times it appears in factorization. Input number should be equal to the product of all factors.\n    \n    Constraints:\n    - Input n must be a positive integer greater than 1\n    - Output should contain prime factors only\n    - Factors should be ordered from smallest to largest\n    - Each factor should appear as many times as it divides the input number\n    - Product of all factors in output should equal the input number\n    \n    Examples:\n    >>> factorize(8)\n    [2, 2, 2]\n    >>> factorize(25)\n    [5, 5]\n    >>> factorize(70)\n    [2, 5, 7]\n    \n    Exceptions:\n    - ValueError: If input n is less than or equal to 1\n    - TypeError: If input n is not an integer\n    \"\"\"\n    if not isinstance(n, int):\n        raise TypeError(\"Input n is not an integer\")\n    if n <= 1:\n        raise ValueError(\"Input n is less than or equal to 1\")\n    \n    factors = []\n    divisor = 2\n    \n    while divisor * divisor <= n:\n        while n % divisor == 0:\n            factors.append(divisor)\n            n //= divisor\n        divisor += 1\n    \n    if n > 1:\n        factors.append(n)\n    \n    return factors\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/26",
+      "task_index": 26,
+      "prompt": "from typing import List\n\n\ndef remove_duplicates(numbers: List[int]) -> List[int]:\n    \"\"\" From a list of integers, remove all elements that occur more than once.\n    Keep order of elements left the same as in the input.\n    >>> remove_duplicates([1, 2, 3, 2, 4])\n    [1, 3, 4]\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([]) == []\n    assert candidate([1, 2, 3, 4]) == [1, 2, 3, 4]\n    assert candidate([1, 2, 3, 2, 4, 3, 5]) == [1, 4, 5]\n",
+      "canonical_solution": "    import collections\n    c = collections.Counter(numbers)\n    return [n for n in numbers if c[n] <= 1]\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 67.0518,
+          "total_pipeline_time_sec": 67.05194592475891,
+          "resource_stats": {
+            "samples": 134,
+            "cpu_percent_avg": 0.09,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190732379,
+            "mem_rss_peak_bytes": 190738432
+          },
+          "final_code": "```python\nfrom typing import List\n\ndef remove_duplicates(numbers: List[int]) -> List[int]:\n    \"\"\"\n    From a list of integers, remove all elements that occur more than once. Keep order of elements left the same as in the input.\n\n    Constraints:\n    - Elements that appear multiple times in the input list should be completely removed (not just reduced to one occurrence)\n    - The order of remaining elements should match their first occurrence in the input list\n    - Empty lists should return empty lists\n    - Single element lists should return the same list if that element is unique\n\n    Examples:\n    >>> remove_duplicates([1, 2, 3, 2, 4])\n    [1, 3, 4]\n    >>> remove_duplicates([])\n    []\n    >>> remove_duplicates([1, 1, 1])\n    []\n    >>> remove_duplicates([1, 2, 3, 4, 5])\n    [1, 2, 3, 4, 5]\n    >>> remove_duplicates([1, 2, 1, 3, 2, 4])\n    [3, 4]\n\n    Exceptions:\n    None\n    \"\"\"\n    # Count occurrences of each number\n    count = {}\n    for num in numbers:\n        count[num] = count.get(num, 0) + 1\n    \n    # Filter out numbers that appear more than once\n    result = [num for num in numbers if count[num] == 1]\n    \n    return result\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/27",
+      "task_index": 27,
+      "prompt": "\n\ndef flip_case(string: str) -> str:\n    \"\"\" For a given string, flip lowercase characters to uppercase and uppercase to lowercase.\n    >>> flip_case('Hello')\n    'hELLO'\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('') == ''\n    assert candidate('Hello!') == 'hELLO!'\n    assert candidate('These violent delights have violent ends') == 'tHESE VIOLENT DELIGHTS HAVE VIOLENT ENDS'\n",
+      "canonical_solution": "    return string.swapcase()\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 39.0294,
+          "total_pipeline_time_sec": 39.0295295715332,
+          "resource_stats": {
+            "samples": 78,
+            "cpu_percent_avg": 0.08,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190749984,
+            "mem_rss_peak_bytes": 190758912
+          },
+          "final_code": "```python\ndef flip_case(string: str) -> str:\n    \"\"\"\n    For a given string, flip lowercase characters to uppercase and uppercase to lowercase.\n    \n    Constraints:\n    - Input must be a string\n    - Return type must be a string\n    - Lowercase letters should become uppercase\n    - Uppercase letters should become lowercase\n    - Non-alphabetic characters should remain unchanged\n    \n    Examples:\n    >>> flip_case(\"Hello\")\n    'hELLO'\n    >>> flip_case(\"PyThOn\")\n    'pYtHoN'\n    >>> flip_case(\"123ABC\")\n    '123abc'\n    >>> flip_case(\"hello WORLD!\")\n    'HELLO world!'\n    \n    Exceptions:\n    - None\n    \"\"\"\n    if not isinstance(string, str):\n        raise TypeError(\"Input must be a string\")\n    \n    result = \"\"\n    for char in string:\n        if char.islower():\n            result += char.upper()\n        elif char.isupper():\n            result += char.lower()\n        else:\n            result += char\n    \n    return result\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/28",
+      "task_index": 28,
+      "prompt": "from typing import List\n\n\ndef concatenate(strings: List[str]) -> str:\n    \"\"\" Concatenate list of strings into a single string\n    >>> concatenate([])\n    ''\n    >>> concatenate(['a', 'b', 'c'])\n    'abc'\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([]) == ''\n    assert candidate(['x', 'y', 'z']) == 'xyz'\n    assert candidate(['x', 'y', 'z', 'w', 'k']) == 'xyzwk'\n",
+      "canonical_solution": "    return ''.join(strings)\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 6.5058,
+          "total_pipeline_time_sec": 6.505951404571533,
+          "resource_stats": {
+            "samples": 13,
+            "cpu_percent_avg": 0.31,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190762377,
+            "mem_rss_peak_bytes": 190763008
+          },
+          "final_code": "```python\ndef concatenate(strings: list) -> str:\n    \"\"\"\n    Concatenate list of strings into a single string\n\n    Constraints:\n    - Input must be a list of strings\n    - Return empty string when input list is empty\n    - Handle lists with any number of string elements\n    - Elements should be joined without separators\n\n    Examples:\n    >>> concatenate([])\n    ''\n    >>> concatenate(['a', 'b', 'c'])\n    'abc'\n\n    Exceptions:\n    None\n    \"\"\"\n    if not isinstance(strings, list):\n        raise TypeError(\"Input must be a list\")\n    \n    if not strings:\n        return \"\"\n    \n    for item in strings:\n        if not isinstance(item, str):\n            raise TypeError(\"All elements in the list must be strings\")\n    \n    return \"\".join(strings)\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/29",
+      "task_index": 29,
+      "prompt": "from typing import List\n\n\ndef filter_by_prefix(strings: List[str], prefix: str) -> List[str]:\n    \"\"\" Filter an input list of strings only for ones that start with a given prefix.\n    >>> filter_by_prefix([], 'a')\n    []\n    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')\n    ['abc', 'array']\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([], 'john') == []\n    assert candidate(['xxx', 'asd', 'xxy', 'john doe', 'xxxAAA', 'xxx'], 'xxx') == ['xxx', 'xxxAAA', 'xxx']\n",
+      "canonical_solution": "    return [x for x in strings if x.startswith(prefix)]\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 10.5084,
+          "total_pipeline_time_sec": 10.508540153503418,
+          "resource_stats": {
+            "samples": 21,
+            "cpu_percent_avg": 0.29,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190769054,
+            "mem_rss_peak_bytes": 190771200
+          },
+          "final_code": "```python\ndef filter_by_prefix(strings: list[str], prefix: str) -> list[str]:\n    \"\"\"\n    Filter an input list of strings only for ones that start with a given prefix.\n\n    Constraints:\n    - Return only strings that start with the specified prefix\n    - Handle empty input list by returning an empty list\n    - Handle empty prefix by returning all strings\n    - Preserve original order of matching strings\n    - Case-sensitive string comparison\n\n    Examples:\n    >>> filter_by_prefix([], \"a\")\n    []\n    >>> filter_by_prefix([\"abc\", \"bcd\", \"cde\", \"array\"], \"a\")\n    ['abc', 'array']\n\n    Exceptions:\n    None\n    \"\"\"\n    if not isinstance(strings, list):\n        raise TypeError(\"strings must be a list\")\n    \n    if not isinstance(prefix, str):\n        raise TypeError(\"prefix must be a string\")\n    \n    # Handle empty input list\n    if not strings:\n        return []\n    \n    # Handle empty prefix - return all strings\n    if prefix == \"\":\n        return strings\n    \n    # Filter strings that start with the prefix\n    result = []\n    for string in strings:\n        if isinstance(string, str) and string.startswith(prefix):\n            result.append(string)\n    \n    return result\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/30",
+      "task_index": 30,
+      "prompt": "\n\ndef get_positive(l: list):\n    \"\"\"Return only positive numbers in the list.\n    >>> get_positive([-1, 2, -4, 5, 6])\n    [2, 5, 6]\n    >>> get_positive([5, 3, -5, 2, -3, 3, 9, 0, 123, 1, -10])\n    [5, 3, 2, 3, 9, 123, 1]\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate([-1, -2, 4, 5, 6]) == [4, 5, 6]\n    assert candidate([5, 3, -5, 2, 3, 3, 9, 0, 123, 1, -10]) == [5, 3, 2, 3, 3, 9, 123, 1]\n    assert candidate([-1, -2]) == []\n    assert candidate([]) == []\n\n",
+      "canonical_solution": "    return [e for e in l if e > 0]\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 27.5241,
+          "total_pipeline_time_sec": 27.5242702960968,
+          "resource_stats": {
+            "samples": 55,
+            "cpu_percent_avg": 0.11,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190777157,
+            "mem_rss_peak_bytes": 190779392
+          },
+          "final_code": "```python\ndef get_positive(l: list):\n    \"\"\"\n    Return only positive numbers in the list.\n\n    Constraints:\n    - The input list can contain integers and floats\n    - Zero is not considered a positive number\n    - Negative numbers should be excluded from the result\n    - The order of positive numbers in the output should match their order in the input\n    - Empty lists should return empty lists\n    - The function should handle lists with all negative numbers (returning empty list)\n\n    Examples:\n    >>> get_positive([-1, 2, -4, 5, 6])\n    [2, 5, 6]\n    >>> get_positive([5, 3, -5, 2, -3, 3, 9, 0, 123, 1, -10])\n    [5, 3, 2, 3, 9, 123, 1]\n    >>> get_positive([])\n    []\n    >>> get_positive([-1, -2, -3])\n    []\n    \"\"\"\n    return [num for num in l if isinstance(num, (int, float)) and num > 0]\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/31",
+      "task_index": 31,
+      "prompt": "\n\ndef is_prime(n):\n    \"\"\"Return true if a given number is prime, and false otherwise.\n    >>> is_prime(6)\n    False\n    >>> is_prime(101)\n    True\n    >>> is_prime(11)\n    True\n    >>> is_prime(13441)\n    True\n    >>> is_prime(61)\n    True\n    >>> is_prime(4)\n    False\n    >>> is_prime(1)\n    False\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(6) == False\n    assert candidate(101) == True\n    assert candidate(11) == True\n    assert candidate(13441) == True\n    assert candidate(61) == True\n    assert candidate(4) == False\n    assert candidate(1) == False\n    assert candidate(5) == True\n    assert candidate(11) == True\n    assert candidate(17) == True\n    assert candidate(5 * 17) == False\n    assert candidate(11 * 7) == False\n    assert candidate(13441 * 19) == False\n\n",
+      "canonical_solution": "    if n < 2:\n        return False\n    for k in range(2, n - 1):\n        if n % k == 0:\n            return False\n    return True\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 18.0165,
+          "total_pipeline_time_sec": 18.01662850379944,
+          "resource_stats": {
+            "samples": 36,
+            "cpu_percent_avg": 0.22,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190783032,
+            "mem_rss_peak_bytes": 190783488
+          },
+          "final_code": "```python\ndef is_prime(n):\n    \"\"\"\n    Determine whether a given integer is a prime number.\n    \n    A prime number is a natural number greater than 1 that has no positive divisors other than 1 and itself.\n    The function should handle edge cases including n = 1 (not prime), n = 2 (prime), and composite numbers.\n    Input n must be a positive integer.\n    The function should return False for numbers less than or equal to 1.\n    \n    Args:\n        n (int): The integer to check for primality\n        \n    Returns:\n        bool: True if n is prime, False otherwise\n        \n    Examples:\n        >>> is_prime(6)\n        False\n        >>> is_prime(101)\n        True\n        >>> is_prime(11)\n        True\n        >>> is_prime(13441)\n        True\n        >>> is_prime(61)\n        True\n        >>> is_prime(4)\n        False\n        >>> is_prime(1)\n        False\n    \"\"\"\n    # Check if input is a positive integer\n    if not isinstance(n, int) or n <= 0:\n        return False\n    \n    # Handle edge cases\n    if n <= 1:\n        return False\n    if n == 2:\n        return True\n    if n % 2 == 0:\n        return False\n    \n    # Check odd divisors up to sqrt(n)\n    i = 3\n    while i * i <= n:\n        if n % i == 0:\n            return False\n        i += 2\n    \n    return True\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/32",
+      "task_index": 32,
+      "prompt": "import math\n\n\ndef poly(xs: list, x: float):\n    \"\"\"\n    Evaluates polynomial with coefficients xs at point x.\n    return xs[0] + xs[1] * x + xs[1] * x^2 + .... xs[n] * x^n\n    \"\"\"\n    return sum([coeff * math.pow(x, i) for i, coeff in enumerate(xs)])\n\n\ndef find_zero(xs: list):\n    \"\"\" xs are coefficients of a polynomial.\n    find_zero find x such that poly(x) = 0.\n    find_zero returns only only zero point, even if there are many.\n    Moreover, find_zero only takes list xs having even number of coefficients\n    and largest non zero coefficient as it guarantees\n    a solution.\n    >>> round(find_zero([1, 2]), 2) # f(x) = 1 + 2x\n    -0.5\n    >>> round(find_zero([-6, 11, -6, 1]), 2) # (x - 1) * (x - 2) * (x - 3) = -6 + 11x - 6x^2 + x^3\n    1.0\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    import math\n    import random\n    rng = random.Random(42)\n    import copy\n    for _ in range(100):\n        ncoeff = 2 * rng.randint(1, 4)\n        coeffs = []\n        for _ in range(ncoeff):\n            coeff = rng.randint(-10, 10)\n            if coeff == 0:\n                coeff = 1\n            coeffs.append(coeff)\n        solution = candidate(copy.deepcopy(coeffs))\n        assert math.fabs(poly(coeffs, solution)) < 1e-4\n\n",
+      "canonical_solution": "    begin, end = -1., 1.\n    while poly(xs, begin) * poly(xs, end) > 0:\n        begin *= 2.0\n        end *= 2.0\n    while end - begin > 1e-10:\n        center = (begin + end) / 2.0\n        if poly(xs, center) * poly(xs, begin) > 0:\n            begin = center\n        else:\n            end = center\n    return begin\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 29.5252,
+          "total_pipeline_time_sec": 29.52531671524048,
+          "resource_stats": {
+            "samples": 59,
+            "cpu_percent_avg": 0.2,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190794526,
+            "mem_rss_peak_bytes": 190795776
+          },
+          "final_code": "```python\ndef find_zero(xs: list):\n    \"\"\"\n    Finds a zero point x such that poly(x) = 0 for a polynomial with coefficients xs. The function guarantees a solution by requiring an even number of coefficients with the largest coefficient being non-zero.\n    \n    Constraints:\n    - Only returns one zero point even if multiple exist\n    - Input list xs must have an even number of coefficients\n    - Largest non-zero coefficient must be present to guarantee a solution\n    - xs represents coefficients of a polynomial where xs[0] is the constant term\n    \n    Examples:\n    >>> find_zero([1, 2])\n    -0.5\n    >>> find_zero([-6, 11, -6, 1])\n    1.0\n    \n    Exceptions:\n    None specified\n    \"\"\"\n    # Validate input\n    if len(xs) % 2 != 0:\n        raise ValueError(\"Input list must have an even number of coefficients\")\n    \n    # Remove leading zeros to find the largest non-zero coefficient\n    trimmed_xs = xs\n    while trimmed_xs and trimmed_xs[-1] == 0:\n        trimmed_xs = trimmed_xs[:-1]\n        \n    if not trimmed_xs:\n        raise ValueError(\"At least one non-zero coefficient is required\")\n    \n    # For a linear polynomial (degree 1), we can solve directly\n    if len(trimmed_xs) == 2:\n        # ax + b = 0 => x = -b/a\n        a, b = trimmed_xs[1], trimmed_xs[0]\n        return -b / a\n    \n    # For higher degree polynomials, use Newton-Raphson method\n    def poly(x):\n        \"\"\"Evaluate polynomial at x\"\"\"\n        result = 0\n        for i, coeff in enumerate(xs):\n            result += coeff * (x ** i)\n        return result\n    \n    def derivative_poly(x):\n        \"\"\"Evaluate derivative of polynomial at x\"\"\"\n        result = 0\n        for i, coeff in enumerate(xs):\n            if i > 0:\n                result += i * coeff * (x ** (i - 1))\n        return result\n    \n    # Start with initial guess\n    x = 0.0\n    \n    # Newton-Raphson iteration\n    for _ in range(1000):  # Limit iterations to prevent infinite loop\n        fx = poly(x)\n        if abs(fx) < 1e-10:  # Convergence check\n            return x\n        f",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/33",
+      "task_index": 33,
+      "prompt": "\n\ndef sort_third(l: list):\n    \"\"\"This function takes a list l and returns a list l' such that\n    l' is identical to l in the indicies that are not divisible by three, while its values at the indicies that are divisible by three are equal\n    to the values of the corresponding indicies of l, but sorted.\n    >>> sort_third([1, 2, 3])\n    [1, 2, 3]\n    >>> sort_third([5, 6, 3, 4, 8, 9, 2])\n    [2, 6, 3, 4, 8, 9, 5]\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert tuple(candidate([1, 2, 3])) == tuple(sort_third([1, 2, 3]))\n    assert tuple(candidate([5, 3, -5, 2, -3, 3, 9, 0, 123, 1, -10])) == tuple(sort_third([5, 3, -5, 2, -3, 3, 9, 0, 123, 1, -10]))\n    assert tuple(candidate([5, 8, -12, 4, 23, 2, 3, 11, 12, -10])) == tuple(sort_third([5, 8, -12, 4, 23, 2, 3, 11, 12, -10]))\n    assert tuple(candidate([5, 6, 3, 4, 8, 9, 2])) == tuple([2, 6, 3, 4, 8, 9, 5])\n    assert tuple(candidate([5, 8, 3, 4, 6, 9, 2])) == tuple([2, 8, 3, 4, 6, 9, 5])\n    assert tuple(candidate([5, 6, 9, 4, 8, 3, 2])) == tuple([2, 6, 9, 4, 8, 3, 5])\n    assert tuple(candidate([5, 6, 3, 4, 8, 9, 2, 1])) == tuple([2, 6, 3, 4, 8, 9, 5, 1])\n\n",
+      "canonical_solution": "    l = list(l)\n    l[::3] = sorted(l[::3])\n    return l\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 8.508,
+          "total_pipeline_time_sec": 8.508148431777954,
+          "resource_stats": {
+            "samples": 17,
+            "cpu_percent_avg": 0.35,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190802763,
+            "mem_rss_peak_bytes": 190803968
+          },
+          "final_code": "```python\ndef sort_third(l: list):\n    \"\"\"\n    This function takes a list l and returns a list l' such that l' is identical to l in the indices that are not divisible by three, while its values at the indices that are divisible by three are equal to the values of the corresponding indices of l, but sorted.\n    \n    Constraints:\n    - The input list can be empty\n    - The input list can contain any type of elements that can be compared for sorting\n    - Indices divisible by three are 0, 3, 6, 9, etc.\n    - Only elements at indices divisible by three should be sorted among themselves\n    - Elements at other indices should remain in their original positions\n    \n    Examples:\n    >>> sort_third([1, 2, 3])\n    [1, 2, 3]\n    >>> sort_third([5, 6, 3, 4, 8, 9, 2])\n    [2, 6, 3, 4, 8, 9, 5]\n    \n    Exceptions:\n    - None specified\n    \"\"\"\n    if not l:\n        return l[:]\n    \n    # Extract elements at indices divisible by 3\n    elements_at_third_indices = [l[i] for i in range(0, len(l), 3)]\n    \n    # Sort these elements\n    sorted_elements = sorted(elements_at_third_indices)\n    \n    # Create result list\n    result = l[:]\n    \n    # Place sorted elements back at indices divisible by 3\n    third_index = 0\n    for i in range(0, len(result), 3):\n        result[i] = sorted_elements[third_index]\n        third_index += 1\n    \n    return result\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/34",
+      "task_index": 34,
+      "prompt": "\n\ndef unique(l: list):\n    \"\"\"Return sorted unique elements in a list\n    >>> unique([5, 3, 5, 2, 3, 3, 9, 0, 123])\n    [0, 2, 3, 5, 9, 123]\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate([5, 3, 5, 2, 3, 3, 9, 0, 123]) == [0, 2, 3, 5, 9, 123]\n\n",
+      "canonical_solution": "    return sorted(list(set(l)))\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 4.0039,
+          "total_pipeline_time_sec": 4.003955364227295,
+          "resource_stats": {
+            "samples": 8,
+            "cpu_percent_avg": 0.5,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190807552,
+            "mem_rss_peak_bytes": 190812160
+          },
+          "final_code": "```python\ndef unique(l: list):\n    \"\"\"\n    Return sorted unique elements in a list\n    \n    Constraints:\n    - Input must be a list\n    - List can contain any comparable elements\n    - Output must be a sorted list of unique elements\n    - Order of elements in output should be ascending\n    \n    Examples:\n    >>> unique([5, 3, 5, 2, 3, 3, 9, 0, 123])\n    [0, 2, 3, 5, 9, 123]\n    \n    Exceptions:\n    - None specified\n    \"\"\"\n    if not isinstance(l, list):\n        raise TypeError(\"Input must be a list\")\n    \n    return sorted(list(set(l)))\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/35",
+      "task_index": 35,
+      "prompt": "\n\ndef max_element(l: list):\n    \"\"\"Return maximum element in the list.\n    >>> max_element([1, 2, 3])\n    3\n    >>> max_element([5, 3, -5, 2, -3, 3, 9, 0, 123, 1, -10])\n    123\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate([1, 2, 3]) == 3\n    assert candidate([5, 3, -5, 2, -3, 3, 9, 0, 124, 1, -10]) == 124\n",
+      "canonical_solution": "    m = l[0]\n    for e in l:\n        if e > m:\n            m = e\n    return m\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 4.0042,
+          "total_pipeline_time_sec": 4.0042924880981445,
+          "resource_stats": {
+            "samples": 8,
+            "cpu_percent_avg": 0.25,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190815232,
+            "mem_rss_peak_bytes": 190816256
+          },
+          "final_code": "```python\ndef max_element(l: list):\n    \"\"\"\n    Return maximum element in the list.\n    \n    Constraints:\n    - The input list must contain at least one element\n    - All elements in the list must be comparable\n    - The function should handle negative numbers\n    - The function should handle zero values\n    \n    Examples:\n    >>> max_element([1, 2, 3])\n    3\n    >>> max_element([5, 3, -5, 2, -3, 3, 9, 0, 123, 1, -10])\n    123\n    \n    Exceptions:\n    - ValueError: Input list is empty\n    \"\"\"\n    if not l:\n        raise ValueError(\"Input list is empty\")\n    \n    return max(l)\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/36",
+      "task_index": 36,
+      "prompt": "\n\ndef fizz_buzz(n: int):\n    \"\"\"Return the number of times the digit 7 appears in integers less than n which are divisible by 11 or 13.\n    >>> fizz_buzz(50)\n    0\n    >>> fizz_buzz(78)\n    2\n    >>> fizz_buzz(79)\n    3\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(50) == 0\n    assert candidate(78) == 2\n    assert candidate(79) == 3\n    assert candidate(100) == 3\n    assert candidate(200) == 6\n    assert candidate(4000) == 192\n    assert candidate(10000) == 639\n    assert candidate(100000) == 8026\n\n",
+      "canonical_solution": "    ns = []\n    for i in range(n):\n        if i % 11 == 0 or i % 13 == 0:\n            ns.append(i)\n    s = ''.join(list(map(str, ns)))\n    ans = 0\n    for c in s:\n        ans += (c == '7')\n    return ans\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 17.0145,
+          "total_pipeline_time_sec": 17.014580726623535,
+          "resource_stats": {
+            "samples": 34,
+            "cpu_percent_avg": 0.18,
+            "cpu_percent_peak": 4.0,
+            "mem_rss_avg_bytes": 190824207,
+            "mem_rss_peak_bytes": 190824448
+          },
+          "final_code": "```python\ndef fizz_buzz(n: int):\n    \"\"\"\n    Count the occurrences of the digit 7 in integers less than n that are divisible by either 11 or 13.\n    \n    Constraints:\n    - n must be a positive integer\n    - Only consider integers less than n\n    - Only count integers divisible by 11 or 13\n    - Count only the digit 7 in those integers\n    \n    Examples:\n    >>> fizz_buzz(50)\n    0\n    >>> fizz_buzz(78)\n    2\n    >>> fizz_buzz(79)\n    3\n    \n    Exceptions:\n    None\n    \"\"\"\n    if not isinstance(n, int) or n <= 0:\n        raise ValueError(\"n must be a positive integer\")\n    \n    count = 0\n    for i in range(n):\n        if i % 11 == 0 or i % 13 == 0:\n            count += str(i).count('7')\n    \n    return count\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/37",
+      "task_index": 37,
+      "prompt": "\n\ndef sort_even(l: list):\n    \"\"\"This function takes a list l and returns a list l' such that\n    l' is identical to l in the odd indicies, while its values at the even indicies are equal\n    to the values of the even indicies of l, but sorted.\n    >>> sort_even([1, 2, 3])\n    [1, 2, 3]\n    >>> sort_even([5, 6, 3, 4])\n    [3, 6, 5, 4]\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert tuple(candidate([1, 2, 3])) == tuple([1, 2, 3])\n    assert tuple(candidate([5, 3, -5, 2, -3, 3, 9, 0, 123, 1, -10])) == tuple([-10, 3, -5, 2, -3, 3, 5, 0, 9, 1, 123])\n    assert tuple(candidate([5, 8, -12, 4, 23, 2, 3, 11, 12, -10])) == tuple([-12, 8, 3, 4, 5, 2, 12, 11, 23, -10])\n\n",
+      "canonical_solution": "    evens = l[::2]\n    odds = l[1::2]\n    evens.sort()\n    ans = []\n    for e, o in zip(evens, odds):\n        ans.extend([e, o])\n    if len(evens) > len(odds):\n        ans.append(evens[-1])\n    return ans\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 5.5064,
+          "total_pipeline_time_sec": 5.506579875946045,
+          "resource_stats": {
+            "samples": 11,
+            "cpu_percent_avg": 0.55,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190828916,
+            "mem_rss_peak_bytes": 190832640
+          },
+          "final_code": "```python\ndef sort_even(l: list):\n    \"\"\"\n    This function takes a list l and returns a list l' such that l' is identical to l in the odd indices, \n    while its values at the even indices are equal to the values of the even indices of l, but sorted.\n    \n    Constraints:\n    - The input list can be empty\n    - The input list can have any length\n    - Only values at even indices (0, 2, 4, ...) are sorted\n    - Values at odd indices (1, 3, 5, ...) remain unchanged\n    - The sorting of even index values should be in ascending order\n    \n    Examples:\n    >>> sort_even([1, 2, 3])\n    [1, 2, 3]\n    \n    >>> sort_even([5, 6, 3, 4])\n    [3, 6, 5, 4]\n    \n    >>> sort_even([])\n    []\n    \n    >>> sort_even([4, 1, 2, 3])\n    [2, 1, 4, 3]\n    \"\"\"\n    if not l:\n        return []\n    \n    # Extract values at even indices\n    even_values = [l[i] for i in range(0, len(l), 2)]\n    \n    # Sort the even values\n    even_values.sort()\n    \n    # Create result list\n    result = l.copy()\n    \n    # Place sorted even values back at even indices\n    even_index = 0\n    for i in range(0, len(result), 2):\n        result[i] = even_values[even_index]\n        even_index += 1\n    \n    return result\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/38",
+      "task_index": 38,
+      "prompt": "\n\ndef encode_cyclic(s: str):\n    \"\"\"\n    returns encoded string by cycling groups of three characters.\n    \"\"\"\n    # split string to groups. Each of length 3.\n    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]\n    # cycle elements in each group. Unless group has fewer elements than 3.\n    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]\n    return \"\".join(groups)\n\n\ndef decode_cyclic(s: str):\n    \"\"\"\n    takes as input string encoded with encode_cyclic function. Returns decoded string.\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    from random import randint, choice\n    import string\n\n    letters = string.ascii_lowercase\n    for _ in range(100):\n        str = ''.join(choice(letters) for i in range(randint(10, 20)))\n        encoded_str = encode_cyclic(str)\n        assert candidate(encoded_str) == str\n\n",
+      "canonical_solution": "    return encode_cyclic(encode_cyclic(s))\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 5.5073,
+          "total_pipeline_time_sec": 5.507441520690918,
+          "resource_stats": {
+            "samples": 11,
+            "cpu_percent_avg": 0.55,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190838225,
+            "mem_rss_peak_bytes": 190840832
+          },
+          "final_code": "```python\ndef decode_cyclic(s: str):\n    \"\"\"\n    Takes as input string encoded with encode_cyclic function. Returns decoded string.\n    \n    Constraints:\n    - Input string must be encoded using the encode_cyclic function\n    - Groups of three characters were cycled during encoding (first character moved to end)\n    - Groups with fewer than 3 characters remain unchanged during encoding\n    - To decode, reverse the cycling operation: move last character to front for groups of length 3\n    \n    Examples:\n    >>> decode_cyclic(\"bcaefdhg\")\n    'abcdefgh'\n    >>> decode_cyclic(\"bcaef\")\n    'abcdef'\n    >>> decode_cyclic(\"bc\")\n    'bc'\n    \n    Exceptions:\n    - None\n    \"\"\"\n    result = []\n    for i in range(0, len(s), 3):\n        group = s[i:i+3]\n        if len(group) == 3:\n            # Reverse the cycling: move last character to front\n            decoded_group = group[2] + group[0] + group[1]\n            result.append(decoded_group)\n        else:\n            # Groups with fewer than 3 characters remain unchanged\n            result.append(group)\n    return ''.join(result)\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/39",
+      "task_index": 39,
+      "prompt": "\n\ndef prime_fib(n: int):\n    \"\"\"\n    prime_fib returns n-th number that is a Fibonacci number and it's also prime.\n    >>> prime_fib(1)\n    2\n    >>> prime_fib(2)\n    3\n    >>> prime_fib(3)\n    5\n    >>> prime_fib(4)\n    13\n    >>> prime_fib(5)\n    89\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(1) == 2\n    assert candidate(2) == 3\n    assert candidate(3) == 5\n    assert candidate(4) == 13\n    assert candidate(5) == 89\n    assert candidate(6) == 233\n    assert candidate(7) == 1597\n    assert candidate(8) == 28657\n    assert candidate(9) == 514229\n    assert candidate(10) == 433494437\n\n",
+      "canonical_solution": "    import math\n\n    def is_prime(p):\n        if p < 2:\n            return False\n        for k in range(2, min(int(math.sqrt(p)) + 1, p - 1)):\n            if p % k == 0:\n                return False\n        return True\n    f = [0, 1]\n    while True:\n        f.append(f[-1] + f[-2])\n        if is_prime(f[-1]):\n            n -= 1\n        if n == 0:\n            return f[-1]\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 48.0356,
+          "total_pipeline_time_sec": 48.0357084274292,
+          "resource_stats": {
+            "samples": 96,
+            "cpu_percent_avg": 0.1,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190845994,
+            "mem_rss_peak_bytes": 190853120
+          },
+          "final_code": "```python\ndef prime_fib(n: int) -> int:\n    \"\"\"\n    Returns the n-th number that is both a Fibonacci number and a prime number.\n    \n    Constraints:\n    - n must be a positive integer (n >= 1)\n    - The function should efficiently generate Fibonacci numbers and check for primality\n    - The result should be the n-th number in the sequence of numbers that are both Fibonacci and prime\n    \n    Examples:\n    >>> prime_fib(1)\n    2\n    >>> prime_fib(2)\n    3\n    >>> prime_fib(3)\n    5\n    >>> prime_fib(4)\n    13\n    >>> prime_fib(5)\n    89\n    \n    Exceptions:\n    - ValueError: when n is less than 1\n    - TypeError: when n is not an integer\n    \"\"\"\n    \n    # Check if n is an integer\n    if not isinstance(n, int):\n        raise TypeError(\"n must be an integer\")\n    \n    # Check if n is positive\n    if n < 1:\n        raise ValueError(\"n must be a positive integer (n >= 1)\")\n    \n    def is_prime(num):\n        \"\"\"Check if a number is prime\"\"\"\n        if num < 2:\n            return False\n        if num == 2:\n            return True\n        if num % 2 == 0:\n            return False\n        for i in range(3, int(num**0.5) + 1, 2):\n            if num % i == 0:\n                return False\n        return True\n    \n    # Generate Fibonacci numbers and check for primes\n    count = 0\n    a, b = 0, 1\n    \n    while count < n:\n        # Generate next Fibonacci number\n        a, b = b, a + b\n        \n        # Check if it's prime\n        if is_prime(a):\n            count += 1\n            if count == n:\n                return a\n    \n    return a\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/40",
+      "task_index": 40,
+      "prompt": "\n\ndef triples_sum_to_zero(l: list):\n    \"\"\"\n    triples_sum_to_zero takes a list of integers as an input.\n    it returns True if there are three distinct elements in the list that\n    sum to zero, and False otherwise.\n\n    >>> triples_sum_to_zero([1, 3, 5, 0])\n    False\n    >>> triples_sum_to_zero([1, 3, -2, 1])\n    True\n    >>> triples_sum_to_zero([1, 2, 3, 7])\n    False\n    >>> triples_sum_to_zero([2, 4, -5, 3, 9, 7])\n    True\n    >>> triples_sum_to_zero([1])\n    False\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate([1, 3, 5, 0]) == False\n    assert candidate([1, 3, 5, -1]) == False\n    assert candidate([1, 3, -2, 1]) == True\n    assert candidate([1, 2, 3, 7]) == False\n    assert candidate([1, 2, 5, 7]) == False\n    assert candidate([2, 4, -5, 3, 9, 7]) == True\n    assert candidate([1]) == False\n    assert candidate([1, 3, 5, -100]) == False\n    assert candidate([100, 3, 5, -100]) == False\n\n",
+      "canonical_solution": "    for i in range(len(l)):\n        for j in range(i + 1, len(l)):\n            for k in range(j + 1, len(l)):\n                if l[i] + l[j] + l[k] == 0:\n                    return True\n    return False\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 32.5263,
+          "total_pipeline_time_sec": 32.526421785354614,
+          "resource_stats": {
+            "samples": 65,
+            "cpu_percent_avg": 0.09,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190857089,
+            "mem_rss_peak_bytes": 190857216
+          },
+          "final_code": "```python\ndef triples_sum_to_zero(l: list) -> bool:\n    \"\"\"\n    Determines if there exist three distinct elements in the input list that sum to zero.\n    \n    Constraints:\n    - Input must be a list of integers\n    - The function should return False if the list has fewer than 3 elements\n    - Elements must be distinct (at different indices)\n    - Return True if any combination of three distinct elements sums to zero\n    - Return False if no such combination exists\n    \n    Examples:\n    >>> triples_sum_to_zero([1, 3, 5, 0])\n    False\n    >>> triples_sum_to_zero([1, 3, -2, 1])\n    True\n    >>> triples_sum_to_zero([1, 2, 3, 7])\n    False\n    >>> triples_sum_to_zero([2, 4, -5, 3, 9, 7])\n    True\n    >>> triples_sum_to_zero([1])\n    False\n    \n    Exceptions:\n    - None\n    \"\"\"\n    # Check if input is a list\n    if not isinstance(l, list):\n        return False\n    \n    # Check if list has fewer than 3 elements\n    if len(l) < 3:\n        return False\n    \n    # Check if all elements are integers\n    for element in l:\n        if not isinstance(element, int):\n            return False\n    \n    # Check all combinations of three distinct elements\n    for i in range(len(l)):\n        for j in range(i + 1, len(l)):\n            for k in range(j + 1, len(l)):\n                if l[i] + l[j] + l[k] == 0:\n                    return True\n    \n    return False\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/41",
+      "task_index": 41,
+      "prompt": "\n\ndef car_race_collision(n: int):\n    \"\"\"\n    Imagine a road that's a perfectly straight infinitely long line.\n    n cars are driving left to right;  simultaneously, a different set of n cars\n    are driving right to left.   The two sets of cars start out being very far from\n    each other.  All cars move in the same speed.  Two cars are said to collide\n    when a car that's moving left to right hits a car that's moving right to left.\n    However, the cars are infinitely sturdy and strong; as a result, they continue moving\n    in their trajectory as if they did not collide.\n\n    This function outputs the number of such collisions.\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(2) == 4\n    assert candidate(3) == 9\n    assert candidate(4) == 16\n    assert candidate(8) == 64\n    assert candidate(10) == 100\n\n",
+      "canonical_solution": "    return n**2\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 5.0058,
+          "total_pipeline_time_sec": 5.0059428215026855,
+          "resource_stats": {
+            "samples": 10,
+            "cpu_percent_avg": 0.6,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190863360,
+            "mem_rss_peak_bytes": 190865408
+          },
+          "final_code": "```python\ndef car_race_collision(n: int):\n    \"\"\"\n    Calculates the number of collisions between two sets of n cars each, where one set moves left to right and the other moves right to left on a straight infinite road. All cars move at the same speed and continue moving after collision.\n\n    Constraints:\n    - n must be a non-negative integer\n    - Each car from the left-moving set will collide with exactly one car from the right-moving set\n    - Cars are infinitely sturdy and continue moving after collision\n\n    Examples:\n    >>> car_race_collision(0)\n    0\n    >>> car_race_collision(1)\n    1\n    >>> car_race_collision(5)\n    5\n\n    Exceptions:\n    - None\n    \"\"\"\n    if not isinstance(n, int) or n < 0:\n        raise ValueError(\"n must be a non-negative integer\")\n    \n    return n\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/42",
+      "task_index": 42,
+      "prompt": "\n\ndef incr_list(l: list):\n    \"\"\"Return list with elements incremented by 1.\n    >>> incr_list([1, 2, 3])\n    [2, 3, 4]\n    >>> incr_list([5, 3, 5, 2, 3, 3, 9, 0, 123])\n    [6, 4, 6, 3, 4, 4, 10, 1, 124]\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate([]) == []\n    assert candidate([3, 2, 1]) == [4, 3, 2]\n    assert candidate([5, 2, 5, 2, 3, 3, 9, 0, 123]) == [6, 3, 6, 3, 4, 4, 10, 1, 124]\n\n",
+      "canonical_solution": "    return [(e + 1) for e in l]\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 14.5112,
+          "total_pipeline_time_sec": 14.511349201202393,
+          "resource_stats": {
+            "samples": 29,
+            "cpu_percent_avg": 0.21,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190870351,
+            "mem_rss_peak_bytes": 190877696
+          },
+          "final_code": "```python\ndef incr_list(l: list):\n    \"\"\"\n    Return list with elements incremented by 1.\n\n    Constraints:\n    - Input must be a list\n    - All elements in the list should be numeric (int or float)\n    - The function should handle empty lists\n    - The function should handle lists with negative numbers\n    - The function should preserve the order of elements\n\n    Examples:\n    >>> incr_list([1, 2, 3])\n    [2, 3, 4]\n    >>> incr_list([5, 3, 5, 2, 3, 3, 9, 0, 123])\n    [6, 4, 6, 3, 4, 4, 10, 1, 124]\n    >>> incr_list([])\n    []\n    >>> incr_list([-1, -2, 0, 1])\n    [0, -1, 1, 2]\n\n    Exceptions:\n    - TypeError: If input is not a list\n    - TypeError: If list contains non-numeric elements\n    \"\"\"\n    if not isinstance(l, list):\n        raise TypeError(\"Input is not a list\")\n    \n    result = []\n    for element in l:\n        if not isinstance(element, (int, float)):\n            raise TypeError(\"List contains non-numeric elements\")\n        result.append(element + 1)\n    \n    return result\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/43",
+      "task_index": 43,
+      "prompt": "\n\ndef pairs_sum_to_zero(l):\n    \"\"\"\n    pairs_sum_to_zero takes a list of integers as an input.\n    it returns True if there are two distinct elements in the list that\n    sum to zero, and False otherwise.\n    >>> pairs_sum_to_zero([1, 3, 5, 0])\n    False\n    >>> pairs_sum_to_zero([1, 3, -2, 1])\n    False\n    >>> pairs_sum_to_zero([1, 2, 3, 7])\n    False\n    >>> pairs_sum_to_zero([2, 4, -5, 3, 5, 7])\n    True\n    >>> pairs_sum_to_zero([1])\n    False\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate([1, 3, 5, 0]) == False\n    assert candidate([1, 3, -2, 1]) == False\n    assert candidate([1, 2, 3, 7]) == False\n    assert candidate([2, 4, -5, 3, 5, 7]) == True\n    assert candidate([1]) == False\n\n    assert candidate([-3, 9, -1, 3, 2, 30]) == True\n    assert candidate([-3, 9, -1, 3, 2, 31]) == True\n    assert candidate([-3, 9, -1, 4, 2, 30]) == False\n    assert candidate([-3, 9, -1, 4, 2, 31]) == False\n\n",
+      "canonical_solution": "    for i, l1 in enumerate(l):\n        for j in range(i + 1, len(l)):\n            if l1 + l[j] == 0:\n                return True\n    return False\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 12.512,
+          "total_pipeline_time_sec": 12.512117624282837,
+          "resource_stats": {
+            "samples": 25,
+            "cpu_percent_avg": 0.24,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190879825,
+            "mem_rss_peak_bytes": 190881792
+          },
+          "final_code": "```python\ndef pairs_sum_to_zero(l: list) -> bool:\n    \"\"\"\n    Check if there are two distinct elements in the list that sum to zero\n    \n    Constraints:\n    - The input must be a list of integers\n    - The function should return False for lists with less than 2 elements\n    - Elements must be distinct (different indices) but can have the same value\n    - The function should handle negative numbers\n    - The function should handle empty lists\n    \n    Examples:\n    >>> pairs_sum_to_zero([1, 3, 5, 0])\n    False\n    >>> pairs_sum_to_zero([1, 3, -2, 1])\n    False\n    >>> pairs_sum_to_zero([1, 2, 3, 7])\n    False\n    >>> pairs_sum_to_zero([2, 4, -5, 3, 5, 7])\n    True\n    >>> pairs_sum_to_zero([1])\n    False\n    \n    Exceptions:\n    None\n    \"\"\"\n    # Check if input is a list\n    if not isinstance(l, list):\n        raise TypeError(\"Input must be a list\")\n    \n    # Return False for lists with less than 2 elements\n    if len(l) < 2:\n        return False\n    \n    # Check if all elements are integers\n    for element in l:\n        if not isinstance(element, int):\n            raise TypeError(\"All elements in the list must be integers\")\n    \n    # Use a set to store seen elements for O(1) lookup\n    seen = set()\n    \n    for num in l:\n        # If the complement (-num) is already in the set, we found a pair\n        if -num in seen:\n            return True\n        # Add current number to the set\n        seen.add(num)\n    \n    # No pair found that sums to zero\n    return False\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/44",
+      "task_index": 44,
+      "prompt": "\n\ndef change_base(x: int, base: int):\n    \"\"\"Change numerical base of input number x to base.\n    return string representation after the conversion.\n    base numbers are less than 10.\n    >>> change_base(8, 3)\n    '22'\n    >>> change_base(8, 2)\n    '1000'\n    >>> change_base(7, 2)\n    '111'\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(8, 3) == \"22\"\n    assert candidate(9, 3) == \"100\"\n    assert candidate(234, 2) == \"11101010\"\n    assert candidate(16, 2) == \"10000\"\n    assert candidate(8, 2) == \"1000\"\n    assert candidate(7, 2) == \"111\"\n    for x in range(2, 8):\n        assert candidate(x, x + 1) == str(x)\n\n",
+      "canonical_solution": "    ret = \"\"\n    while x > 0:\n        ret = str(x % base) + ret\n        x //= base\n    return ret\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 20.5198,
+          "total_pipeline_time_sec": 20.519925117492676,
+          "resource_stats": {
+            "samples": 41,
+            "cpu_percent_avg": 0.15,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190889284,
+            "mem_rss_peak_bytes": 190889984
+          },
+          "final_code": "```python\ndef change_base(x: int, base: int) -> str:\n    \"\"\"\n    Converts a decimal integer to its string representation in the specified base.\n    \n    Constraints:\n    - Base must be between 2 and 9 inclusive\n    - Input x must be a non-negative integer\n    - Returns string representation of number in the new base\n    \n    Examples:\n    >>> change_base(8, 3)\n    '22'\n    >>> change_base(8, 2)\n    '1000'\n    >>> change_base(7, 2)\n    '111'\n    \n    Exceptions:\n    None\n    \"\"\"\n    if not isinstance(x, int) or x < 0:\n        raise ValueError(\"x must be a non-negative integer\")\n    if not isinstance(base, int) or base < 2 or base > 9:\n        raise ValueError(\"base must be between 2 and 9 inclusive\")\n    \n    if x == 0:\n        return \"0\"\n    \n    digits = []\n    while x > 0:\n        digits.append(str(x % base))\n        x //= base\n    \n    return \"\".join(reversed(digits))\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/45",
+      "task_index": 45,
+      "prompt": "\n\ndef triangle_area(a, h):\n    \"\"\"Given length of a side and high return area for a triangle.\n    >>> triangle_area(5, 3)\n    7.5\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(5, 3) == 7.5\n    assert candidate(2, 2) == 2.0\n    assert candidate(10, 8) == 40.0\n\n",
+      "canonical_solution": "    return a * h / 2.0\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 10.0086,
+          "total_pipeline_time_sec": 10.008717060089111,
+          "resource_stats": {
+            "samples": 20,
+            "cpu_percent_avg": 0.2,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190895513,
+            "mem_rss_peak_bytes": 190898176
+          },
+          "final_code": "```python\ndef triangle_area(a, h):\n    \"\"\"\n    Calculate the area of a triangle given the length of a side and its corresponding height.\n    \n    Constraints:\n    - Both parameters must be numeric values\n    - Both parameters must be positive numbers\n    - The function should return a float or integer result\n    \n    Examples:\n    >>> triangle_area(5, 3)\n    7.5\n    \n    Exceptions:\n    - Raises TypeError if parameters are not numeric\n    - Raises ValueError if parameters are not positive\n    \"\"\"\n    # Check if both parameters are numeric\n    if not isinstance(a, (int, float)) or not isinstance(h, (int, float)):\n        raise TypeError(\"Both parameters must be numeric values\")\n    \n    # Check if both parameters are positive\n    if a <= 0 or h <= 0:\n        raise ValueError(\"Both parameters must be positive numbers\")\n    \n    # Calculate and return the area\n    return 0.5 * a * h\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/46",
+      "task_index": 46,
+      "prompt": "\n\ndef fib4(n: int):\n    \"\"\"The Fib4 number sequence is a sequence similar to the Fibbonacci sequnece that's defined as follows:\n    fib4(0) -> 0\n    fib4(1) -> 0\n    fib4(2) -> 2\n    fib4(3) -> 0\n    fib4(n) -> fib4(n-1) + fib4(n-2) + fib4(n-3) + fib4(n-4).\n    Please write a function to efficiently compute the n-th element of the fib4 number sequence.  Do not use recursion.\n    >>> fib4(5)\n    4\n    >>> fib4(6)\n    8\n    >>> fib4(7)\n    14\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(5) == 4\n    assert candidate(8) == 28\n    assert candidate(10) == 104\n    assert candidate(12) == 386\n\n",
+      "canonical_solution": "    results = [0, 0, 2, 0]\n    if n < 4:\n        return results[n]\n\n    for _ in range(4, n + 1):\n        results.append(results[-1] + results[-2] + results[-3] + results[-4])\n        results.pop(0)\n\n    return results[-1]\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 8.5083,
+          "total_pipeline_time_sec": 8.508665084838867,
+          "resource_stats": {
+            "samples": 17,
+            "cpu_percent_avg": 0.35,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190899862,
+            "mem_rss_peak_bytes": 190902272
+          },
+          "final_code": "```python\ndef fib4(n: int):\n    \"\"\"\n    Computes the n-th element of the Fib4 number sequence, which is defined as: fib4(0)=0, fib4(1)=0, fib4(2)=2, fib4(3)=0, and for n>=4, fib4(n) = fib4(n-1) + fib4(n-2) + fib4(n-3) + fib4(n-4). The implementation uses an iterative approach for efficiency.\n    \n    Constraints:\n    - Do not use recursion\n    - n must be a non-negative integer\n    - For n < 0, behavior is undefined\n    \n    Examples:\n    >>> fib4(5)\n    4\n    >>> fib4(6)\n    8\n    >>> fib4(7)\n    14\n    \n    Exceptions:\n    None\n    \"\"\"\n    if n < 0:\n        raise ValueError(\"n must be a non-negative integer\")\n    \n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 0\n    elif n == 2:\n        return 2\n    elif n == 3:\n        return 0\n    \n    # Initialize the first four values\n    a, b, c, d = 0, 0, 2, 0\n    \n    # Iteratively compute fib4(n) for n >= 4\n    for i in range(4, n + 1):\n        next_val = a + b + c + d\n        a, b, c, d = b, c, d, next_val\n    \n    return d\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/47",
+      "task_index": 47,
+      "prompt": "\n\ndef median(l: list):\n    \"\"\"Return median of elements in the list l.\n    >>> median([3, 1, 2, 4, 5])\n    3\n    >>> median([-10, 4, 6, 1000, 10, 20])\n    15.0\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate([3, 1, 2, 4, 5]) == 3\n    assert candidate([-10, 4, 6, 1000, 10, 20]) == 8.0\n    assert candidate([5]) == 5\n    assert candidate([6, 5]) == 5.5\n    assert candidate([8, 1, 3, 9, 9, 2, 7]) == 7 \n\n",
+      "canonical_solution": "    l = sorted(l)\n    if len(l) % 2 == 1:\n        return l[len(l) // 2]\n    else:\n        return (l[len(l) // 2 - 1] + l[len(l) // 2]) / 2.0\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 8.5067,
+          "total_pipeline_time_sec": 8.506791830062866,
+          "resource_stats": {
+            "samples": 17,
+            "cpu_percent_avg": 0.24,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190907331,
+            "mem_rss_peak_bytes": 190910464
+          },
+          "final_code": "```python\ndef median(l: list):\n    \"\"\"\n    Calculate and return the median value of elements in a list. The median is the middle value when the list is sorted. If the list has an even number of elements, the median is the average of the two middle elements.\n    \n    Constraints:\n    - The input list must contain at least one element\n    - The list can contain both positive and negative integers\n    - For even-length lists, return the average of the two middle elements as a float\n    - For odd-length lists, return the middle element\n    - The original list should not be modified\n    \n    Examples:\n    >>> median([3, 1, 2, 4, 5])\n    3\n    >>> median([-10, 4, 6, 1000, 10, 20])\n    15.0\n    \n    Exceptions:\n    None\n    \"\"\"\n    if not isinstance(l, list):\n        raise TypeError(\"Input must be a list\")\n    \n    if len(l) == 0:\n        raise ValueError(\"List must contain at least one element\")\n    \n    # Create a copy to avoid modifying the original list\n    sorted_list = sorted(l)\n    n = len(sorted_list)\n    \n    if n % 2 == 1:\n        # Odd length: return the middle element\n        return sorted_list[n // 2]\n    else:\n        # Even length: return the average of the two middle elements\n        mid1 = sorted_list[n // 2 - 1]\n        mid2 = sorted_list[n // 2]\n        return (mid1 + mid2) / 2.0\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/48",
+      "task_index": 48,
+      "prompt": "\n\ndef is_palindrome(text: str):\n    \"\"\"\n    Checks if given string is a palindrome\n    >>> is_palindrome('')\n    True\n    >>> is_palindrome('aba')\n    True\n    >>> is_palindrome('aaaaa')\n    True\n    >>> is_palindrome('zbcd')\n    False\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate('') == True\n    assert candidate('aba') == True\n    assert candidate('aaaaa') == True\n    assert candidate('zbcd') == False\n    assert candidate('xywyx') == True\n    assert candidate('xywyz') == False\n    assert candidate('xywzx') == False\n\n",
+      "canonical_solution": "    for i in range(len(text)):\n        if text[i] != text[len(text) - 1 - i]:\n            return False\n    return True\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 9.0072,
+          "total_pipeline_time_sec": 9.007285356521606,
+          "resource_stats": {
+            "samples": 18,
+            "cpu_percent_avg": 0.33,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190915242,
+            "mem_rss_peak_bytes": 190918656
+          },
+          "final_code": "```python\ndef is_palindrome(text: str):\n    \"\"\"\n    Checks if given string is a palindrome\n    \n    Constraints:\n    - An empty string is considered a palindrome\n    - The function should handle strings of any length\n    - Palindrome check should be case-sensitive\n    - Only the exact character sequence matters for palindrome determination\n    \n    Examples:\n    >>> is_palindrome(\"\")\n    True\n    >>> is_palindrome(\"aba\")\n    True\n    >>> is_palindrome(\"aaaaa\")\n    True\n    >>> is_palindrome(\"zbcd\")\n    False\n    \n    Exceptions:\n    None\n    \"\"\"\n    # Check if input is a string\n    if not isinstance(text, str):\n        raise TypeError(\"Input must be a string\")\n    \n    # An empty string is considered a palindrome\n    if len(text) == 0:\n        return True\n    \n    # Check if the string equals its reverse\n    return text == text[::-1]\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/49",
+      "task_index": 49,
+      "prompt": "\n\ndef modp(n: int, p: int):\n    \"\"\"Return 2^n modulo p (be aware of numerics).\n    >>> modp(3, 5)\n    3\n    >>> modp(1101, 101)\n    2\n    >>> modp(0, 101)\n    1\n    >>> modp(3, 11)\n    8\n    >>> modp(100, 101)\n    1\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(3, 5) == 3\n    assert candidate(1101, 101) == 2\n    assert candidate(0, 101) == 1\n    assert candidate(3, 11) == 8\n    assert candidate(100, 101) == 1\n    assert candidate(30, 5) == 4\n    assert candidate(31, 5) == 3\n\n",
+      "canonical_solution": "    ret = 1\n    for i in range(n):\n        ret = (2 * ret) % p\n    return ret\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 18.512,
+          "total_pipeline_time_sec": 18.51206135749817,
+          "resource_stats": {
+            "samples": 37,
+            "cpu_percent_avg": 0.22,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190923194,
+            "mem_rss_peak_bytes": 190926848
+          },
+          "final_code": "```python\ndef modp(n: int, p: int) -> int:\n    \"\"\"\n    Computes 2 raised to the power of n, then takes the result modulo p. This function handles large exponents efficiently by using modular exponentiation to avoid numerical overflow.\n\n    Constraints:\n    - n must be a non-negative integer\n    - p must be a positive integer greater than 1\n    - The function should handle large values of n efficiently using modular exponentiation\n    - Return value should be in the range [0, p-1]\n\n    Examples:\n    >>> modp(n=3, p=5)\n    3\n    >>> modp(n=1101, p=101)\n    2\n    >>> modp(n=0, p=101)\n    1\n    >>> modp(n=3, p=11)\n    8\n    >>> modp(n=100, p=101)\n    1\n\n    Exceptions:\n    - None\n    \"\"\"\n    # Validate inputs\n    if not isinstance(n, int) or n < 0:\n        raise ValueError(\"n must be a non-negative integer\")\n    if not isinstance(p, int) or p <= 1:\n        raise ValueError(\"p must be a positive integer greater than 1\")\n    \n    # Use Python's built-in pow function with three arguments for modular exponentiation\n    # pow(base, exponent, modulus) computes (base^exponent) % modulus efficiently\n    return pow(2, n, p)\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    }
+  ]
+}

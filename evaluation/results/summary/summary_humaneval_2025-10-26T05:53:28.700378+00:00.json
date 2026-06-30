@@ -1,0 +1,134 @@
+{
+  "summary": {
+    "timestamp": "2025-10-26T05:53:28.700378+00:00",
+    "dataset": "humaneval",
+    "num_tasks": 1,
+    "attempts_per_task": 1,
+    "latency": {
+      "count": 1,
+      "mean": 20.5237,
+      "median": 20.5237,
+      "stdev": 0.0,
+      "p50": 20.5237,
+      "p90": 20.5237,
+      "p95": 20.5237
+    },
+    "resource": {
+      "cpu_percent_avg_mean": 1.27,
+      "cpu_percent_peak_max": 4.0,
+      "mem_rss_avg_mean_bytes": 209313792,
+      "mem_rss_peak_max_bytes": 209444864
+    },
+    "pass_stats": {
+      "total_tasks": 1,
+      "passed_at_1": 0,
+      "pass_at_1_pct": 0.0
+    },
+    "model_config": null,
+    "use_translator": true,
+    "use_optimizer": true,
+    "shared_llm": false,
+    "cloud_llm": true,
+    "env_info": {
+      "timestamp": "2025-10-26T05:53:28.700356Z",
+      "git_commit": "bb1e61550eaeba451f1eeaee866e4cd92d86174a",
+      "git_branch": "eval-run/humaneval_20251026_084148",
+      "cpu_model": "x86_64",
+      "cpu_cores": 12,
+      "dependencies": [
+        "autoflake==2.3.1",
+        "autopep8==2.3.2",
+        "black==25.9.0",
+        "dirtyjson==1.0.8",
+        "fire==0.7.1",
+        "isort==7.0.0",
+        "json_repair==0.52.3",
+        "langchain==1.0.2",
+        "langchain_core==1.0.1",
+        "langchain_ollama==1.0.0",
+        "matplotlib==3.10.7",
+        "mypy==1.18.2",
+        "numpy==2.3.4",
+        "psutil==7.1.0",
+        "pydantic==2.12.3",
+        "pytest==8.4.2",
+        "pyupgrade==3.20.0",
+        "PyYAML==6.0.2",
+        "PyYAML==6.0.3",
+        "setuptools==80.9.0",
+        "tqdm==4.67.1"
+      ]
+    }
+  },
+  "results": [
+    {
+      "task_id": "HumanEval/0",
+      "prompt": "from typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.3) == True\n    assert candidate([1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.05) == False\n    assert candidate([1.0, 2.0, 5.9, 4.0, 5.0], 0.95) == True\n    assert candidate([1.0, 2.0, 5.9, 4.0, 5.0], 0.8) == False\n    assert candidate([1.0, 2.0, 3.0, 4.0, 5.0, 2.0], 0.1) == True\n    assert candidate([1.1, 2.2, 3.1, 4.1, 5.1], 1.0) == True\n    assert candidate([1.1, 2.2, 3.1, 4.1, 5.1], 0.5) == False\n\n",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 20.5237,
+          "resource_stats": {
+            "samples": 41,
+            "cpu_percent_avg": 1.27,
+            "cpu_percent_peak": 4.0,
+            "mem_rss_avg_bytes": 209313792,
+            "mem_rss_peak_bytes": 209444864
+          },
+          "final_code": {
+            "optimized_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n\n    Args:\n        spec (dict): A dictionary containing the specification for JSON generation.\n                    Expected to contain keys like 'error', 'data', etc.\n\n    Returns:\n        dict: A dictionary representing the generated JSON response.\n\n    Raises:\n        TypeError: If spec is not a dictionary.\n        KeyError: If required keys are missing from spec.\n\n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n\n        >>> generate_json({\"data\": {\"name\": \"John\", \"age\": 30}})\n        {'data': {'name': 'John', 'age': 30}}\n\n        >>> generate_json({\"error\": null, \"result\": \"success\"})\n        {'error': None, 'result': 'success'}\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError('spec must be a dictionary')\n    return spec",
+            "issues_found": [],
+            "success": true,
+            "improvements": [
+              "Applied autopep8 style fixes",
+              "Removed unused imports and variables with autoflake",
+              "Sorted imports with isort",
+              "Applied Python version upgrades with pyupgrade",
+              "Applied Black formatting (PEP8)",
+              "Fixed common coding issues",
+              "Applied performance optimizations",
+              "Enhanced type hints",
+              "Passed mypy type checking"
+            ],
+            "functionality_preserved": true,
+            "mypy_result": {
+              "passed": true,
+              "output": "Success: no issues found in 1 source file\n",
+              "errors": "",
+              "suggestions": []
+            },
+            "optimization_stats": {
+              "original_lines": 29,
+              "original_size": 1004,
+              "steps_completed": 9,
+              "tools_used": [
+                "autopep8",
+                "autoflake",
+                "isort",
+                "pyupgrade",
+                "black",
+                "mypy"
+              ],
+              "final_lines": 28,
+              "final_size": 967,
+              "size_reduction": 37,
+              "lines_changed": 1
+            },
+            "tools_used": [
+              "autopep8",
+              "autoflake",
+              "isort",
+              "pyupgrade",
+              "black",
+              "mypy"
+            ]
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "error": null
+        }
+      ]
+    }
+  ]
+}

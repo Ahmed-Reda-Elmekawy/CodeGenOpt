@@ -1,0 +1,22 @@
+{
+  "task_id": "HumanEval/31",
+  "prompt": "\n\ndef is_prime(n):\n    \"\"\"Return true if a given number is prime, and false otherwise.\n    >>> is_prime(6)\n    False\n    >>> is_prime(101)\n    True\n    >>> is_prime(11)\n    True\n    >>> is_prime(13441)\n    True\n    >>> is_prime(61)\n    True\n    >>> is_prime(4)\n    False\n    >>> is_prime(1)\n    False\n    \"\"\"\n",
+  "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(6) == False\n    assert candidate(101) == True\n    assert candidate(11) == True\n    assert candidate(13441) == True\n    assert candidate(61) == True\n    assert candidate(4) == False\n    assert candidate(1) == False\n    assert candidate(5) == True\n    assert candidate(11) == True\n    assert candidate(17) == True\n    assert candidate(5 * 17) == False\n    assert candidate(11 * 7) == False\n    assert candidate(13441 * 19) == False\n\n",
+  "attempts": [
+    {
+      "attempt_idx": 0,
+      "duration_sec": 13.2425,
+      "resource_stats": {
+        "samples": 66,
+        "cpu_percent_avg": 1.59,
+        "cpu_percent_peak": 10.0,
+        "mem_rss_avg_bytes": 208601088,
+        "mem_rss_peak_bytes": 208601088
+      },
+      "final_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    This function processes a structured JSON specification and returns\n    a valid Python dictionary that can be serialized to JSON.\n    \n    Args:\n        spec (dict): A dictionary containing the JSON specification with keys:\n            - \"error\" (str, optional): Error message if generation failed\n            - Other specification fields as needed\n    \n    Returns:\n        dict: A valid dictionary representation that can be serialized to JSON\n    \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n        \n        >>> generate_json({})\n        {}\n    \n    Raises:\n        TypeError: If spec is not a dictionary\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    # Return the spec as-is since it's already in the correct format\n    return spec.copy()",
+      "syntax_ok": true,
+      "passed": true,
+      "error": null
+    }
+  ]
+}

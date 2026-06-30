@@ -1,0 +1,22 @@
+{
+  "task_id": "HumanEval/2",
+  "prompt": "\n\ndef truncate_number(number: float) -> float:\n    \"\"\" Given a positive floating point number, it can be decomposed into\n    and integer part (largest integer smaller than given number) and decimals\n    (leftover part always smaller than 1).\n\n    Return the decimal part of the number.\n    >>> truncate_number(3.5)\n    0.5\n    \"\"\"\n",
+  "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate(3.5) == 0.5\n    assert abs(candidate(1.33) - 0.33) < 1e-6\n    assert abs(candidate(123.456) - 0.456) < 1e-6\n",
+  "attempts": [
+    {
+      "attempt_idx": 0,
+      "duration_sec": 16.0551,
+      "resource_stats": {
+        "samples": 80,
+        "cpu_percent_avg": 1.69,
+        "cpu_percent_peak": 10.0,
+        "mem_rss_avg_bytes": 208301260,
+        "mem_rss_peak_bytes": 208338944
+      },
+      "final_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    Args:\n        spec (dict): A dictionary containing the specification for JSON generation.\n                    Expected to contain keys like 'error', 'data', etc.\n    \n    Returns:\n        dict: A dictionary representing the generated JSON response.\n    \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If spec contains invalid data types.\n    \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n        \n        >>> generate_json({\"data\": {\"name\": \"John\", \"age\": 30}})\n        {'data': {'name': 'John', 'age': 30}}\n        \n        >>> generate_json({})\n        {}\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    # Validate that all values in spec are of supported types\n    for key, value in spec.items():\n        if not isinstance(value, (bool, int, str, list, dict, type(None))):\n            raise ValueError(f\"Invalid data type for key '{key}': {type(value)}\")\n    \n    return spec.copy()",
+      "syntax_ok": true,
+      "passed": true,
+      "error": null
+    }
+  ]
+}

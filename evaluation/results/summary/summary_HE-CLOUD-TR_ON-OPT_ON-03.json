@@ -1,0 +1,175 @@
+{
+  "summary": {
+    "timestamp": "2026-04-18T22:25:39.286901+00:00",
+    "experiment_name": "HE-CLOUD-TR_ON-OPT_ON-03",
+    "experiment_id": "HE-CLOUD-TR_ON-OPT_ON-03",
+    "test_config": {
+      "dataset": "humaneval",
+      "sample_indices": null,
+      "num_tasks": 3,
+      "attempts_per_task": 1,
+      "use_translator": true,
+      "use_optimizer": true,
+      "shared_llm": false,
+      "cloud_llm": true
+    },
+    "model_config": null,
+    "latency": {
+      "count": 3,
+      "mean": 22.3492,
+      "median": 21.013,
+      "stdev": 9.8475,
+      "p50": 21.013,
+      "p90": 21.013,
+      "p95": 21.013
+    },
+    "resource": {
+      "cpu_percent_avg_mean": 0.23,
+      "cpu_percent_peak_max": 2.0,
+      "mem_rss_avg_mean_bytes": 189557253,
+      "mem_rss_peak_max_bytes": 189648896
+    },
+    "pass_stats": {
+      "total_tasks": 3,
+      "passed_at_1": 3,
+      "pass_at_1_pct": 100.0
+    },
+    "env_info": {
+      "timestamp": "2026-04-18T22:25:39.286871Z",
+      "git_commit": "287a3676695c5342322c788522b6e19cdfac10a0",
+      "git_branch": "main",
+      "cpu_model": "x86_64",
+      "cpu_cores": 12,
+      "dependencies": [
+        "autoflake==2.3.1",
+        "autopep8==2.3.2",
+        "black==25.9.0",
+        "dirtyjson==1.0.8",
+        "fire==0.7.1",
+        "isort==7.0.0",
+        "json_repair==0.52.3",
+        "langchain==1.0.2",
+        "langchain_core==1.0.1",
+        "langchain_ollama==1.0.0",
+        "matplotlib==3.10.7",
+        "mypy==1.18.2",
+        "numpy==2.3.4",
+        "psutil==7.1.0",
+        "pydantic==2.12.3",
+        "pytest==8.4.2",
+        "pyupgrade==3.20.0",
+        "PyYAML==6.0.2",
+        "PyYAML==6.0.3",
+        "setuptools==80.9.0",
+        "tqdm==4.67.1"
+      ]
+    }
+  },
+  "results": [
+    {
+      "task_id": "HumanEval/0",
+      "task_index": 0,
+      "prompt": "from typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.3) == True\n    assert candidate([1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.05) == False\n    assert candidate([1.0, 2.0, 5.9, 4.0, 5.0], 0.95) == True\n    assert candidate([1.0, 2.0, 5.9, 4.0, 5.0], 0.8) == False\n    assert candidate([1.0, 2.0, 3.0, 4.0, 5.0, 2.0], 0.1) == True\n    assert candidate([1.1, 2.2, 3.1, 4.1, 5.1], 1.0) == True\n    assert candidate([1.1, 2.2, 3.1, 4.1, 5.1], 0.5) == False\n\n",
+      "canonical_solution": "    for idx, elem in enumerate(numbers):\n        for idx2, elem2 in enumerate(numbers):\n            if idx != idx2:\n                distance = abs(elem - elem2)\n                if distance < threshold:\n                    return True\n\n    return False\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 21.013,
+          "total_pipeline_time_sec": 21.01309299468994,
+          "resource_stats": {
+            "samples": 42,
+            "cpu_percent_avg": 0.19,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 189436586,
+            "mem_rss_peak_bytes": 189489152
+          },
+          "final_code": "def has_close_elements(numbers: list[float], threshold: float) -> bool:\n    \"\"\"\n    Check if in given list of numbers, are any two numbers closer to each other than given threshold.\n\n    Constraints:\n    - The input list can contain floating point numbers including integers\n    - The threshold must be a non-negative number\n    - An empty list or single element list should return False\n    - The function should handle duplicate values correctly\n    - Comparison should be done using absolute difference between numbers\n\n    Examples:\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n\n    Exceptions:\n    - None\n    \"\"\"\n    # Handle edge cases\n    if len(numbers) < 2:\n        return False\n\n    # Compare all pairs of numbers\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if abs(numbers[i] - numbers[j]) < threshold:\n                return True\n\n    return False\n",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": true,
+          "passed": true,
+          "test_output": "",
+          "error_type": null,
+          "error_message": null,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/1",
+      "task_index": 1,
+      "prompt": "from typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(())', '(()())']\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('(()()) ((())) () ((())()())') == [\n        '(()())', '((()))', '()', '((())()())'\n    ]\n    assert candidate('() (()) ((())) (((())))') == [\n        '()', '(())', '((()))', '(((())))'\n    ]\n    assert candidate('(()(())((())))') == [\n        '(()(())((())))'\n    ]\n    assert candidate('( ) (( )) (( )( ))') == ['()', '(())', '(()())']\n",
+      "canonical_solution": "    result = []\n    current_string = []\n    current_depth = 0\n\n    for c in paren_string:\n        if c == '(':\n            current_depth += 1\n            current_string.append(c)\n        elif c == ')':\n            current_depth -= 1\n            current_string.append(c)\n\n            if current_depth == 0:\n                result.append(''.join(current_string))\n                current_string.clear()\n\n    return result\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 11.0123,
+          "total_pipeline_time_sec": 11.01246953010559,
+          "resource_stats": {
+            "samples": 22,
+            "cpu_percent_avg": 0.36,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 189592482,
+            "mem_rss_peak_bytes": 189603840
+          },
+          "final_code": "def separate_paren_groups(paren_string: str) -> list[str]:\n    \"\"\"\n    Separates a string containing multiple groups of nested parentheses into individual balanced parenthesis groups.\n\n    Constraints:\n    - Input string contains multiple groups of nested parentheses\n    - Each group is balanced (each opening parenthesis has a matching closing parenthesis)\n    - Groups are not nested within each other\n    - Spaces in the input string should be ignored\n    - Return a list of strings where each string represents a separate balanced group\n\n    Examples:\n    >>> separate_paren_groups({\"paren_string\": \"( ) (( )) (( )( ))\"})\n    ['()', '(())', '(()())']\n\n    Exceptions:\n    None\n    \"\"\"\n    # Remove spaces from the input string\n    paren_string = paren_string.replace(\" \", \"\")\n\n    result = []\n    current_group = \"\"\n    balance = 0\n\n    for char in paren_string:\n        if char == \"(\":\n            current_group += char\n            balance += 1\n        elif char == \")\":\n            current_group += char\n            balance -= 1\n\n            # When balance reaches 0, we have a complete group\n            if balance == 0:\n                result.append(current_group)\n                current_group = \"\"\n\n    return result\n",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": true,
+          "passed": true,
+          "test_output": "",
+          "error_type": null,
+          "error_message": null,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/2",
+      "task_index": 2,
+      "prompt": "\n\ndef truncate_number(number: float) -> float:\n    \"\"\" Given a positive floating point number, it can be decomposed into\n    and integer part (largest integer smaller than given number) and decimals\n    (leftover part always smaller than 1).\n\n    Return the decimal part of the number.\n    >>> truncate_number(3.5)\n    0.5\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate(3.5) == 0.5\n    assert abs(candidate(1.33) - 0.33) < 1e-6\n    assert abs(candidate(123.456) - 0.456) < 1e-6\n",
+      "canonical_solution": "    return number % 1.0\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 35.0223,
+          "total_pipeline_time_sec": 35.02236580848694,
+          "resource_stats": {
+            "samples": 70,
+            "cpu_percent_avg": 0.14,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 189642693,
+            "mem_rss_peak_bytes": 189648896
+          },
+          "final_code": "def truncate_number(number: float) -> float:\n    \"\"\"\n    Given a positive floating point number, it can be decomposed into an integer part (largest integer smaller than given number) and decimals (leftover part always smaller than 1). Return the decimal part of the number.\n\n    Constraints:\n    - The input number must be a positive floating point number\n    - The function should return only the decimal part of the number\n    - The decimal part is always smaller than 1\n    - The integer part is the largest integer smaller than the given number\n\n    Examples:\n    >>> truncate_number({\"number\": 3.5})\n    0.5\n    >>> truncate_number({\"number\": 2.75})\n    0.75\n    >>> truncate_number({\"number\": 5.0})\n    0.0\n    >>> truncate_number({\"number\": 0.9})\n    0.9\n\n    Exceptions:\n    - None specified\n    \"\"\"\n    # Extract the decimal part by subtracting the integer part\n    return number - int(number)\n",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": true,
+          "passed": true,
+          "test_output": "",
+          "error_type": null,
+          "error_message": null,
+          "error": null
+        }
+      ]
+    }
+  ]
+}

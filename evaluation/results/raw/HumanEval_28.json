@@ -1,0 +1,22 @@
+{
+  "task_id": "HumanEval/28",
+  "prompt": "from typing import List\n\n\ndef concatenate(strings: List[str]) -> str:\n    \"\"\" Concatenate list of strings into a single string\n    >>> concatenate([])\n    ''\n    >>> concatenate(['a', 'b', 'c'])\n    'abc'\n    \"\"\"\n",
+  "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([]) == ''\n    assert candidate(['x', 'y', 'z']) == 'xyz'\n    assert candidate(['x', 'y', 'z', 'w', 'k']) == 'xyzwk'\n",
+  "attempts": [
+    {
+      "attempt_idx": 0,
+      "duration_sec": 16.6547,
+      "resource_stats": {
+        "samples": 83,
+        "cpu_percent_avg": 1.14,
+        "cpu_percent_peak": 5.0,
+        "mem_rss_avg_bytes": 208601088,
+        "mem_rss_peak_bytes": 208601088
+      },
+      "final_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    This function processes a structured JSON specification and returns\n    a valid Python dictionary representation.\n    \n    Args:\n        spec (dict): A dictionary containing the JSON specification\n                    with keys defining the structure and requirements.\n    \n    Returns:\n        dict: A processed dictionary based on the specification.\n    \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If the specification is invalid or cannot be processed.\n    \n    Examples:\n        >>> generate_json({\"name\": \"test\", \"type\": \"string\"})\n        {'name': 'test', 'type': 'string'}\n        \n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n        \n        >>> generate_json({})\n        {}\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    if \"error\" in spec and spec[\"error\"] == \"Failed to generate JSON after retries\":\n        return {\"error\": \"Failed to generate JSON after retries\"}\n    \n    return spec",
+      "syntax_ok": true,
+      "passed": true,
+      "error": null
+    }
+  ]
+}

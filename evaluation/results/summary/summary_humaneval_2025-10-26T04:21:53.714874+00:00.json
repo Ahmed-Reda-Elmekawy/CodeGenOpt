@@ -1,0 +1,1250 @@
+{
+  "summary": {
+    "timestamp": "2025-10-26T04:21:53.714874+00:00",
+    "dataset": "humaneval",
+    "num_tasks": 50,
+    "attempts_per_task": 1,
+    "model_config": null,
+    "latency": {
+      "count": 50,
+      "mean": 19.9143,
+      "median": 16.7528,
+      "stdev": 7.2067,
+      "p50": 16.8509,
+      "p90": 29.4922,
+      "p95": 33.7061
+    },
+    "resource": {
+      "cpu_percent_avg_mean": 1.33,
+      "cpu_percent_peak_max": 10.0,
+      "mem_rss_avg_mean_bytes": 208548895,
+      "mem_rss_peak_max_bytes": 208863232
+    },
+    "pass_stats": {
+      "total_tasks": 50,
+      "passed_at_1": 44,
+      "pass_at_1_pct": 88.0
+    },
+    "env": {
+      "git_commit": "0ae26eb234bac9a88849f6814dd802c47f8cb9df",
+      "git_branch": "research/evaluation_humaneval_results",
+      "pip_freeze": [
+        "aiofiles==24.1.0",
+        "aiohappyeyeballs==2.6.1",
+        "aiohttp==3.12.15",
+        "aiosignal==1.4.0",
+        "annotated-types==0.7.0",
+        "anyio==4.10.0",
+        "attrs==25.3.0",
+        "autoflake==2.3.1",
+        "autopep8==2.3.2",
+        "black==25.9.0",
+        "Brotli==1.1.0",
+        "certifi==2025.8.3",
+        "charset-normalizer==3.4.3",
+        "click==8.2.1",
+        "contourpy==1.3.3",
+        "cycler==0.12.1",
+        "datasets==4.1.1",
+        "dill==0.4.0",
+        "dirtyjson==1.0.8",
+        "fastapi==0.116.1",
+        "ffmpy==0.6.1",
+        "filelock==3.19.1",
+        "fire==0.7.1",
+        "flake8==7.3.0",
+        "fonttools==4.59.2",
+        "frozenlist==1.7.0",
+        "fsspec==2025.7.0",
+        "gradio==5.43.1",
+        "gradio_client==1.12.1",
+        "greenlet==3.2.4",
+        "groovy==0.1.2",
+        "h11==0.16.0",
+        "hf-xet==1.1.8",
+        "httpcore==1.0.9",
+        "httpx==0.28.1",
+        "huggingface-hub==0.34.4",
+        "human-eval==1.0",
+        "idna==3.10",
+        "iniconfig==2.1.0",
+        "isort==6.1.0",
+        "Jinja2==3.1.6",
+        "jsonpatch==1.33",
+        "jsonpointer==3.0.0",
+        "kiwisolver==1.4.9",
+        "langchain==0.3.27",
+        "langchain-core==0.3.77",
+        "langchain-ollama==0.3.10",
+        "langchain-text-splitters==0.3.9",
+        "langsmith==0.4.16",
+        "markdown-it-py==4.0.0",
+        "MarkupSafe==3.0.2",
+        "matplotlib==3.10.6",
+        "mccabe==0.7.0",
+        "mdurl==0.1.2",
+        "multidict==6.6.4",
+        "multiprocess==0.70.16",
+        "mypy==1.18.2",
+        "mypy_extensions==1.1.0",
+        "numpy==2.3.2",
+        "ollama==0.6.0",
+        "orjson==3.11.2",
+        "packaging==25.0",
+        "pandas==2.3.2",
+        "pathspec==0.12.1",
+        "pillow==11.3.0",
+        "platformdirs==4.4.0",
+        "pluggy==1.6.0",
+        "propcache==0.3.2",
+        "psutil==7.1.0",
+        "pyarrow==21.0.0",
+        "pycodestyle==2.14.0",
+        "pydantic==2.11.7",
+        "pydantic_core==2.33.2",
+        "pydub==0.25.1",
+        "pyflakes==3.4.0",
+        "Pygments==2.19.2",
+        "pyparsing==3.2.3",
+        "pytest==8.4.2",
+        "python-dateutil==2.9.0.post0",
+        "python-multipart==0.0.20",
+        "pytokens==0.1.10",
+        "pytz==2025.2",
+        "pyupgrade==3.20.0",
+        "PyYAML==6.0.2",
+        "requests==2.32.5",
+        "requests-toolbelt==1.0.0",
+        "rich==14.1.0",
+        "ruff==0.12.10",
+        "safehttpx==0.1.6",
+        "semantic-version==2.10.0",
+        "shellingham==1.5.4",
+        "six==1.17.0",
+        "sniffio==1.3.1",
+        "SQLAlchemy==2.0.43",
+        "starlette==0.47.2",
+        "tenacity==9.1.2",
+        "termcolor==3.1.0",
+        "tokenize_rt==6.2.0",
+        "tomlkit==0.13.3",
+        "tqdm==4.67.1",
+        "typer==0.16.1",
+        "typing-inspection==0.4.1",
+        "typing_extensions==4.14.1",
+        "tzdata==2025.2",
+        "urllib3==2.5.0",
+        "uvicorn==0.35.0",
+        "websockets==15.0.1",
+        "xxhash==3.6.0",
+        "yapf==0.43.0",
+        "yarl==1.20.1",
+        "zstandard==0.24.0"
+      ],
+      "cpu_model": "x86_64",
+      "cpu_cores": 12
+    }
+  },
+  "results": [
+    {
+      "task_id": "HumanEval/0",
+      "prompt": "from typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.3) == True\n    assert candidate([1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.05) == False\n    assert candidate([1.0, 2.0, 5.9, 4.0, 5.0], 0.95) == True\n    assert candidate([1.0, 2.0, 5.9, 4.0, 5.0], 0.8) == False\n    assert candidate([1.0, 2.0, 3.0, 4.0, 5.0, 2.0], 0.1) == True\n    assert candidate([1.1, 2.2, 3.1, 4.1, 5.1], 1.0) == True\n    assert candidate([1.1, 2.2, 3.1, 4.1, 5.1], 0.5) == False\n\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 27.6843,
+          "resource_stats": {
+            "samples": 138,
+            "cpu_percent_avg": 1.12,
+            "cpu_percent_peak": 5.0,
+            "mem_rss_avg_bytes": 208075850,
+            "mem_rss_peak_bytes": 208076800
+          },
+          "final_code": "def generate_json(spec):\n    \"\"\"\n    Generate a JSON string from a structured specification.\n    \n    Args:\n        spec (dict): A dictionary containing the specification for JSON generation.\n                    Expected to have keys that define the structure and content\n                    of the desired JSON output.\n    \n    Returns:\n        str: A valid JSON string representation of the input specification.\n    \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If the specification cannot be converted to valid JSON.\n    \n    Examples:\n        >>> generate_json({\"name\": \"John\", \"age\": 30})\n        '{\"name\": \"John\", \"age\": 30}'\n        \n        >>> generate_json({\"items\": [1, 2, 3], \"count\": null})\n        '{\"items\": [1, 2, 3], \"count\": null}'\n        \n        >>> generate_json({})\n        '{}'\n    \"\"\"\n    import json\n    \n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    try:\n        return json.dumps(spec)\n    except (TypeError, ValueError) as e:\n        raise ValueError(f\"Failed to generate JSON: {str(e)}\")",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/1",
+      "prompt": "from typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(())', '(()())']\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('(()()) ((())) () ((())()())') == [\n        '(()())', '((()))', '()', '((())()())'\n    ]\n    assert candidate('() (()) ((())) (((())))') == [\n        '()', '(())', '((()))', '(((())))'\n    ]\n    assert candidate('(()(())((())))') == [\n        '(()(())((())))'\n    ]\n    assert candidate('( ) (( )) (( )( ))') == ['()', '(())', '(()())']\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 42.3308,
+          "resource_stats": {
+            "samples": 211,
+            "cpu_percent_avg": 0.95,
+            "cpu_percent_peak": 10.0,
+            "mem_rss_avg_bytes": 208207872,
+            "mem_rss_peak_bytes": 208207872
+          },
+          "final_code": "def generate_json(spec: dict) -> str:\n    \"\"\"\n    Generate JSON string from a structured specification dictionary.\n    \n    Args:\n        spec (dict): A dictionary containing the function specification with keys:\n                    - name (str): Function name\n                    - parameters (list): List of parameter dictionaries\n                    - return_type (str): Return type annotation\n    \n    Returns:\n        str: Generated JSON string representation of the specification\n    \n    Raises:\n        TypeError: If spec is not a dictionary or contains invalid types\n        ValueError: If required keys are missing from the specification\n    \n    Examples:\n        >>> generate_json({\n        ...     \"name\": \"example_func\",\n        ...     \"parameters\": [\n        ...         {\"name\": \"x\", \"type\": \"int\", \"default\": null},\n        ...         {\"name\": \"y\", \"type\": \"str\", \"default\": \"default\"}\n        ...     ],\n        ...     \"return_type\": \"bool\"\n        ... })\n        '{\"name\": \"example_func\", \"parameters\": [{\"name\": \"x\", \"type\": \"int\", \"default\": null}, {\"name\": \"y\", \"type\": \"str\", \"default\": \"default\"}], \"return_type\": \"bool\"}'\n        \n        >>> generate_json({\n        ...     \"name\": \"simple_func\",\n        ...     \"parameters\": [],\n        ...     \"return_type\": \"None\"\n        ... })\n        '{\"name\": \"simple_func\", \"parameters\": [], \"return_type\": \"None\"}'\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    required_keys = [\"name\", \"parameters\", \"return_type\"]\n    for key in required_keys:\n        if key not in spec:\n            raise ValueError(f\"Missing required key: {key}\")\n    \n    if not isinstance(spec[\"name\"], str):\n        raise TypeError(\"name must be a string\")\n    \n    if not isinstance(spec[\"parameters\"], list):\n        raise TypeError(\"parameters must be a list\")\n    \n    if not isinstance(spec[\"return_type\"], str):\n        raise TypeError(\"return_type must be a string\")\n    \n    for param in spec[\"parameters\"]:\n        if not isinstance(param, dict):\n            raise TypeError(\"Each parameter must be a dictionary\")\n        if \"name\" not in param or \"type\" not in param:\n            raise ValueError(\"Each parameter must have name and type keys\")\n    \n    import json\n    return json.dumps(spec, separators=(',', ': '))",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/2",
+      "prompt": "\n\ndef truncate_number(number: float) -> float:\n    \"\"\" Given a positive floating point number, it can be decomposed into\n    and integer part (largest integer smaller than given number) and decimals\n    (leftover part always smaller than 1).\n\n    Return the decimal part of the number.\n    >>> truncate_number(3.5)\n    0.5\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate(3.5) == 0.5\n    assert abs(candidate(1.33) - 0.33) < 1e-6\n    assert abs(candidate(123.456) - 0.456) < 1e-6\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 16.0551,
+          "resource_stats": {
+            "samples": 80,
+            "cpu_percent_avg": 1.69,
+            "cpu_percent_peak": 10.0,
+            "mem_rss_avg_bytes": 208301260,
+            "mem_rss_peak_bytes": 208338944
+          },
+          "final_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    Args:\n        spec (dict): A dictionary containing the specification for JSON generation.\n                    Expected to contain keys like 'error', 'data', etc.\n    \n    Returns:\n        dict: A dictionary representing the generated JSON response.\n    \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If spec contains invalid data types.\n    \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n        \n        >>> generate_json({\"data\": {\"name\": \"John\", \"age\": 30}})\n        {'data': {'name': 'John', 'age': 30}}\n        \n        >>> generate_json({})\n        {}\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    # Validate that all values in spec are of supported types\n    for key, value in spec.items():\n        if not isinstance(value, (bool, int, str, list, dict, type(None))):\n            raise ValueError(f\"Invalid data type for key '{key}': {type(value)}\")\n    \n    return spec.copy()",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/3",
+      "prompt": "from typing import List\n\n\ndef below_zero(operations: List[int]) -> bool:\n    \"\"\" You're given a list of deposit and withdrawal operations on a bank account that starts with\n    zero balance. Your task is to detect if at any point the balance of account fallls below zero, and\n    at that point function should return True. Otherwise it should return False.\n    >>> below_zero([1, 2, 3])\n    False\n    >>> below_zero([1, 2, -4, 5])\n    True\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([]) == False\n    assert candidate([1, 2, -3, 1, 2, -3]) == False\n    assert candidate([1, 2, -4, 5, 6]) == True\n    assert candidate([1, -1, 2, -2, 5, -5, 4, -4]) == False\n    assert candidate([1, -1, 2, -2, 5, -5, 4, -5]) == True\n    assert candidate([1, -2, 2, -2, 5, -5, 4, -4]) == True\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 32.1022,
+          "resource_stats": {
+            "samples": 160,
+            "cpu_percent_avg": 0.81,
+            "cpu_percent_peak": 10.0,
+            "mem_rss_avg_bytes": 208338944,
+            "mem_rss_peak_bytes": 208338944
+          },
+          "final_code": "def generate_json(spec: dict) -> str:\n    \"\"\"\n    Generate JSON string from structured specification.\n    \n    Args:\n        spec (dict): Function specification in JSON format containing function details.\n        \n    Returns:\n        str: Generated JSON string representation of the specification.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If spec contains invalid structure or missing required fields.\n        \n    Examples:\n        >>> generate_json({\"name\": \"test\", \"parameters\": []})\n        '{\"name\": \"test\", \"parameters\": []}'\n        \n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        '{\"error\": \"Failed to generate JSON after retries\"}'\n        \n        >>> generate_json(None)\n        Traceback (most recent call last):\n            ...\n        TypeError: spec must be a dictionary\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    import json\n    try:\n        return json.dumps(spec)\n    except (TypeError, ValueError) as e:\n        raise ValueError(f\"Invalid spec structure: {str(e)}\")",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/4",
+      "prompt": "from typing import List\n\n\ndef mean_absolute_deviation(numbers: List[float]) -> float:\n    \"\"\" For a given list of input numbers, calculate Mean Absolute Deviation\n    around the mean of this dataset.\n    Mean Absolute Deviation is the average absolute difference between each\n    element and a centerpoint (mean in this case):\n    MAD = average | x - x_mean |\n    >>> mean_absolute_deviation([1.0, 2.0, 3.0, 4.0])\n    1.0\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert abs(candidate([1.0, 2.0, 3.0]) - 2.0/3.0) < 1e-6\n    assert abs(candidate([1.0, 2.0, 3.0, 4.0]) - 1.0) < 1e-6\n    assert abs(candidate([1.0, 2.0, 3.0, 4.0, 5.0]) - 6.0/5.0) < 1e-6\n\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 14.2466,
+          "resource_stats": {
+            "samples": 71,
+            "cpu_percent_avg": 1.69,
+            "cpu_percent_peak": 5.0,
+            "mem_rss_avg_bytes": 208338944,
+            "mem_rss_peak_bytes": 208338944
+          },
+          "final_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    Args:\n        spec (dict): A dictionary containing the specification for JSON generation.\n        \n    Returns:\n        dict: A dictionary representing the generated JSON response.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If the spec contains invalid structure.\n        \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n        \n        >>> generate_json({\"status\": \"success\", \"data\": {\"key\": \"value\"}})\n        {'status': 'success', 'data': {'key': 'value'}}\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    if not spec:\n        raise ValueError(\"spec cannot be empty\")\n    \n    return spec.copy()",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/5",
+      "prompt": "from typing import List\n\n\ndef intersperse(numbers: List[int], delimeter: int) -> List[int]:\n    \"\"\" Insert a number 'delimeter' between every two consecutive elements of input list `numbers'\n    >>> intersperse([], 4)\n    []\n    >>> intersperse([1, 2, 3], 4)\n    [1, 4, 2, 4, 3]\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([], 7) == []\n    assert candidate([5, 6, 3, 2], 8) == [5, 8, 6, 8, 3, 8, 2]\n    assert candidate([2, 2, 2], 2) == [2, 2, 2, 2, 2]\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 11.2387,
+          "resource_stats": {
+            "samples": 56,
+            "cpu_percent_avg": 1.79,
+            "cpu_percent_peak": 10.0,
+            "mem_rss_avg_bytes": 208338944,
+            "mem_rss_peak_bytes": 208338944
+          },
+          "final_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    Args:\n        spec (dict): A dictionary containing the function specification.\n        \n    Returns:\n        dict: A dictionary representing the generated JSON response.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        KeyError: If required keys are missing from spec.\n        \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n        \n        >>> generate_json({\"function\": \"test\", \"parameters\": {\"x\": 1}})\n        {'function': 'test', 'parameters': {'x': 1}}\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    return spec",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/6",
+      "prompt": "from typing import List\n\n\ndef parse_nested_parens(paren_string: str) -> List[int]:\n    \"\"\" Input to this function is a string represented multiple groups for nested parentheses separated by spaces.\n    For each of the group, output the deepest level of nesting of parentheses.\n    E.g. (()()) has maximum two levels of nesting while ((())) has three.\n\n    >>> parse_nested_parens('(()()) ((())) () ((())()())')\n    [2, 3, 1, 3]\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('(()()) ((())) () ((())()())') == [2, 3, 1, 3]\n    assert candidate('() (()) ((())) (((())))') == [1, 2, 3, 4]\n    assert candidate('(()(())((())))') == [4]\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 14.645,
+          "resource_stats": {
+            "samples": 73,
+            "cpu_percent_avg": 1.64,
+            "cpu_percent_peak": 5.0,
+            "mem_rss_avg_bytes": 208338944,
+            "mem_rss_peak_bytes": 208338944
+          },
+          "final_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    Args:\n        spec (dict): A dictionary containing the function specification.\n        \n    Returns:\n        dict: A dictionary representing the generated JSON response.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        KeyError: If required keys are missing from spec.\n        \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n        \n        >>> generate_json({\"function\": \"test\", \"parameters\": {\"x\": 1}})\n        {'function': 'test', 'parameters': {'x': 1}}\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    return spec",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/7",
+      "prompt": "from typing import List\n\n\ndef filter_by_substring(strings: List[str], substring: str) -> List[str]:\n    \"\"\" Filter an input list of strings only for ones that contain given substring\n    >>> filter_by_substring([], 'a')\n    []\n    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')\n    ['abc', 'bacd', 'array']\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([], 'john') == []\n    assert candidate(['xxx', 'asd', 'xxy', 'john doe', 'xxxAAA', 'xxx'], 'xxx') == ['xxx', 'xxxAAA', 'xxx']\n    assert candidate(['xxx', 'asd', 'aaaxxy', 'john doe', 'xxxAAA', 'xxx'], 'xx') == ['xxx', 'aaaxxy', 'xxxAAA', 'xxx']\n    assert candidate(['grunt', 'trumpet', 'prune', 'gruesome'], 'run') == ['grunt', 'prune']\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 25.0776,
+          "resource_stats": {
+            "samples": 125,
+            "cpu_percent_avg": 1.2,
+            "cpu_percent_peak": 5.0,
+            "mem_rss_avg_bytes": 208338944,
+            "mem_rss_peak_bytes": 208338944
+          },
+          "final_code": "def generate_json(spec: dict) -> str:\n    \"\"\"\n    Generate JSON string from a structured specification dictionary.\n    \n    Args:\n        spec (dict): A dictionary containing the function specification with keys:\n                    - name (str): Function name\n                    - parameters (list): List of parameter dictionaries\n                    - return_type (str): Return type annotation\n    \n    Returns:\n        str: Generated JSON string representation of the specification\n    \n    Raises:\n        TypeError: If spec is not a dictionary or contains invalid types\n        ValueError: If required keys are missing from the specification\n    \n    Examples:\n        >>> generate_json({\n        ...     \"name\": \"add\",\n        ...     \"parameters\": [\n        ...         {\"name\": \"a\", \"type\": \"int\"},\n        ...         {\"name\": \"b\", \"type\": \"int\"}\n        ...     ],\n        ...     \"return_type\": \"int\"\n        ... })\n        '{\"name\": \"add\", \"parameters\": [{\"name\": \"a\", \"type\": \"int\"}, {\"name\": \"b\", \"type\": \"int\"}], \"return_type\": \"int\"}'\n        \n        >>> generate_json({\n        ...     \"name\": \"greet\",\n        ...     \"parameters\": [\n        ...         {\"name\": \"name\", \"type\": \"str\", \"default\": \"World\"}\n        ...     ],\n        ...     \"return_type\": \"str\"\n        ... })\n        '{\"name\": \"greet\", \"parameters\": [{\"name\": \"name\", \"type\": \"str\", \"default\": \"World\"}], \"return_type\": \"str\"}'\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    required_keys = [\"name\", \"parameters\", \"return_type\"]\n    for key in required_keys:\n        if key not in spec:\n            raise ValueError(f\"Missing required key: {key}\")\n    \n    if not isinstance(spec[\"name\"], str):\n        raise TypeError(\"name must be a string\")\n    \n    if not isinstance(spec[\"parameters\"], list):\n        raise TypeError(\"parameters must be a list\")\n    \n    if not isinstance(spec[\"return_type\"], str):\n        raise TypeError(\"return_type must be a string\")\n    \n    for param in spec[\"parameters\"]:\n        if not isinstance(param, dict):\n            raise TypeError(\"Each parameter must be a dictionary\")\n        if \"name\" not in param or \"type\" not in param:\n            raise ValueError(\"Each parameter must have name and type keys",
+          "syntax_ok": false,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/8",
+      "prompt": "from typing import List, Tuple\n\n\ndef sum_product(numbers: List[int]) -> Tuple[int, int]:\n    \"\"\" For a given list of integers, return a tuple consisting of a sum and a product of all the integers in a list.\n    Empty sum should be equal to 0 and empty product should be equal to 1.\n    >>> sum_product([])\n    (0, 1)\n    >>> sum_product([1, 2, 3, 4])\n    (10, 24)\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([]) == (0, 1)\n    assert candidate([1, 1, 1]) == (3, 1)\n    assert candidate([100, 0]) == (100, 0)\n    assert candidate([3, 5, 7]) == (3 + 5 + 7, 3 * 5 * 7)\n    assert candidate([10]) == (10, 10)\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 15.651,
+          "resource_stats": {
+            "samples": 78,
+            "cpu_percent_avg": 1.28,
+            "cpu_percent_peak": 10.0,
+            "mem_rss_avg_bytes": 208338944,
+            "mem_rss_peak_bytes": 208338944
+          },
+          "final_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    Args:\n        spec (dict): A dictionary containing the function specification.\n        \n    Returns:\n        dict: A dictionary representing the generated JSON response.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        KeyError: If required keys are missing from spec.\n        \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n        \n        >>> generate_json({\"function\": \"test\", \"parameters\": {\"x\": 1}})\n        {'function': 'test', 'parameters': {'x': 1}}\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    return spec",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/9",
+      "prompt": "from typing import List, Tuple\n\n\ndef rolling_max(numbers: List[int]) -> List[int]:\n    \"\"\" From a given list of integers, generate a list of rolling maximum element found until given moment\n    in the sequence.\n    >>> rolling_max([1, 2, 3, 2, 3, 4, 2])\n    [1, 2, 3, 3, 3, 4, 4]\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([]) == []\n    assert candidate([1, 2, 3, 4]) == [1, 2, 3, 4]\n    assert candidate([4, 3, 2, 1]) == [4, 4, 4, 4]\n    assert candidate([3, 2, 3, 100, 3]) == [3, 3, 3, 100, 100]\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 15.254,
+          "resource_stats": {
+            "samples": 76,
+            "cpu_percent_avg": 1.64,
+            "cpu_percent_peak": 9.9,
+            "mem_rss_avg_bytes": 208338944,
+            "mem_rss_peak_bytes": 208338944
+          },
+          "final_code": "def generate_json(spec: dict) -> str:\n    \"\"\"\n    Generate JSON string from structured specification.\n    \n    Args:\n        spec (dict): Function specification in JSON format containing function details.\n        \n    Returns:\n        str: Generated JSON string representation of the specification.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If spec contains invalid structure or missing required fields.\n        \n    Examples:\n        >>> generate_json({\"name\": \"test\", \"parameters\": []})\n        '{\"name\": \"test\", \"parameters\": []}'\n        \n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        '{\"error\": \"Failed to generate JSON after retries\"}'\n        \n        >>> generate_json(None)\n        Traceback (most recent call last):\n            ...\n        TypeError: spec must be a dictionary\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    import json\n    try:\n        return json.dumps(spec)\n    except (TypeError, ValueError) as e:\n        raise ValueError(f\"Invalid spec structure: {str(e)}\")",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/10",
+      "prompt": "\n\ndef is_palindrome(string: str) -> bool:\n    \"\"\" Test if given string is a palindrome \"\"\"\n    return string == string[::-1]\n\n\ndef make_palindrome(string: str) -> str:\n    \"\"\" Find the shortest palindrome that begins with a supplied string.\n    Algorithm idea is simple:\n    - Find the longest postfix of supplied string that is a palindrome.\n    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.\n    >>> make_palindrome('')\n    ''\n    >>> make_palindrome('cat')\n    'catac'\n    >>> make_palindrome('cata')\n    'catac'\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('') == ''\n    assert candidate('x') == 'x'\n    assert candidate('xyz') == 'xyzyx'\n    assert candidate('xyx') == 'xyx'\n    assert candidate('jerry') == 'jerryrrej'\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 13.8448,
+          "resource_stats": {
+            "samples": 69,
+            "cpu_percent_avg": 1.59,
+            "cpu_percent_peak": 10.0,
+            "mem_rss_avg_bytes": 208338944,
+            "mem_rss_peak_bytes": 208338944
+          },
+          "final_code": "def generate_json(spec: dict) -> str:\n    \"\"\"\n    Generate JSON string from structured specification.\n    \n    Args:\n        spec (dict): Function specification in JSON format containing function details.\n        \n    Returns:\n        str: Generated JSON string representation of the specification.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If spec contains invalid structure or missing required fields.\n        \n    Examples:\n        >>> generate_json({\"name\": \"test\", \"parameters\": []})\n        '{\"name\": \"test\", \"parameters\": []}'\n        \n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        '{\"error\": \"Failed to generate JSON after retries\"}'\n        \n        >>> generate_json(None)\n        Traceback (most recent call last):\n            ...\n        TypeError: spec must be a dictionary\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    import json\n    try:\n        return json.dumps(spec)\n    except (TypeError, ValueError) as e:\n        raise ValueError(f\"Invalid spec structure: {str(e)}\")",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/11",
+      "prompt": "from typing import List\n\n\ndef string_xor(a: str, b: str) -> str:\n    \"\"\" Input are two strings a and b consisting only of 1s and 0s.\n    Perform binary XOR on these inputs and return result also as a string.\n    >>> string_xor('010', '110')\n    '100'\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('111000', '101010') == '010010'\n    assert candidate('1', '1') == '0'\n    assert candidate('0101', '0000') == '0101'\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 24.6743,
+          "resource_stats": {
+            "samples": 123,
+            "cpu_percent_avg": 1.34,
+            "cpu_percent_peak": 5.0,
+            "mem_rss_avg_bytes": 208460425,
+            "mem_rss_peak_bytes": 208470016
+          },
+          "final_code": "def generate_json(spec: dict) -> str:\n    \"\"\"\n    Generate JSON string from structured specification.\n    \n    Args:\n        spec (dict): Function specification in JSON format containing function details.\n        \n    Returns:\n        str: Generated JSON string representation of the specification.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If spec contains invalid structure or missing required fields.\n        \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        '{\"error\": \"Failed to generate JSON after retries\"}'\n        \n        >>> generate_json({\"name\": \"test_func\", \"params\": [\"a\", \"b\"]})\n        '{\"name\": \"test_func\", \"params\": [\"a\", \"b\"]}'\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    if not spec:\n        raise ValueError(\"spec cannot be empty\")\n    \n    try:\n        import json\n        return json.dumps(spec, separators=(',', ': '))\n    except (TypeError, ValueError) as e:\n        raise ValueError(f\"Failed to serialize spec to JSON: {str(e)}\")",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/12",
+      "prompt": "from typing import List, Optional\n\n\ndef longest(strings: List[str]) -> Optional[str]:\n    \"\"\" Out of list of strings, return the longest one. Return the first one in case of multiple\n    strings of the same length. Return None in case the input list is empty.\n    >>> longest([])\n\n    >>> longest(['a', 'b', 'c'])\n    'a'\n    >>> longest(['a', 'bb', 'ccc'])\n    'ccc'\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([]) == None\n    assert candidate(['x', 'y', 'z']) == 'x'\n    assert candidate(['x', 'yyy', 'zzzz', 'www', 'kkkk', 'abc']) == 'zzzz'\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 14.8487,
+          "resource_stats": {
+            "samples": 74,
+            "cpu_percent_avg": 1.35,
+            "cpu_percent_peak": 5.0,
+            "mem_rss_avg_bytes": 208470016,
+            "mem_rss_peak_bytes": 208470016
+          },
+          "final_code": "def generate_json(spec: dict) -> str:\n    \"\"\"\n    Generate JSON string from structured specification.\n    \n    Args:\n        spec (dict): Function specification in JSON format containing function details.\n        \n    Returns:\n        str: Generated JSON string representation of the specification.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If spec is empty or malformed.\n        \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        '{\"error\": \"Failed to generate JSON after retries\"}'\n        \n        >>> generate_json({})\n        Traceback (most recent call last):\n        ...\n        ValueError: Specification cannot be empty\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    if not spec:\n        raise ValueError(\"Specification cannot be empty\")\n    \n    import json\n    return json.dumps(spec, separators=(',', ': '))",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/13",
+      "prompt": "\n\ndef greatest_common_divisor(a: int, b: int) -> int:\n    \"\"\" Return a greatest common divisor of two integers a and b\n    >>> greatest_common_divisor(3, 5)\n    1\n    >>> greatest_common_divisor(25, 15)\n    5\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate(3, 7) == 1\n    assert candidate(10, 15) == 5\n    assert candidate(49, 14) == 7\n    assert candidate(144, 60) == 12\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 14.6507,
+          "resource_stats": {
+            "samples": 73,
+            "cpu_percent_avg": 1.58,
+            "cpu_percent_peak": 5.0,
+            "mem_rss_avg_bytes": 208470016,
+            "mem_rss_peak_bytes": 208470016
+          },
+          "final_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    Args:\n        spec (dict): A dictionary containing the specification for JSON generation.\n        \n    Returns:\n        dict: A dictionary representing the generated JSON response.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If the spec contains invalid parameters.\n        \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n        \n        >>> generate_json({\"status\": \"success\", \"data\": null})\n        {'status': 'success', 'data': None}\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    # Handle the error case specifically mentioned\n    if \"error\" in spec:\n        return {\"error\": spec[\"error\"]}\n    \n    # For other cases, return the spec as-is\n    return spec",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/14",
+      "prompt": "from typing import List\n\n\ndef all_prefixes(string: str) -> List[str]:\n    \"\"\" Return list of all prefixes from shortest to longest of the input string\n    >>> all_prefixes('abc')\n    ['a', 'ab', 'abc']\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('') == []\n    assert candidate('asdfgh') == ['a', 'as', 'asd', 'asdf', 'asdfg', 'asdfgh']\n    assert candidate('WWW') == ['W', 'WW', 'WWW']\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 14.0461,
+          "resource_stats": {
+            "samples": 70,
+            "cpu_percent_avg": 1.43,
+            "cpu_percent_peak": 5.0,
+            "mem_rss_avg_bytes": 208470016,
+            "mem_rss_peak_bytes": 208470016
+          },
+          "final_code": "def generate_json(spec: dict) -> str:\n    \"\"\"\n    Generate JSON string from structured specification.\n    \n    Args:\n        spec (dict): Function specification in JSON format containing function details.\n        \n    Returns:\n        str: Generated JSON string representation of the specification.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If spec is empty or malformed.\n        \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        '{\"error\": \"Failed to generate JSON after retries\"}'\n        \n        >>> generate_json({})\n        Traceback (most recent call last):\n        ...\n        ValueError: Specification cannot be empty\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    if not spec:\n        raise ValueError(\"Specification cannot be empty\")\n    \n    import json\n    return json.dumps(spec, separators=(',', ': '))",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/15",
+      "prompt": "\n\ndef string_sequence(n: int) -> str:\n    \"\"\" Return a string containing space-delimited numbers starting from 0 upto n inclusive.\n    >>> string_sequence(0)\n    '0'\n    >>> string_sequence(5)\n    '0 1 2 3 4 5'\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate(0) == '0'\n    assert candidate(3) == '0 1 2 3'\n    assert candidate(10) == '0 1 2 3 4 5 6 7 8 9 10'\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 33.7061,
+          "resource_stats": {
+            "samples": 168,
+            "cpu_percent_avg": 0.74,
+            "cpu_percent_peak": 5.0,
+            "mem_rss_avg_bytes": 208470016,
+            "mem_rss_peak_bytes": 208470016
+          },
+          "final_code": "def generate_json(spec: dict) -> str:\n    \"\"\"\n    Generate JSON string from structured specification.\n    \n    Args:\n        spec (dict): Function specification in JSON format containing function details.\n        \n    Returns:\n        str: Generated JSON string representation of the specification.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If spec contains invalid structure or missing required fields.\n        \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        '{\"error\": \"Failed to generate JSON after retries\"}'\n        \n        >>> generate_json({\"name\": \"test_func\", \"params\": [\"a\", \"b\"]})\n        '{\"name\": \"test_func\", \"params\": [\"a\", \"b\"]}'\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    if not spec:\n        raise ValueError(\"spec cannot be empty\")\n    \n    try:\n        import json\n        return json.dumps(spec, separators=(',', ': '))\n    except (TypeError, ValueError) as e:\n        raise ValueError(f\"Failed to serialize spec to JSON: {str(e)}\")",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/16",
+      "prompt": "\n\ndef count_distinct_characters(string: str) -> int:\n    \"\"\" Given a string, find out how many distinct characters (regardless of case) does it consist of\n    >>> count_distinct_characters('xyzXYZ')\n    3\n    >>> count_distinct_characters('Jerry')\n    4\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('') == 0\n    assert candidate('abcde') == 5\n    assert candidate('abcde' + 'cade' + 'CADE') == 5\n    assert candidate('aaaaAAAAaaaa') == 1\n    assert candidate('Jerry jERRY JeRRRY') == 5\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 16.8509,
+          "resource_stats": {
+            "samples": 84,
+            "cpu_percent_avg": 1.19,
+            "cpu_percent_peak": 5.0,
+            "mem_rss_avg_bytes": 208470016,
+            "mem_rss_peak_bytes": 208470016
+          },
+          "final_code": "def generate_json(spec: dict) -> str:\n    \"\"\"\n    Generate JSON string from structured specification.\n    \n    Args:\n        spec (dict): Function specification in JSON format containing function details.\n        \n    Returns:\n        str: Generated JSON string representation of the specification.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If spec is empty or malformed.\n        \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        '{\"error\": \"Failed to generate JSON after retries\"}'\n        \n        >>> generate_json({})\n        Traceback (most recent call last):\n        ...\n        ValueError: Specification cannot be empty\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    if not spec:\n        raise ValueError(\"Specification cannot be empty\")\n    \n    import json\n    return json.dumps(spec, separators=(',', ': '))",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/17",
+      "prompt": "from typing import List\n\n\ndef parse_music(music_string: str) -> List[int]:\n    \"\"\" Input to this function is a string representing musical notes in a special ASCII format.\n    Your task is to parse this string and return list of integers corresponding to how many beats does each\n    not last.\n\n    Here is a legend:\n    'o' - whole note, lasts four beats\n    'o|' - half note, lasts two beats\n    '.|' - quater note, lasts one beat\n\n    >>> parse_music('o o| .| o| o| .| .| .| .| o o')\n    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('') == []\n    assert candidate('o o o o') == [4, 4, 4, 4]\n    assert candidate('.| .| .| .|') == [1, 1, 1, 1]\n    assert candidate('o| o| .| .| o o o o') == [2, 2, 1, 1, 4, 4, 4, 4]\n    assert candidate('o| .| o| .| o o| o o|') == [2, 1, 2, 1, 4, 2, 4, 2]\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 17.4559,
+          "resource_stats": {
+            "samples": 87,
+            "cpu_percent_avg": 1.49,
+            "cpu_percent_peak": 5.0,
+            "mem_rss_avg_bytes": 208470016,
+            "mem_rss_peak_bytes": 208470016
+          },
+          "final_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    Args:\n        spec (dict): A dictionary containing the specification for JSON generation.\n        \n    Returns:\n        dict: A dictionary representing the generated JSON response.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If the spec is invalid or missing required fields.\n        \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n        \n        >>> generate_json({\"status\": \"success\", \"data\": {\"key\": \"value\"}})\n        {'status': 'success', 'data': {'key': 'value'}}\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    if not spec:\n        raise ValueError(\"spec cannot be empty\")\n    \n    return spec.copy()",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/18",
+      "prompt": "\n\ndef how_many_times(string: str, substring: str) -> int:\n    \"\"\" Find how many times a given substring can be found in the original string. Count overlaping cases.\n    >>> how_many_times('', 'a')\n    0\n    >>> how_many_times('aaa', 'a')\n    3\n    >>> how_many_times('aaaa', 'aa')\n    3\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('', 'x') == 0\n    assert candidate('xyxyxyx', 'x') == 4\n    assert candidate('cacacacac', 'cac') == 4\n    assert candidate('john doe', 'john') == 1\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 35.3093,
+          "resource_stats": {
+            "samples": 176,
+            "cpu_percent_avg": 0.88,
+            "cpu_percent_peak": 10.0,
+            "mem_rss_avg_bytes": 208470016,
+            "mem_rss_peak_bytes": 208470016
+          },
+          "final_code": "def generate_json(spec: dict) -> str:\n    \"\"\"\n    Generate JSON string from a structured specification dictionary.\n    \n    Args:\n        spec (dict): A dictionary containing the function specification with keys:\n                    - name (str): Function name\n                    - parameters (list): List of parameter dictionaries\n                    - return_type (str): Return type annotation\n    \n    Returns:\n        str: Generated JSON string representation of the specification\n    \n    Raises:\n        TypeError: If spec is not a dictionary or contains invalid types\n        ValueError: If required keys are missing from the specification\n    \n    Examples:\n        >>> generate_json({\n        ...     \"name\": \"example_func\",\n        ...     \"parameters\": [\n        ...         {\"name\": \"x\", \"type\": \"int\", \"default\": null},\n        ...         {\"name\": \"y\", \"type\": \"str\", \"default\": \"default\"}\n        ...     ],\n        ...     \"return_type\": \"bool\"\n        ... })\n        '{\"name\": \"example_func\", \"parameters\": [{\"name\": \"x\", \"type\": \"int\", \"default\": null}, {\"name\": \"y\", \"type\": \"str\", \"default\": \"default\"}], \"return_type\": \"bool\"}'\n        \n        >>> generate_json({\n        ...     \"name\": \"simple_func\",\n        ...     \"parameters\": [],\n        ...     \"return_type\": \"None\"\n        ... })\n        '{\"name\": \"simple_func\", \"parameters\": [], \"return_type\": \"None\"}'\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    required_keys = {\"name\", \"parameters\", \"return_type\"}\n    missing_keys = required_keys - spec.keys()\n    if missing_keys:\n        raise ValueError(f\"Missing required keys: {missing_keys}\")\n    \n    if not isinstance(spec[\"name\"], str):\n        raise TypeError(\"name must be a string\")\n    \n    if not isinstance(spec[\"parameters\"], list):\n        raise TypeError(\"parameters must be a list\")\n    \n    if not isinstance(spec[\"return_type\"], str):\n        raise TypeError(\"return_type must be a string\")\n    \n    for i, param in enumerate(spec[\"parameters\"]):\n        if not isinstance(param, dict):\n            raise TypeError(f\"parameter at index {i} must be a dictionary\")\n        if \"name\" not in param or \"type\" not in param:\n            raise ValueError(f\"parameter at index {i} missing required keys 'name' or 'type",
+          "syntax_ok": false,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/19",
+      "prompt": "from typing import List\n\n\ndef sort_numbers(numbers: str) -> str:\n    \"\"\" Input is a space-delimited string of numberals from 'zero' to 'nine'.\n    Valid choices are 'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight' and 'nine'.\n    Return the string with numbers sorted from smallest to largest\n    >>> sort_numbers('three one five')\n    'one three five'\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('') == ''\n    assert candidate('three') == 'three'\n    assert candidate('three five nine') == 'three five nine'\n    assert candidate('five zero four seven nine eight') == 'zero four five seven eight nine'\n    assert candidate('six five four three two one zero') == 'zero one two three four five six'\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 16.4495,
+          "resource_stats": {
+            "samples": 82,
+            "cpu_percent_avg": 1.46,
+            "cpu_percent_peak": 10.0,
+            "mem_rss_avg_bytes": 208470016,
+            "mem_rss_peak_bytes": 208470016
+          },
+          "final_code": "def generate_json(spec):\n    \"\"\"\n    Generate a JSON string from a structured specification.\n    \n    Args:\n        spec (dict): A dictionary containing the specification for JSON generation.\n                    Expected to have keys that define the structure and content\n                    of the desired JSON output.\n    \n    Returns:\n        str: A valid JSON string representation of the input specification.\n    \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If the specification cannot be converted to valid JSON.\n    \n    Examples:\n        >>> generate_json({\"name\": \"John\", \"age\": 30})\n        '{\"name\": \"John\", \"age\": 30}'\n        \n        >>> generate_json({\"items\": [1, 2, 3], \"count\": null})\n        '{\"items\": [1, 2, 3], \"count\": null}'\n        \n        >>> generate_json({})\n        '{}'\n    \"\"\"\n    import json\n    \n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    try:\n        return json.dumps(spec)\n    except (TypeError, ValueError) as e:\n        raise ValueError(f\"Failed to generate JSON: {str(e)}\")",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/20",
+      "prompt": "from typing import List, Tuple\n\n\ndef find_closest_elements(numbers: List[float]) -> Tuple[float, float]:\n    \"\"\" From a supplied list of numbers (of length at least two) select and return two that are the closest to each\n    other and return them in order (smaller number, larger number).\n    >>> find_closest_elements([1.0, 2.0, 3.0, 4.0, 5.0, 2.2])\n    (2.0, 2.2)\n    >>> find_closest_elements([1.0, 2.0, 3.0, 4.0, 5.0, 2.0])\n    (2.0, 2.0)\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([1.0, 2.0, 3.9, 4.0, 5.0, 2.2]) == (3.9, 4.0)\n    assert candidate([1.0, 2.0, 5.9, 4.0, 5.0]) == (5.0, 5.9)\n    assert candidate([1.0, 2.0, 3.0, 4.0, 5.0, 2.2]) == (2.0, 2.2)\n    assert candidate([1.0, 2.0, 3.0, 4.0, 5.0, 2.0]) == (2.0, 2.0)\n    assert candidate([1.1, 2.2, 3.1, 4.1, 5.1]) == (2.2, 3.1)\n\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 37.1085,
+          "resource_stats": {
+            "samples": 185,
+            "cpu_percent_avg": 1.05,
+            "cpu_percent_peak": 5.0,
+            "mem_rss_avg_bytes": 208470016,
+            "mem_rss_peak_bytes": 208470016
+          },
+          "final_code": "def generate_json(spec):\n    \"\"\"\n    Generate a JSON string from a structured specification.\n    \n    Args:\n        spec (dict): A dictionary containing the function specification with keys:\n                    - name (str): The function name\n                    - parameters (list): List of parameter dictionaries\n                    - return_type (str): The return type description\n                    \n    Returns:\n        str: A JSON string representation of the specification\n        \n    Raises:\n        TypeError: If spec is not a dictionary or contains invalid types\n        ValueError: If required fields are missing or empty\n        \n    Examples:\n        >>> generate_json({\n        ...     \"name\": \"process_data\",\n        ...     \"parameters\": [\n        ...         {\"name\": \"data\", \"type\": \"list\", \"required\": True},\n        ...         {\"name\": \"options\", \"type\": \"dict\", \"required\": False}\n        ...     ],\n        ...     \"return_type\": \"dict\"\n        ... })\n        '{\"name\": \"process_data\", \"parameters\": [{\"name\": \"data\", \"type\": \"list\", \"required\": true}, {\"name\": \"options\", \"type\": \"dict\", \"required\": false}], \"return_type\": \"dict\"}'\n        \n        >>> generate_json({\n        ...     \"name\": \"calculate\",\n        ...     \"parameters\": null,\n        ...     \"return_type\": \"int\"\n        ... })\n        '{\"name\": \"calculate\", \"parameters\": null, \"return_type\": \"int\"}'\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    if not spec:\n        raise ValueError(\"spec cannot be empty\")\n    \n    required_fields = [\"name\", \"return_type\"]\n    for field in required_fields:\n        if field not in spec:\n            raise ValueError(f\"Missing required field: {field}\")\n        if not isinstance(spec[field], str):\n            raise TypeError(f\"{field} must be a string\")\n        if not spec[field].strip():\n            raise ValueError(f\"{field} cannot be empty\")\n    \n    if spec.get(\"parameters\") is not None:\n        if not isinstance(spec[\"parameters\"], list):\n            raise TypeError(\"parameters must be a list or null\")\n        \n        for i, param in enumerate(spec[\"parameters\"]):\n            if not isinstance(param, dict):\n                raise TypeError(f\"parameter at index {i} must be a dictionary\")\n            \n            if \"name\" not in param:\n                raise ValueError(f\"parameter at index {i} missing required field",
+          "syntax_ok": false,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/21",
+      "prompt": "from typing import List\n\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n    \"\"\" Given list of numbers (of at least two elements), apply a linear transform to that list,\n    such that the smallest number will become 0 and the largest will become 1\n    >>> rescale_to_unit([1.0, 2.0, 3.0, 4.0, 5.0])\n    [0.0, 0.25, 0.5, 0.75, 1.0]\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([2.0, 49.9]) == [0.0, 1.0]\n    assert candidate([100.0, 49.9]) == [1.0, 0.0]\n    assert candidate([1.0, 2.0, 3.0, 4.0, 5.0]) == [0.0, 0.25, 0.5, 0.75, 1.0]\n    assert candidate([2.0, 1.0, 5.0, 3.0, 4.0]) == [0.25, 0.0, 1.0, 0.5, 0.75]\n    assert candidate([12.0, 11.0, 15.0, 13.0, 14.0]) == [0.25, 0.0, 1.0, 0.5, 0.75]\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 29.4922,
+          "resource_stats": {
+            "samples": 147,
+            "cpu_percent_avg": 1.36,
+            "cpu_percent_peak": 10.0,
+            "mem_rss_avg_bytes": 208470016,
+            "mem_rss_peak_bytes": 208470016
+          },
+          "final_code": "def generate_json(spec):\n    \"\"\"\n    Generate a JSON string from a structured specification.\n    \n    Args:\n        spec (dict): A dictionary containing the function specification with keys:\n                    - name (str): The function name\n                    - parameters (list): List of parameter dictionaries\n                    - return_type (str): The return type description\n                    \n    Returns:\n        str: A JSON string representation of the specification\n        \n    Raises:\n        TypeError: If spec is not a dictionary or contains invalid types\n        ValueError: If required keys are missing from the specification\n        \n    Examples:\n        >>> generate_json({\n        ...     \"name\": \"example_func\",\n        ...     \"parameters\": [{\"name\": \"x\", \"type\": \"int\"}, {\"name\": \"y\", \"type\": \"str\"}],\n        ...     \"return_type\": \"bool\"\n        ... })\n        '{\"name\": \"example_func\", \"parameters\": [{\"name\": \"x\", \"type\": \"int\"}, {\"name\": \"y\", \"type\": \"str\"}], \"return_type\": \"bool\"}'\n        \n        >>> generate_json({\n        ...     \"name\": \"simple_func\",\n        ...     \"parameters\": [],\n        ...     \"return_type\": \"None\"\n        ... })\n        '{\"name\": \"simple_func\", \"parameters\": [], \"return_type\": \"None\"}'\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    required_keys = [\"name\", \"parameters\", \"return_type\"]\n    for key in required_keys:\n        if key not in spec:\n            raise ValueError(f\"Missing required key: {key}\")\n    \n    if not isinstance(spec[\"name\"], str):\n        raise TypeError(\"name must be a string\")\n    \n    if not isinstance(spec[\"parameters\"], list):\n        raise TypeError(\"parameters must be a list\")\n    \n    if not isinstance(spec[\"return_type\"], str):\n        raise TypeError(\"return_type must be a string\")\n    \n    for param in spec[\"parameters\"]:\n        if not isinstance(param, dict):\n            raise TypeError(\"Each parameter must be a dictionary\")\n        if \"name\" not in param or \"type\" not in param:\n            raise ValueError(\"Each parameter must have 'name' and 'type' keys\")\n    \n    import json\n    return json.dumps(spec, separators=(',', ': '))",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/22",
+      "prompt": "from typing import List, Any\n\n\ndef filter_integers(values: List[Any]) -> List[int]:\n    \"\"\" Filter given list of any python values only for integers\n    >>> filter_integers(['a', 3.14, 5])\n    [5]\n    >>> filter_integers([1, 2, 3, 'abc', {}, []])\n    [1, 2, 3]\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([]) == []\n    assert candidate([4, {}, [], 23.2, 9, 'adasd']) == [4, 9]\n    assert candidate([3, 'c', 3, 3, 'a', 'b']) == [3, 3, 3]\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 24.8757,
+          "resource_stats": {
+            "samples": 124,
+            "cpu_percent_avg": 1.01,
+            "cpu_percent_peak": 10.0,
+            "mem_rss_avg_bytes": 208601088,
+            "mem_rss_peak_bytes": 208601088
+          },
+          "final_code": "def generate_json(spec):\n    \"\"\"\n    Generate a JSON string from a structured specification.\n    \n    Args:\n        spec (dict): A dictionary containing the specification for JSON generation.\n                    Expected to have keys that define the structure and content\n                    of the desired JSON output.\n    \n    Returns:\n        str: A valid JSON string representation of the input specification.\n    \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If the specification cannot be converted to valid JSON.\n    \n    Examples:\n        >>> generate_json({\"name\": \"John\", \"age\": 30})\n        '{\"name\": \"John\", \"age\": 30}'\n        \n        >>> generate_json({\"items\": [1, 2, 3], \"count\": null})\n        '{\"items\": [1, 2, 3], \"count\": null}'\n        \n        >>> generate_json({})\n        '{}'\n    \"\"\"\n    import json\n    \n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    try:\n        return json.dumps(spec)\n    except (TypeError, ValueError) as e:\n        raise ValueError(f\"Failed to generate JSON: {str(e)}\")",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/23",
+      "prompt": "\n\ndef strlen(string: str) -> int:\n    \"\"\" Return length of given string\n    >>> strlen('')\n    0\n    >>> strlen('abc')\n    3\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('') == 0\n    assert candidate('x') == 1\n    assert candidate('asdasnakj') == 9\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 24.4742,
+          "resource_stats": {
+            "samples": 122,
+            "cpu_percent_avg": 1.07,
+            "cpu_percent_peak": 10.0,
+            "mem_rss_avg_bytes": 208601088,
+            "mem_rss_peak_bytes": 208601088
+          },
+          "final_code": "def generate_json(retries: int = 3, timeout: float = 5.0, validate: bool = True) -> dict:\n    \"\"\"\n    Generate a JSON response with retry logic and validation.\n    \n    Args:\n        retries (int): Number of retry attempts. Must be non-negative.\n        timeout (float): Timeout in seconds for each attempt. Must be positive.\n        validate (bool): Whether to validate the generated JSON.\n        \n    Returns:\n        dict: A dictionary containing the generated JSON data.\n        \n    Raises:\n        ValueError: If retries is negative or timeout is not positive.\n        RuntimeError: If all retry attempts fail.\n        \n    Examples:\n        >>> generate_json({\"retries\": 2, \"timeout\": 3.0, \"validate\": true})\n        {'status': 'success', 'data': {'message': 'Generated JSON'}}\n        \n        >>> generate_json({\"retries\": 0, \"timeout\": 1.0, \"validate\": false})\n        {'status': 'success', 'data': {'message': 'Generated JSON'}}\n        \n        >>> generate_json({\"retries\": null, \"timeout\": null, \"validate\": null})\n        {'status': 'success', 'data': {'message': 'Generated JSON'}}\n    \"\"\"\n    if retries is not None and (not isinstance(retries, int) or retries < 0):\n        raise ValueError(\"retries must be a non-negative integer\")\n    \n    if timeout is not None and (not isinstance(timeout, (int, float)) or timeout <= 0):\n        raise ValueError(\"timeout must be a positive number\")\n    \n    if retries is None:\n        retries = 3\n        \n    if timeout is None:\n        timeout = 5.0\n        \n    if validate is None:\n        validate = True\n    \n    attempt = 0\n    while attempt <= retries:\n        try:\n            # Simulate JSON generation\n            result = {\n                \"status\": \"success\",\n                \"data\": {\n                    \"message\": \"Generated JSON\"\n                }\n            }\n            \n            if validate:\n                # Simulate validation\n                if not isinstance(result, dict):\n                    raise ValueError(\"Invalid JSON format\")\n                    \n            return result\n            \n        except Exception as e:\n            attempt += 1\n            if attempt > retries:\n                raise RuntimeError(f\"Failed to generate JSON after {retries + 1} attempts\") from e\n    \n    raise RuntimeError(f\"Failed to generate JSON after {retries + 1} attempts\")",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/24",
+      "prompt": "\n\ndef largest_divisor(n: int) -> int:\n    \"\"\" For a given number n, find the largest number that divides n evenly, smaller than n\n    >>> largest_divisor(15)\n    5\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate(3) == 1\n    assert candidate(7) == 1\n    assert candidate(10) == 5\n    assert candidate(100) == 50\n    assert candidate(49) == 7\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 19.8542,
+          "resource_stats": {
+            "samples": 99,
+            "cpu_percent_avg": 0.96,
+            "cpu_percent_peak": 5.0,
+            "mem_rss_avg_bytes": 208601088,
+            "mem_rss_peak_bytes": 208601088
+          },
+          "final_code": "def generate_json(spec):\n    \"\"\"\n    Generate a JSON string from a structured specification.\n    \n    Args:\n        spec (dict): A dictionary containing the specification for JSON generation.\n                    Expected to have keys that define the structure and content\n                    of the desired JSON output.\n    \n    Returns:\n        str: A valid JSON string representation of the input specification.\n    \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If the specification cannot be converted to valid JSON.\n    \n    Examples:\n        >>> generate_json({\"name\": \"John\", \"age\": 30})\n        '{\"name\": \"John\", \"age\": 30}'\n        \n        >>> generate_json({\"items\": [1, 2, 3], \"count\": null})\n        '{\"items\": [1, 2, 3], \"count\": null}'\n        \n        >>> generate_json({})\n        '{}'\n    \"\"\"\n    import json\n    \n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    try:\n        return json.dumps(spec)\n    except (TypeError, ValueError) as e:\n        raise ValueError(f\"Failed to generate JSON: {str(e)}\")",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/25",
+      "prompt": "from typing import List\n\n\ndef factorize(n: int) -> List[int]:\n    \"\"\" Return list of prime factors of given integer in the order from smallest to largest.\n    Each of the factors should be listed number of times corresponding to how many times it appeares in factorization.\n    Input number should be equal to the product of all factors\n    >>> factorize(8)\n    [2, 2, 2]\n    >>> factorize(25)\n    [5, 5]\n    >>> factorize(70)\n    [2, 5, 7]\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate(2) == [2]\n    assert candidate(4) == [2, 2]\n    assert candidate(8) == [2, 2, 2]\n    assert candidate(3 * 19) == [3, 19]\n    assert candidate(3 * 19 * 3 * 19) == [3, 3, 19, 19]\n    assert candidate(3 * 19 * 3 * 19 * 3 * 19) == [3, 3, 3, 19, 19, 19]\n    assert candidate(3 * 19 * 19 * 19) == [3, 19, 19, 19]\n    assert candidate(3 * 2 * 3) == [2, 3, 3]\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 17.0546,
+          "resource_stats": {
+            "samples": 85,
+            "cpu_percent_avg": 1.53,
+            "cpu_percent_peak": 5.0,
+            "mem_rss_avg_bytes": 208601088,
+            "mem_rss_peak_bytes": 208601088
+          },
+          "final_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    This function processes a structured JSON specification and returns\n    a valid Python dictionary representation.\n    \n    Args:\n        spec (dict): A dictionary containing the JSON specification\n                    with keys defining the structure and requirements.\n    \n    Returns:\n        dict: A valid Python dictionary representing the processed JSON.\n    \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If the specification is invalid or cannot be processed.\n    \n    Examples:\n        >>> generate_json({\"name\": \"test\", \"type\": \"string\"})\n        {'name': 'test', 'type': 'string'}\n        \n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n        \n        >>> generate_json(None)\n        Traceback (most recent call last):\n            ...\n        TypeError: spec must be a dictionary\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    if not spec:\n        return {}\n    \n    # Handle the specific error case mentioned in the example\n    if \"error\" in spec and spec[\"error\"] == \"Failed to generate JSON after retries\":\n        return {\"error\": \"Failed to generate JSON after retries\"}\n    \n    # Return the spec as-is for valid cases\n    return spec",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/26",
+      "prompt": "from typing import List\n\n\ndef remove_duplicates(numbers: List[int]) -> List[int]:\n    \"\"\" From a list of integers, remove all elements that occur more than once.\n    Keep order of elements left the same as in the input.\n    >>> remove_duplicates([1, 2, 3, 2, 4])\n    [1, 3, 4]\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([]) == []\n    assert candidate([1, 2, 3, 4]) == [1, 2, 3, 4]\n    assert candidate([1, 2, 3, 2, 4, 3, 5]) == [1, 4, 5]\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 18.8583,
+          "resource_stats": {
+            "samples": 94,
+            "cpu_percent_avg": 1.44,
+            "cpu_percent_peak": 10.0,
+            "mem_rss_avg_bytes": 208601088,
+            "mem_rss_peak_bytes": 208601088
+          },
+          "final_code": "def generate_json(spec):\n    \"\"\"\n    Generate a JSON string from a structured specification.\n    \n    Args:\n        spec (dict): A dictionary containing the specification for JSON generation.\n                    Expected to have keys that define the structure and content\n                    of the desired JSON output.\n    \n    Returns:\n        str: A valid JSON string representation of the input specification.\n    \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If the specification cannot be converted to valid JSON.\n    \n    Examples:\n        >>> generate_json({\"name\": \"John\", \"age\": 30})\n        '{\"name\": \"John\", \"age\": 30}'\n        \n        >>> generate_json({\"items\": [1, 2, 3], \"count\": null})\n        '{\"items\": [1, 2, 3], \"count\": null}'\n        \n        >>> generate_json({})\n        '{}'\n    \"\"\"\n    import json\n    \n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    try:\n        return json.dumps(spec)\n    except (TypeError, ValueError) as e:\n        raise ValueError(f\"Failed to generate JSON: {str(e)}\")",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/27",
+      "prompt": "\n\ndef flip_case(string: str) -> str:\n    \"\"\" For a given string, flip lowercase characters to uppercase and uppercase to lowercase.\n    >>> flip_case('Hello')\n    'hELLO'\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('') == ''\n    assert candidate('Hello!') == 'hELLO!'\n    assert candidate('These violent delights have violent ends') == 'tHESE VIOLENT DELIGHTS HAVE VIOLENT ENDS'\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 17.055,
+          "resource_stats": {
+            "samples": 85,
+            "cpu_percent_avg": 1.59,
+            "cpu_percent_peak": 10.0,
+            "mem_rss_avg_bytes": 208601088,
+            "mem_rss_peak_bytes": 208601088
+          },
+          "final_code": "def generate_json(spec):\n    \"\"\"\n    Generate a JSON string from a structured specification.\n    \n    Args:\n        spec (dict): A dictionary containing the specification for JSON generation.\n                    Expected to have keys that define the structure and content\n                    of the desired JSON output.\n    \n    Returns:\n        str: A valid JSON string representation of the input specification.\n    \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If the specification cannot be converted to valid JSON.\n    \n    Examples:\n        >>> generate_json({\"name\": \"John\", \"age\": 30})\n        '{\"name\": \"John\", \"age\": 30}'\n        \n        >>> generate_json({\"items\": [1, 2, 3], \"count\": null})\n        '{\"items\": [1, 2, 3], \"count\": null}'\n        \n        >>> generate_json({})\n        '{}'\n    \"\"\"\n    import json\n    \n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    try:\n        return json.dumps(spec)\n    except (TypeError, ValueError) as e:\n        raise ValueError(f\"Failed to generate JSON: {str(e)}\")",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/28",
+      "prompt": "from typing import List\n\n\ndef concatenate(strings: List[str]) -> str:\n    \"\"\" Concatenate list of strings into a single string\n    >>> concatenate([])\n    ''\n    >>> concatenate(['a', 'b', 'c'])\n    'abc'\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([]) == ''\n    assert candidate(['x', 'y', 'z']) == 'xyz'\n    assert candidate(['x', 'y', 'z', 'w', 'k']) == 'xyzwk'\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 16.6547,
+          "resource_stats": {
+            "samples": 83,
+            "cpu_percent_avg": 1.14,
+            "cpu_percent_peak": 5.0,
+            "mem_rss_avg_bytes": 208601088,
+            "mem_rss_peak_bytes": 208601088
+          },
+          "final_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    This function processes a structured JSON specification and returns\n    a valid Python dictionary representation.\n    \n    Args:\n        spec (dict): A dictionary containing the JSON specification\n                    with keys defining the structure and requirements.\n    \n    Returns:\n        dict: A processed dictionary based on the specification.\n    \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If the specification is invalid or cannot be processed.\n    \n    Examples:\n        >>> generate_json({\"name\": \"test\", \"type\": \"string\"})\n        {'name': 'test', 'type': 'string'}\n        \n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n        \n        >>> generate_json({})\n        {}\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    if \"error\" in spec and spec[\"error\"] == \"Failed to generate JSON after retries\":\n        return {\"error\": \"Failed to generate JSON after retries\"}\n    \n    return spec",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/29",
+      "prompt": "from typing import List\n\n\ndef filter_by_prefix(strings: List[str], prefix: str) -> List[str]:\n    \"\"\" Filter an input list of strings only for ones that start with a given prefix.\n    >>> filter_by_prefix([], 'a')\n    []\n    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')\n    ['abc', 'array']\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([], 'john') == []\n    assert candidate(['xxx', 'asd', 'xxy', 'john doe', 'xxxAAA', 'xxx'], 'xxx') == ['xxx', 'xxxAAA', 'xxx']\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 22.6711,
+          "resource_stats": {
+            "samples": 113,
+            "cpu_percent_avg": 1.46,
+            "cpu_percent_peak": 10.0,
+            "mem_rss_avg_bytes": 208601088,
+            "mem_rss_peak_bytes": 208601088
+          },
+          "final_code": "def generate_json(spec):\n    \"\"\"\n    Generate a JSON string from a structured specification.\n    \n    Args:\n        spec (dict): A dictionary containing the function specification with keys:\n                    - name (str): The function name\n                    - parameters (list): List of parameter dictionaries\n                    - return_type (str): The return type description\n                    \n    Returns:\n        str: A JSON string representation of the specification\n        \n    Raises:\n        TypeError: If spec is not a dictionary or contains invalid types\n        ValueError: If required fields are missing or empty\n        \n    Examples:\n        >>> generate_json({\n        ...     \"name\": \"example_func\",\n        ...     \"parameters\": [{\"name\": \"x\", \"type\": \"int\"}, {\"name\": \"y\", \"type\": \"str\"}],\n        ...     \"return_type\": \"bool\"\n        ... })\n        '{\"name\": \"example_func\", \"parameters\": [{\"name\": \"x\", \"type\": \"int\"}, {\"name\": \"y\", \"type\": \"str\"}], \"return_type\": \"bool\"}'\n        \n        >>> generate_json({\n        ...     \"name\": \"simple_func\",\n        ...     \"parameters\": [],\n        ...     \"return_type\": \"None\"\n        ... })\n        '{\"name\": \"simple_func\", \"parameters\": [], \"return_type\": \"None\"}'\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    required_fields = [\"name\", \"parameters\", \"return_type\"]\n    for field in required_fields:\n        if field not in spec:\n            raise ValueError(f\"Missing required field: {field}\")\n    \n    if not isinstance(spec[\"name\"], str):\n        raise TypeError(\"name must be a string\")\n    \n    if not isinstance(spec[\"parameters\"], list):\n        raise TypeError(\"parameters must be a list\")\n    \n    if not isinstance(spec[\"return_type\"], str):\n        raise TypeError(\"return_type must be a string\")\n    \n    if not spec[\"name\"].strip():\n        raise ValueError(\"name cannot be empty\")\n    \n    for i, param in enumerate(spec[\"parameters\"]):\n        if not isinstance(param, dict):\n            raise TypeError(f\"parameter at index {i} must be a dictionary\")\n        if \"name\" not in param or \"type\" not in param:\n            raise ValueError(f\"parameter at index {i} missing required fields\")\n        if not isinstance(param[\"name\"], str) or not isinstance(param[\"type\"], str):\n            raise TypeError(f\"",
+          "syntax_ok": false,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/30",
+      "prompt": "\n\ndef get_positive(l: list):\n    \"\"\"Return only positive numbers in the list.\n    >>> get_positive([-1, 2, -4, 5, 6])\n    [2, 5, 6]\n    >>> get_positive([5, 3, -5, 2, -3, 3, 9, 0, 123, 1, -10])\n    [5, 3, 2, 3, 9, 123, 1]\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate([-1, -2, 4, 5, 6]) == [4, 5, 6]\n    assert candidate([5, 3, -5, 2, 3, 3, 9, 0, 123, 1, -10]) == [5, 3, 2, 3, 3, 9, 123, 1]\n    assert candidate([-1, -2]) == []\n    assert candidate([]) == []\n\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 13.8448,
+          "resource_stats": {
+            "samples": 69,
+            "cpu_percent_avg": 1.67,
+            "cpu_percent_peak": 10.0,
+            "mem_rss_avg_bytes": 208601088,
+            "mem_rss_peak_bytes": 208601088
+          },
+          "final_code": "def generate_json(spec):\n    \"\"\"\n    Generate a JSON string from a structured specification.\n    \n    Args:\n        spec (dict): A dictionary containing the specification for JSON generation.\n                    Expected to have keys that define the structure and content\n                    of the desired JSON output.\n    \n    Returns:\n        str: A valid JSON string representation of the input specification.\n    \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If the specification cannot be converted to valid JSON.\n    \n    Examples:\n        >>> generate_json({\"name\": \"John\", \"age\": 30})\n        '{\"name\": \"John\", \"age\": 30}'\n        \n        >>> generate_json({\"items\": [1, 2, 3], \"count\": null})\n        '{\"items\": [1, 2, 3], \"count\": null}'\n        \n        >>> generate_json({})\n        '{}'\n    \"\"\"\n    import json\n    \n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    try:\n        return json.dumps(spec)\n    except (TypeError, ValueError) as e:\n        raise ValueError(f\"Failed to generate JSON: {str(e)}\")",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/31",
+      "prompt": "\n\ndef is_prime(n):\n    \"\"\"Return true if a given number is prime, and false otherwise.\n    >>> is_prime(6)\n    False\n    >>> is_prime(101)\n    True\n    >>> is_prime(11)\n    True\n    >>> is_prime(13441)\n    True\n    >>> is_prime(61)\n    True\n    >>> is_prime(4)\n    False\n    >>> is_prime(1)\n    False\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(6) == False\n    assert candidate(101) == True\n    assert candidate(11) == True\n    assert candidate(13441) == True\n    assert candidate(61) == True\n    assert candidate(4) == False\n    assert candidate(1) == False\n    assert candidate(5) == True\n    assert candidate(11) == True\n    assert candidate(17) == True\n    assert candidate(5 * 17) == False\n    assert candidate(11 * 7) == False\n    assert candidate(13441 * 19) == False\n\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 13.2425,
+          "resource_stats": {
+            "samples": 66,
+            "cpu_percent_avg": 1.59,
+            "cpu_percent_peak": 10.0,
+            "mem_rss_avg_bytes": 208601088,
+            "mem_rss_peak_bytes": 208601088
+          },
+          "final_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    This function processes a structured JSON specification and returns\n    a valid Python dictionary that can be serialized to JSON.\n    \n    Args:\n        spec (dict): A dictionary containing the JSON specification with keys:\n            - \"error\" (str, optional): Error message if generation failed\n            - Other specification fields as needed\n    \n    Returns:\n        dict: A valid dictionary representation that can be serialized to JSON\n    \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n        \n        >>> generate_json({})\n        {}\n    \n    Raises:\n        TypeError: If spec is not a dictionary\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    # Return the spec as-is since it's already in the correct format\n    return spec.copy()",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/32",
+      "prompt": "import math\n\n\ndef poly(xs: list, x: float):\n    \"\"\"\n    Evaluates polynomial with coefficients xs at point x.\n    return xs[0] + xs[1] * x + xs[1] * x^2 + .... xs[n] * x^n\n    \"\"\"\n    return sum([coeff * math.pow(x, i) for i, coeff in enumerate(xs)])\n\n\ndef find_zero(xs: list):\n    \"\"\" xs are coefficients of a polynomial.\n    find_zero find x such that poly(x) = 0.\n    find_zero returns only only zero point, even if there are many.\n    Moreover, find_zero only takes list xs having even number of coefficients\n    and largest non zero coefficient as it guarantees\n    a solution.\n    >>> round(find_zero([1, 2]), 2) # f(x) = 1 + 2x\n    -0.5\n    >>> round(find_zero([-6, 11, -6, 1]), 2) # (x - 1) * (x - 2) * (x - 3) = -6 + 11x - 6x^2 + x^3\n    1.0\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    import math\n    import random\n    rng = random.Random(42)\n    import copy\n    for _ in range(100):\n        ncoeff = 2 * rng.randint(1, 4)\n        coeffs = []\n        for _ in range(ncoeff):\n            coeff = rng.randint(-10, 10)\n            if coeff == 0:\n                coeff = 1\n            coeffs.append(coeff)\n        solution = candidate(copy.deepcopy(coeffs))\n        assert math.fabs(poly(coeffs, solution)) < 1e-4\n\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 15.0473,
+          "resource_stats": {
+            "samples": 75,
+            "cpu_percent_avg": 1.4,
+            "cpu_percent_peak": 10.0,
+            "mem_rss_avg_bytes": 208601088,
+            "mem_rss_peak_bytes": 208601088
+          },
+          "final_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    This function processes a structured JSON specification and returns\n    a valid Python dictionary that can be serialized to JSON.\n    \n    Args:\n        spec (dict): A dictionary containing the JSON specification with keys:\n            - \"error\" (str, optional): Error message if generation failed\n            - Other specification fields as needed\n    \n    Returns:\n        dict: A valid dictionary representation that can be serialized to JSON\n    \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n        \n        >>> generate_json({})\n        {}\n    \n    Raises:\n        TypeError: If spec is not a dictionary\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    # Return the spec as-is since it's already in the correct format\n    return spec.copy()",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/33",
+      "prompt": "\n\ndef sort_third(l: list):\n    \"\"\"This function takes a list l and returns a list l' such that\n    l' is identical to l in the indicies that are not divisible by three, while its values at the indicies that are divisible by three are equal\n    to the values of the corresponding indicies of l, but sorted.\n    >>> sort_third([1, 2, 3])\n    [1, 2, 3]\n    >>> sort_third([5, 6, 3, 4, 8, 9, 2])\n    [2, 6, 3, 4, 8, 9, 5]\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert tuple(candidate([1, 2, 3])) == tuple(sort_third([1, 2, 3]))\n    assert tuple(candidate([5, 3, -5, 2, -3, 3, 9, 0, 123, 1, -10])) == tuple(sort_third([5, 3, -5, 2, -3, 3, 9, 0, 123, 1, -10]))\n    assert tuple(candidate([5, 8, -12, 4, 23, 2, 3, 11, 12, -10])) == tuple(sort_third([5, 8, -12, 4, 23, 2, 3, 11, 12, -10]))\n    assert tuple(candidate([5, 6, 3, 4, 8, 9, 2])) == tuple([2, 6, 3, 4, 8, 9, 5])\n    assert tuple(candidate([5, 8, 3, 4, 6, 9, 2])) == tuple([2, 8, 3, 4, 6, 9, 5])\n    assert tuple(candidate([5, 6, 9, 4, 8, 3, 2])) == tuple([2, 6, 9, 4, 8, 3, 5])\n    assert tuple(candidate([5, 6, 3, 4, 8, 9, 2, 1])) == tuple([2, 6, 3, 4, 8, 9, 5, 1])\n\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 20.4623,
+          "resource_stats": {
+            "samples": 102,
+            "cpu_percent_avg": 1.52,
+            "cpu_percent_peak": 5.0,
+            "mem_rss_avg_bytes": 208601088,
+            "mem_rss_peak_bytes": 208601088
+          },
+          "final_code": "def generate_json(retries: int = 3, timeout: float = 5.0, validate: bool = True) -> dict:\n    \"\"\"\n    Generate a JSON response with retry logic and validation.\n    \n    Args:\n        retries (int): Number of retry attempts. Must be >= 0.\n        timeout (float): Timeout in seconds. Must be > 0.\n        validate (bool): Whether to validate the generated JSON.\n        \n    Returns:\n        dict: Generated JSON response.\n        \n    Raises:\n        ValueError: If retries < 0 or timeout <= 0.\n        TimeoutError: If operation times out after all retries.\n        \n    Examples:\n        >>> generate_json({\"retries\": 2, \"timeout\": 3.0, \"validate\": true})\n        {'status': 'success', 'data': {}}\n        \n        >>> generate_json({\"retries\": 0, \"timeout\": 1.0, \"validate\": null})\n        {'status': 'success', 'data': {}}\n    \"\"\"\n    if not isinstance(retries, int) or retries < 0:\n        raise ValueError(\"retries must be a non-negative integer\")\n    if not isinstance(timeout, (int, float)) or timeout <= 0:\n        raise ValueError(\"timeout must be a positive number\")\n    if validate is not None and not isinstance(validate, bool):\n        raise ValueError(\"validate must be a boolean or None\")\n    \n    # Simulate JSON generation with retry logic\n    import time\n    import random\n    \n    for attempt in range(retries + 1):\n        try:\n            # Simulate work\n            time.sleep(0.1)\n            # Simulate random failure\n            if random.random() < 0.3 and attempt < retries:\n                raise TimeoutError(\"Operation timed out\")\n            return {\"status\": \"success\", \"data\": {}}\n        except TimeoutError:\n            if attempt == retries:\n                raise TimeoutError(\"Failed to generate JSON after retries\")\n            time.sleep(min(0.5 * (2 ** attempt), timeout))\n    \n    return {\"status\": \"success\", \"data\": {}}",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/34",
+      "prompt": "\n\ndef unique(l: list):\n    \"\"\"Return sorted unique elements in a list\n    >>> unique([5, 3, 5, 2, 3, 3, 9, 0, 123])\n    [0, 2, 3, 5, 9, 123]\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate([5, 3, 5, 2, 3, 3, 9, 0, 123]) == [0, 2, 3, 5, 9, 123]\n\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 11.6403,
+          "resource_stats": {
+            "samples": 58,
+            "cpu_percent_avg": 1.64,
+            "cpu_percent_peak": 10.0,
+            "mem_rss_avg_bytes": 208607867,
+            "mem_rss_peak_bytes": 208732160
+          },
+          "final_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    Args:\n        spec (dict): A dictionary containing the function specification.\n        \n    Returns:\n        dict: A dictionary representing the generated JSON response.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        KeyError: If required keys are missing from spec.\n        \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n        \n        >>> generate_json({\"function\": \"test\", \"parameters\": {\"x\": 1}})\n        {'function': 'test', 'parameters': {'x': 1}}\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    return spec",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/35",
+      "prompt": "\n\ndef max_element(l: list):\n    \"\"\"Return maximum element in the list.\n    >>> max_element([1, 2, 3])\n    3\n    >>> max_element([5, 3, -5, 2, -3, 3, 9, 0, 123, 1, -10])\n    123\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate([1, 2, 3]) == 3\n    assert candidate([5, 3, -5, 2, -3, 3, 9, 0, 124, 1, -10]) == 124\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 14.4476,
+          "resource_stats": {
+            "samples": 72,
+            "cpu_percent_avg": 1.39,
+            "cpu_percent_peak": 5.0,
+            "mem_rss_avg_bytes": 208732160,
+            "mem_rss_peak_bytes": 208732160
+          },
+          "final_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    Args:\n        spec (dict): A dictionary containing the function specification.\n        \n    Returns:\n        dict: A dictionary representing the generated JSON response.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        KeyError: If required keys are missing from spec.\n        \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n        \n        >>> generate_json({\"function\": \"test\", \"parameters\": {\"x\": 1}})\n        {'function': 'test', 'parameters': {'x': 1}}\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    return spec",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/36",
+      "prompt": "\n\ndef fizz_buzz(n: int):\n    \"\"\"Return the number of times the digit 7 appears in integers less than n which are divisible by 11 or 13.\n    >>> fizz_buzz(50)\n    0\n    >>> fizz_buzz(78)\n    2\n    >>> fizz_buzz(79)\n    3\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(50) == 0\n    assert candidate(78) == 2\n    assert candidate(79) == 3\n    assert candidate(100) == 3\n    assert candidate(200) == 6\n    assert candidate(4000) == 192\n    assert candidate(10000) == 639\n    assert candidate(100000) == 8026\n\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 13.4451,
+          "resource_stats": {
+            "samples": 67,
+            "cpu_percent_avg": 1.42,
+            "cpu_percent_peak": 10.0,
+            "mem_rss_avg_bytes": 208732160,
+            "mem_rss_peak_bytes": 208732160
+          },
+          "final_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    Args:\n        spec (dict): A dictionary containing the function specification.\n        \n    Returns:\n        dict: A dictionary representing the generated JSON response.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        KeyError: If required keys are missing from spec.\n        \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n        \n        >>> generate_json({\"function\": \"test\", \"parameters\": {\"x\": 1}})\n        {'function': 'test', 'parameters': {'x': 1}}\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    return spec",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/37",
+      "prompt": "\n\ndef sort_even(l: list):\n    \"\"\"This function takes a list l and returns a list l' such that\n    l' is identical to l in the odd indicies, while its values at the even indicies are equal\n    to the values of the even indicies of l, but sorted.\n    >>> sort_even([1, 2, 3])\n    [1, 2, 3]\n    >>> sort_even([5, 6, 3, 4])\n    [3, 6, 5, 4]\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert tuple(candidate([1, 2, 3])) == tuple([1, 2, 3])\n    assert tuple(candidate([5, 3, -5, 2, -3, 3, 9, 0, 123, 1, -10])) == tuple([-10, 3, -5, 2, -3, 3, 5, 0, 9, 1, 123])\n    assert tuple(candidate([5, 8, -12, 4, 23, 2, 3, 11, 12, -10])) == tuple([-12, 8, 3, 4, 5, 2, 12, 11, 23, -10])\n\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 15.8521,
+          "resource_stats": {
+            "samples": 79,
+            "cpu_percent_avg": 1.39,
+            "cpu_percent_peak": 5.0,
+            "mem_rss_avg_bytes": 208732160,
+            "mem_rss_peak_bytes": 208732160
+          },
+          "final_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    Args:\n        spec (dict): A dictionary containing the function specification.\n        \n    Returns:\n        dict: A dictionary representing the generated JSON response.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        KeyError: If required keys are missing from spec.\n        \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n        \n        >>> generate_json({\"function\": \"test\", \"parameters\": {\"x\": 1}})\n        {'function': 'test', 'parameters': {'x': 1}}\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    return spec",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/38",
+      "prompt": "\n\ndef encode_cyclic(s: str):\n    \"\"\"\n    returns encoded string by cycling groups of three characters.\n    \"\"\"\n    # split string to groups. Each of length 3.\n    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]\n    # cycle elements in each group. Unless group has fewer elements than 3.\n    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]\n    return \"\".join(groups)\n\n\ndef decode_cyclic(s: str):\n    \"\"\"\n    takes as input string encoded with encode_cyclic function. Returns decoded string.\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    from random import randint, choice\n    import string\n\n    letters = string.ascii_lowercase\n    for _ in range(100):\n        str = ''.join(choice(letters) for i in range(randint(10, 20)))\n        encoded_str = encode_cyclic(str)\n        assert candidate(encoded_str) == str\n\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 24.2744,
+          "resource_stats": {
+            "samples": 121,
+            "cpu_percent_avg": 1.07,
+            "cpu_percent_peak": 9.9,
+            "mem_rss_avg_bytes": 208732160,
+            "mem_rss_peak_bytes": 208732160
+          },
+          "final_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    Args:\n        spec (dict): A dictionary containing the function specification.\n        \n    Returns:\n        dict: A dictionary representing the generated JSON response.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        KeyError: If required keys are missing from spec.\n        \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n        \n        >>> generate_json({\"function\": \"test\", \"parameters\": {\"x\": 1}})\n        {'function': 'test', 'parameters': {'x': 1}}\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    return spec",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/39",
+      "prompt": "\n\ndef prime_fib(n: int):\n    \"\"\"\n    prime_fib returns n-th number that is a Fibonacci number and it's also prime.\n    >>> prime_fib(1)\n    2\n    >>> prime_fib(2)\n    3\n    >>> prime_fib(3)\n    5\n    >>> prime_fib(4)\n    13\n    >>> prime_fib(5)\n    89\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(1) == 2\n    assert candidate(2) == 3\n    assert candidate(3) == 5\n    assert candidate(4) == 13\n    assert candidate(5) == 89\n    assert candidate(6) == 233\n    assert candidate(7) == 1597\n    assert candidate(8) == 28657\n    assert candidate(9) == 514229\n    assert candidate(10) == 433494437\n\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 21.2679,
+          "resource_stats": {
+            "samples": 106,
+            "cpu_percent_avg": 1.42,
+            "cpu_percent_peak": 10.0,
+            "mem_rss_avg_bytes": 208732160,
+            "mem_rss_peak_bytes": 208732160
+          },
+          "final_code": "def generate_json(spec: dict) -> str:\n    \"\"\"\n    Generate JSON string from a structured specification dictionary.\n    \n    Args:\n        spec (dict): A dictionary containing the function specification with keys:\n                    - name (str): Function name\n                    - parameters (list): List of parameter dictionaries\n                    - return_type (str): Return type annotation\n    \n    Returns:\n        str: Generated JSON string representation of the specification\n        \n    Raises:\n        TypeError: If spec is not a dictionary or contains invalid types\n        ValueError: If required keys are missing from the specification\n        \n    Examples:\n        >>> generate_json({\n        ...     \"name\": \"add\",\n        ...     \"parameters\": [\n        ...         {\"name\": \"a\", \"type\": \"int\"},\n        ...         {\"name\": \"b\", \"type\": \"int\"}\n        ...     ],\n        ...     \"return_type\": \"int\"\n        ... })\n        '{\"name\": \"add\", \"parameters\": [{\"name\": \"a\", \"type\": \"int\"}, {\"name\": \"b\", \"type\": \"int\"}], \"return_type\": \"int\"}'\n        \n        >>> generate_json({\n        ...     \"name\": \"greet\",\n        ...     \"parameters\": [\n        ...         {\"name\": \"name\", \"type\": \"str\", \"default\": \"World\"}\n        ...     ],\n        ...     \"return_type\": \"str\"\n        ... })\n        '{\"name\": \"greet\", \"parameters\": [{\"name\": \"name\", \"type\": \"str\", \"default\": \"World\"}], \"return_type\": \"str\"}'\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    required_keys = [\"name\", \"parameters\", \"return_type\"]\n    for key in required_keys:\n        if key not in spec:\n            raise ValueError(f\"Missing required key: {key}\")\n    \n    if not isinstance(spec[\"name\"], str):\n        raise TypeError(\"name must be a string\")\n    \n    if not isinstance(spec[\"parameters\"], list):\n        raise TypeError(\"parameters must be a list\")\n    \n    if not isinstance(spec[\"return_type\"], str):\n        raise TypeError(\"return_type must be a string\")\n    \n    for param in spec[\"parameters\"]:\n        if not isinstance(param, dict):\n            raise TypeError(\"Each parameter must be a dictionary\")\n        if \"name\" not in param or \"type\" not in param:\n            raise ValueError(\"Each parameter must have name and type keys",
+          "syntax_ok": false,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/40",
+      "prompt": "\n\ndef triples_sum_to_zero(l: list):\n    \"\"\"\n    triples_sum_to_zero takes a list of integers as an input.\n    it returns True if there are three distinct elements in the list that\n    sum to zero, and False otherwise.\n\n    >>> triples_sum_to_zero([1, 3, 5, 0])\n    False\n    >>> triples_sum_to_zero([1, 3, -2, 1])\n    True\n    >>> triples_sum_to_zero([1, 2, 3, 7])\n    False\n    >>> triples_sum_to_zero([2, 4, -5, 3, 9, 7])\n    True\n    >>> triples_sum_to_zero([1])\n    False\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate([1, 3, 5, 0]) == False\n    assert candidate([1, 3, 5, -1]) == False\n    assert candidate([1, 3, -2, 1]) == True\n    assert candidate([1, 2, 3, 7]) == False\n    assert candidate([1, 2, 5, 7]) == False\n    assert candidate([2, 4, -5, 3, 9, 7]) == True\n    assert candidate([1]) == False\n    assert candidate([1, 3, 5, -100]) == False\n    assert candidate([100, 3, 5, -100]) == False\n\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 16.4546,
+          "resource_stats": {
+            "samples": 82,
+            "cpu_percent_avg": 1.58,
+            "cpu_percent_peak": 10.0,
+            "mem_rss_avg_bytes": 208732160,
+            "mem_rss_peak_bytes": 208732160
+          },
+          "final_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    Args:\n        spec (dict): A dictionary containing the specification for JSON generation.\n        \n    Returns:\n        dict: A dictionary representing the generated JSON response.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If the spec contains invalid structure.\n        \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n        \n        >>> generate_json({\"status\": \"success\", \"data\": null})\n        {'status': 'success', 'data': None}\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    # Handle the error case specifically mentioned\n    if \"error\" in spec:\n        return {\"error\": spec[\"error\"]}\n    \n    # For other cases, return the spec as-is\n    return spec",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/41",
+      "prompt": "\n\ndef car_race_collision(n: int):\n    \"\"\"\n    Imagine a road that's a perfectly straight infinitely long line.\n    n cars are driving left to right;  simultaneously, a different set of n cars\n    are driving right to left.   The two sets of cars start out being very far from\n    each other.  All cars move in the same speed.  Two cars are said to collide\n    when a car that's moving left to right hits a car that's moving right to left.\n    However, the cars are infinitely sturdy and strong; as a result, they continue moving\n    in their trajectory as if they did not collide.\n\n    This function outputs the number of such collisions.\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(2) == 4\n    assert candidate(3) == 9\n    assert candidate(4) == 16\n    assert candidate(8) == 64\n    assert candidate(10) == 100\n\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 15.4499,
+          "resource_stats": {
+            "samples": 77,
+            "cpu_percent_avg": 1.62,
+            "cpu_percent_peak": 10.0,
+            "mem_rss_avg_bytes": 208732160,
+            "mem_rss_peak_bytes": 208732160
+          },
+          "final_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    Args:\n        spec (dict): A dictionary containing the specification for JSON generation.\n                    Expected to contain keys like 'error', 'data', etc.\n    \n    Returns:\n        dict: A dictionary representing the generated JSON response.\n    \n    Raises:\n        TypeError: If spec is not a dictionary.\n        KeyError: If required keys are missing from spec.\n    \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n        \n        >>> generate_json({\"data\": {\"name\": \"John\", \"age\": 30}})\n        {'data': {'name': 'John', 'age': 30}}\n        \n        >>> generate_json({\"error\": null, \"result\": \"success\"})\n        {'error': None, 'result': 'success'}\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    return spec.copy()",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/42",
+      "prompt": "\n\ndef incr_list(l: list):\n    \"\"\"Return list with elements incremented by 1.\n    >>> incr_list([1, 2, 3])\n    [2, 3, 4]\n    >>> incr_list([5, 3, 5, 2, 3, 3, 9, 0, 123])\n    [6, 4, 6, 3, 4, 4, 10, 1, 124]\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate([]) == []\n    assert candidate([3, 2, 1]) == [4, 3, 2]\n    assert candidate([5, 2, 5, 2, 3, 3, 9, 0, 123]) == [6, 3, 6, 3, 4, 4, 10, 1, 124]\n\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 13.4463,
+          "resource_stats": {
+            "samples": 67,
+            "cpu_percent_avg": 1.49,
+            "cpu_percent_peak": 10.0,
+            "mem_rss_avg_bytes": 208732160,
+            "mem_rss_peak_bytes": 208732160
+          },
+          "final_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    Args:\n        spec (dict): A dictionary containing the function specification.\n        \n    Returns:\n        dict: A dictionary representing the generated JSON response.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        KeyError: If required keys are missing from spec.\n        \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n        \n        >>> generate_json({\"function\": \"test\", \"parameters\": {\"x\": 1}})\n        {'function': 'test', 'parameters': {'x': 1}}\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    return spec",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/43",
+      "prompt": "\n\ndef pairs_sum_to_zero(l):\n    \"\"\"\n    pairs_sum_to_zero takes a list of integers as an input.\n    it returns True if there are two distinct elements in the list that\n    sum to zero, and False otherwise.\n    >>> pairs_sum_to_zero([1, 3, 5, 0])\n    False\n    >>> pairs_sum_to_zero([1, 3, -2, 1])\n    False\n    >>> pairs_sum_to_zero([1, 2, 3, 7])\n    False\n    >>> pairs_sum_to_zero([2, 4, -5, 3, 5, 7])\n    True\n    >>> pairs_sum_to_zero([1])\n    False\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate([1, 3, 5, 0]) == False\n    assert candidate([1, 3, -2, 1]) == False\n    assert candidate([1, 2, 3, 7]) == False\n    assert candidate([2, 4, -5, 3, 5, 7]) == True\n    assert candidate([1]) == False\n\n    assert candidate([-3, 9, -1, 3, 2, 30]) == True\n    assert candidate([-3, 9, -1, 3, 2, 31]) == True\n    assert candidate([-3, 9, -1, 4, 2, 30]) == False\n    assert candidate([-3, 9, -1, 4, 2, 31]) == False\n\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 25.2698,
+          "resource_stats": {
+            "samples": 126,
+            "cpu_percent_avg": 0.95,
+            "cpu_percent_peak": 5.0,
+            "mem_rss_avg_bytes": 208732160,
+            "mem_rss_peak_bytes": 208732160
+          },
+          "final_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    Args:\n        spec (dict): A dictionary containing the specification for JSON generation.\n                    Expected to contain keys like 'error', 'data', etc.\n    \n    Returns:\n        dict: A dictionary representing the generated JSON response.\n    \n    Raises:\n        TypeError: If spec is not a dictionary.\n        KeyError: If required keys are missing from spec.\n    \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n        \n        >>> generate_json({\"data\": {\"name\": \"John\", \"age\": 30}})\n        {'data': {'name': 'John', 'age': 30}}\n        \n        >>> generate_json({\"error\": null, \"result\": \"success\"})\n        {'error': None, 'result': 'success'}\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    return spec.copy()",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/44",
+      "prompt": "\n\ndef change_base(x: int, base: int):\n    \"\"\"Change numerical base of input number x to base.\n    return string representation after the conversion.\n    base numbers are less than 10.\n    >>> change_base(8, 3)\n    '22'\n    >>> change_base(8, 2)\n    '1000'\n    >>> change_base(7, 2)\n    '111'\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(8, 3) == \"22\"\n    assert candidate(9, 3) == \"100\"\n    assert candidate(234, 2) == \"11101010\"\n    assert candidate(16, 2) == \"10000\"\n    assert candidate(8, 2) == \"1000\"\n    assert candidate(7, 2) == \"111\"\n    for x in range(2, 8):\n        assert candidate(x, x + 1) == str(x)\n\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 14.4454,
+          "resource_stats": {
+            "samples": 72,
+            "cpu_percent_avg": 1.46,
+            "cpu_percent_peak": 5.0,
+            "mem_rss_avg_bytes": 208732160,
+            "mem_rss_peak_bytes": 208732160
+          },
+          "final_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    Args:\n        spec (dict): A dictionary containing the function specification.\n        \n    Returns:\n        dict: A dictionary representing the generated JSON.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        KeyError: If required keys are missing from spec.\n        \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n        \n        >>> generate_json({\"name\": \"test\", \"type\": \"function\"})\n        {'name': 'test', 'type': 'function'}\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    return spec.copy()",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/45",
+      "prompt": "\n\ndef triangle_area(a, h):\n    \"\"\"Given length of a side and high return area for a triangle.\n    >>> triangle_area(5, 3)\n    7.5\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(5, 3) == 7.5\n    assert candidate(2, 2) == 2.0\n    assert candidate(10, 8) == 40.0\n\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 15.2483,
+          "resource_stats": {
+            "samples": 76,
+            "cpu_percent_avg": 1.12,
+            "cpu_percent_peak": 5.0,
+            "mem_rss_avg_bytes": 208732160,
+            "mem_rss_peak_bytes": 208732160
+          },
+          "final_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    Args:\n        spec (dict): A dictionary containing the specification for JSON generation.\n        \n    Returns:\n        dict: A dictionary representing the generated JSON response.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If the spec contains invalid structure.\n        \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n        \n        >>> generate_json({\"status\": \"success\", \"data\": null})\n        {'status': 'success', 'data': None}\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    # Handle the error case specifically mentioned\n    if \"error\" in spec:\n        return {\"error\": spec[\"error\"]}\n    \n    # For other cases, return the spec as-is\n    return spec",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/46",
+      "prompt": "\n\ndef fib4(n: int):\n    \"\"\"The Fib4 number sequence is a sequence similar to the Fibbonacci sequnece that's defined as follows:\n    fib4(0) -> 0\n    fib4(1) -> 0\n    fib4(2) -> 2\n    fib4(3) -> 0\n    fib4(n) -> fib4(n-1) + fib4(n-2) + fib4(n-3) + fib4(n-4).\n    Please write a function to efficiently compute the n-th element of the fib4 number sequence.  Do not use recursion.\n    >>> fib4(5)\n    4\n    >>> fib4(6)\n    8\n    >>> fib4(7)\n    14\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(5) == 4\n    assert candidate(8) == 28\n    assert candidate(10) == 104\n    assert candidate(12) == 386\n\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 20.8617,
+          "resource_stats": {
+            "samples": 104,
+            "cpu_percent_avg": 1.15,
+            "cpu_percent_peak": 10.0,
+            "mem_rss_avg_bytes": 208732160,
+            "mem_rss_peak_bytes": 208732160
+          },
+          "final_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    Args:\n        spec (dict): A dictionary containing the function specification.\n        \n    Returns:\n        dict: A dictionary representing the generated JSON response.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        KeyError: If required keys are missing from spec.\n        \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n        \n        >>> generate_json({\"function\": \"test\", \"parameters\": {\"x\": 1}})\n        {'function': 'test', 'parameters': {'x': 1}}\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    return spec",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/47",
+      "prompt": "\n\ndef median(l: list):\n    \"\"\"Return median of elements in the list l.\n    >>> median([3, 1, 2, 4, 5])\n    3\n    >>> median([-10, 4, 6, 1000, 10, 20])\n    15.0\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate([3, 1, 2, 4, 5]) == 3\n    assert candidate([-10, 4, 6, 1000, 10, 20]) == 8.0\n    assert candidate([5]) == 5\n    assert candidate([6, 5]) == 5.5\n    assert candidate([8, 1, 3, 9, 9, 2, 7]) == 7 \n\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 24.6844,
+          "resource_stats": {
+            "samples": 123,
+            "cpu_percent_avg": 1.06,
+            "cpu_percent_peak": 10.0,
+            "mem_rss_avg_bytes": 208732160,
+            "mem_rss_peak_bytes": 208732160
+          },
+          "final_code": "def generate_json(spec: dict) -> str:\n    \"\"\"\n    Generate JSON string from structured specification.\n    \n    Args:\n        spec (dict): Function specification in JSON format containing function details.\n        \n    Returns:\n        str: Valid JSON string representation of the specification.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If spec contains invalid JSON structure.\n        \n    Examples:\n        >>> generate_json({\"name\": \"test\", \"parameters\": []})\n        '{\"name\": \"test\", \"parameters\": []}'\n        \n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        '{\"error\": \"Failed to generate JSON after retries\"}'\n        \n        >>> generate_json({})\n        '{}'\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    try:\n        import json\n        return json.dumps(spec)\n    except (TypeError, ValueError) as e:\n        raise ValueError(f\"Invalid JSON structure: {str(e)}\")",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/48",
+      "prompt": "\n\ndef is_palindrome(text: str):\n    \"\"\"\n    Checks if given string is a palindrome\n    >>> is_palindrome('')\n    True\n    >>> is_palindrome('aba')\n    True\n    >>> is_palindrome('aaaaa')\n    True\n    >>> is_palindrome('zbcd')\n    False\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate('') == True\n    assert candidate('aba') == True\n    assert candidate('aaaaa') == True\n    assert candidate('zbcd') == False\n    assert candidate('xywyx') == True\n    assert candidate('xywyz') == False\n    assert candidate('xywzx') == False\n\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 12.8352,
+          "resource_stats": {
+            "samples": 64,
+            "cpu_percent_avg": 1.09,
+            "cpu_percent_peak": 10.0,
+            "mem_rss_avg_bytes": 208785408,
+            "mem_rss_peak_bytes": 208863232
+          },
+          "final_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    Args:\n        spec (dict): A dictionary containing the specification for JSON generation.\n        \n    Returns:\n        dict: A dictionary representing the generated JSON response.\n        \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If the spec is invalid or missing required fields.\n        \n    Examples:\n        >>> generate_json({\"error\": \"Failed to generate JSON after retries\"})\n        {'error': 'Failed to generate JSON after retries'}\n        \n        >>> generate_json({\"status\": \"success\", \"data\": {\"id\": 123}})\n        {'status': 'success', 'data': {'id': 123}}\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    if not spec:\n        raise ValueError(\"spec cannot be empty\")\n    \n    return spec",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/49",
+      "prompt": "\n\ndef modp(n: int, p: int):\n    \"\"\"Return 2^n modulo p (be aware of numerics).\n    >>> modp(3, 5)\n    3\n    >>> modp(1101, 101)\n    2\n    >>> modp(0, 101)\n    1\n    >>> modp(3, 11)\n    8\n    >>> modp(100, 101)\n    1\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(3, 5) == 3\n    assert candidate(1101, 101) == 2\n    assert candidate(0, 101) == 1\n    assert candidate(3, 11) == 8\n    assert candidate(100, 101) == 1\n    assert candidate(30, 5) == 4\n    assert candidate(31, 5) == 3\n\n",
+      "attempts": [
+        {
+          "attempt_idx": 0,
+          "duration_sec": 29.2773,
+          "resource_stats": {
+            "samples": 146,
+            "cpu_percent_avg": 1.13,
+            "cpu_percent_peak": 10.0,
+            "mem_rss_avg_bytes": 208863232,
+            "mem_rss_peak_bytes": 208863232
+          },
+          "final_code": "def generate_json(spec: dict) -> str:\n    \"\"\"\n    Generate JSON string from a structured specification dictionary.\n    \n    Args:\n        spec (dict): A dictionary containing the function specification with keys:\n                    - name (str): Function name\n                    - parameters (list): List of parameter dictionaries\n                    - return_type (str): Return type annotation\n    \n    Returns:\n        str: Generated JSON string representation of the specification\n    \n    Raises:\n        TypeError: If spec is not a dictionary or contains invalid types\n        ValueError: If required keys are missing from the specification\n    \n    Examples:\n        >>> generate_json({\n        ...     \"name\": \"add\",\n        ...     \"parameters\": [\n        ...         {\"name\": \"a\", \"type\": \"int\"},\n        ...         {\"name\": \"b\", \"type\": \"int\"}\n        ...     ],\n        ...     \"return_type\": \"int\"\n        ... })\n        '{\"name\": \"add\", \"parameters\": [{\"name\": \"a\", \"type\": \"int\"}, {\"name\": \"b\", \"type\": \"int\"}], \"return_type\": \"int\"}'\n        \n        >>> generate_json({\n        ...     \"name\": \"greet\",\n        ...     \"parameters\": [\n        ...         {\"name\": \"name\", \"type\": \"str\", \"default\": \"World\"}\n        ...     ],\n        ...     \"return_type\": \"str\"\n        ... })\n        '{\"name\": \"greet\", \"parameters\": [{\"name\": \"name\", \"type\": \"str\", \"default\": \"World\"}], \"return_type\": \"str\"}'\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    required_keys = [\"name\", \"parameters\", \"return_type\"]\n    for key in required_keys:\n        if key not in spec:\n            raise ValueError(f\"Missing required key: {key}\")\n    \n    if not isinstance(spec[\"name\"], str):\n        raise TypeError(\"name must be a string\")\n    \n    if not isinstance(spec[\"parameters\"], list):\n        raise TypeError(\"parameters must be a list\")\n    \n    if not isinstance(spec[\"return_type\"], str):\n        raise TypeError(\"return_type must be a string\")\n    \n    for param in spec[\"parameters\"]:\n        if not isinstance(param, dict):\n            raise TypeError(\"Each parameter must be a dictionary\")\n        if \"name\" not in param or \"type\" not in param:\n            raise ValueError(\"Each parameter must have name and type keys",
+          "syntax_ok": false,
+          "passed": false,
+          "error": null
+        }
+      ]
+    }
+  ]
+}

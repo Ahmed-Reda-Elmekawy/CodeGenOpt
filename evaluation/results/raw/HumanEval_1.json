@@ -1,0 +1,22 @@
+{
+  "task_id": "HumanEval/1",
+  "prompt": "from typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(())', '(()())']\n    \"\"\"\n",
+  "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('(()()) ((())) () ((())()())') == [\n        '(()())', '((()))', '()', '((())()())'\n    ]\n    assert candidate('() (()) ((())) (((())))') == [\n        '()', '(())', '((()))', '(((())))'\n    ]\n    assert candidate('(()(())((())))') == [\n        '(()(())((())))'\n    ]\n    assert candidate('( ) (( )) (( )( ))') == ['()', '(())', '(()())']\n",
+  "attempts": [
+    {
+      "attempt_idx": 0,
+      "duration_sec": 42.3308,
+      "resource_stats": {
+        "samples": 211,
+        "cpu_percent_avg": 0.95,
+        "cpu_percent_peak": 10.0,
+        "mem_rss_avg_bytes": 208207872,
+        "mem_rss_peak_bytes": 208207872
+      },
+      "final_code": "def generate_json(spec: dict) -> str:\n    \"\"\"\n    Generate JSON string from a structured specification dictionary.\n    \n    Args:\n        spec (dict): A dictionary containing the function specification with keys:\n                    - name (str): Function name\n                    - parameters (list): List of parameter dictionaries\n                    - return_type (str): Return type annotation\n    \n    Returns:\n        str: Generated JSON string representation of the specification\n    \n    Raises:\n        TypeError: If spec is not a dictionary or contains invalid types\n        ValueError: If required keys are missing from the specification\n    \n    Examples:\n        >>> generate_json({\n        ...     \"name\": \"example_func\",\n        ...     \"parameters\": [\n        ...         {\"name\": \"x\", \"type\": \"int\", \"default\": null},\n        ...         {\"name\": \"y\", \"type\": \"str\", \"default\": \"default\"}\n        ...     ],\n        ...     \"return_type\": \"bool\"\n        ... })\n        '{\"name\": \"example_func\", \"parameters\": [{\"name\": \"x\", \"type\": \"int\", \"default\": null}, {\"name\": \"y\", \"type\": \"str\", \"default\": \"default\"}], \"return_type\": \"bool\"}'\n        \n        >>> generate_json({\n        ...     \"name\": \"simple_func\",\n        ...     \"parameters\": [],\n        ...     \"return_type\": \"None\"\n        ... })\n        '{\"name\": \"simple_func\", \"parameters\": [], \"return_type\": \"None\"}'\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    required_keys = [\"name\", \"parameters\", \"return_type\"]\n    for key in required_keys:\n        if key not in spec:\n            raise ValueError(f\"Missing required key: {key}\")\n    \n    if not isinstance(spec[\"name\"], str):\n        raise TypeError(\"name must be a string\")\n    \n    if not isinstance(spec[\"parameters\"], list):\n        raise TypeError(\"parameters must be a list\")\n    \n    if not isinstance(spec[\"return_type\"], str):\n        raise TypeError(\"return_type must be a string\")\n    \n    for param in spec[\"parameters\"]:\n        if not isinstance(param, dict):\n            raise TypeError(\"Each parameter must be a dictionary\")\n        if \"name\" not in param or \"type\" not in param:\n            raise ValueError(\"Each parameter must have name and type keys\")\n    \n    import json\n    return json.dumps(spec, separators=(',', ': '))",
+      "syntax_ok": true,
+      "passed": true,
+      "error": null
+    }
+  ]
+}

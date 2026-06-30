@@ -1,0 +1,54 @@
+{
+  "metadata": {
+    "experiment_name": "3LM-LOCAL-TR_OFF-OPT_OFF-03",
+    "experiment_id": "3LM-LOCAL-TR_OFF-OPT_OFF-03",
+    "timestamp": "2026-04-18T23:17:33.394333+00:00",
+    "dataset": "3lm",
+    "config": {
+      "dataset": "3lm",
+      "sample_indices": null,
+      "num_tasks": 3,
+      "attempts_per_task": 1,
+      "use_translator": false,
+      "use_optimizer": false,
+      "shared_llm": true,
+      "cloud_llm": false
+    }
+  },
+  "aggregated": {
+    "pass_at_1_pct": 0.0,
+    "pass_at_k_pct": null,
+    "latency_mean": 100.4111,
+    "latency_median": 98.0721,
+    "latency_p95": 98.0721,
+    "cpu_avg": 0.14,
+    "cpu_peak": 4.0,
+    "mem_peak_mb": 201.64608
+  },
+  "per_task": [
+    {
+      "task_id": "HumanEval/0",
+      "task_index": 0,
+      "passed": false,
+      "syntax_ok": false,
+      "error_type": "syntax_error",
+      "duration_sec": 98.0721
+    },
+    {
+      "task_id": "HumanEval/1",
+      "task_index": 1,
+      "passed": false,
+      "syntax_ok": false,
+      "error_type": "syntax_error",
+      "duration_sec": 108.5936
+    },
+    {
+      "task_id": "HumanEval/2",
+      "task_index": 2,
+      "passed": false,
+      "syntax_ok": false,
+      "error_type": "syntax_error",
+      "duration_sec": 94.5676
+    }
+  ]
+}

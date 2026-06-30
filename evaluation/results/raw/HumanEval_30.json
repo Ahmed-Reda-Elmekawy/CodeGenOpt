@@ -1,0 +1,22 @@
+{
+  "task_id": "HumanEval/30",
+  "prompt": "\n\ndef get_positive(l: list):\n    \"\"\"Return only positive numbers in the list.\n    >>> get_positive([-1, 2, -4, 5, 6])\n    [2, 5, 6]\n    >>> get_positive([5, 3, -5, 2, -3, 3, 9, 0, 123, 1, -10])\n    [5, 3, 2, 3, 9, 123, 1]\n    \"\"\"\n",
+  "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate([-1, -2, 4, 5, 6]) == [4, 5, 6]\n    assert candidate([5, 3, -5, 2, 3, 3, 9, 0, 123, 1, -10]) == [5, 3, 2, 3, 3, 9, 123, 1]\n    assert candidate([-1, -2]) == []\n    assert candidate([]) == []\n\n",
+  "attempts": [
+    {
+      "attempt_idx": 0,
+      "duration_sec": 13.8448,
+      "resource_stats": {
+        "samples": 69,
+        "cpu_percent_avg": 1.67,
+        "cpu_percent_peak": 10.0,
+        "mem_rss_avg_bytes": 208601088,
+        "mem_rss_peak_bytes": 208601088
+      },
+      "final_code": "def generate_json(spec):\n    \"\"\"\n    Generate a JSON string from a structured specification.\n    \n    Args:\n        spec (dict): A dictionary containing the specification for JSON generation.\n                    Expected to have keys that define the structure and content\n                    of the desired JSON output.\n    \n    Returns:\n        str: A valid JSON string representation of the input specification.\n    \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If the specification cannot be converted to valid JSON.\n    \n    Examples:\n        >>> generate_json({\"name\": \"John\", \"age\": 30})\n        '{\"name\": \"John\", \"age\": 30}'\n        \n        >>> generate_json({\"items\": [1, 2, 3], \"count\": null})\n        '{\"items\": [1, 2, 3], \"count\": null}'\n        \n        >>> generate_json({})\n        '{}'\n    \"\"\"\n    import json\n    \n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    try:\n        return json.dumps(spec)\n    except (TypeError, ValueError) as e:\n        raise ValueError(f\"Failed to generate JSON: {str(e)}\")",
+      "syntax_ok": true,
+      "passed": true,
+      "error": null
+    }
+  ]
+}

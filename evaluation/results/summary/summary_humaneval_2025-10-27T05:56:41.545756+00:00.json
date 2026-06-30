@@ -1,0 +1,285 @@
+{
+  "summary": {
+    "timestamp": "2025-10-27T05:56:41.545756+00:00",
+    "dataset": "humaneval",
+    "num_tasks": 10,
+    "attempts_per_task": 1,
+    "latency": {
+      "count": 10,
+      "mean": 16.722,
+      "median": 16.2729,
+      "stdev": 4.3763,
+      "p50": 16.5229,
+      "p90": 20.5242,
+      "p95": 20.5242
+    },
+    "resource": {
+      "cpu_percent_avg_mean": 1.13,
+      "cpu_percent_peak_max": 6.0,
+      "mem_rss_avg_mean_bytes": 191223882,
+      "mem_rss_peak_max_bytes": 191545344
+    },
+    "pass_stats": {
+      "total_tasks": 10,
+      "passed_at_1": 10,
+      "pass_at_1_pct": 100.0
+    },
+    "model_config": null,
+    "use_translator": true,
+    "use_optimizer": true,
+    "shared_llm": false,
+    "cloud_llm": true,
+    "env_info": {
+      "timestamp": "2025-10-27T05:56:41.545727Z",
+      "git_commit": "1ba91893999867a9412c6ecea74bf543d591dace",
+      "git_branch": "eval-run/humaneval_20251027_081009",
+      "cpu_model": "x86_64",
+      "cpu_cores": 12,
+      "dependencies": [
+        "autoflake==2.3.1",
+        "autopep8==2.3.2",
+        "black==25.9.0",
+        "dirtyjson==1.0.8",
+        "fire==0.7.1",
+        "isort==7.0.0",
+        "json_repair==0.52.3",
+        "langchain==1.0.2",
+        "langchain_core==1.0.1",
+        "langchain_ollama==1.0.0",
+        "matplotlib==3.10.7",
+        "mypy==1.18.2",
+        "numpy==2.3.4",
+        "psutil==7.1.0",
+        "pydantic==2.12.3",
+        "pytest==8.4.2",
+        "pyupgrade==3.20.0",
+        "PyYAML==6.0.2",
+        "PyYAML==6.0.3",
+        "setuptools==80.9.0",
+        "tqdm==4.67.1"
+      ]
+    }
+  },
+  "results": [
+    {
+      "task_id": "HumanEval/0",
+      "prompt": "from typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.3) == True\n    assert candidate([1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.05) == False\n    assert candidate([1.0, 2.0, 5.9, 4.0, 5.0], 0.95) == True\n    assert candidate([1.0, 2.0, 5.9, 4.0, 5.0], 0.8) == False\n    assert candidate([1.0, 2.0, 3.0, 4.0, 5.0, 2.0], 0.1) == True\n    assert candidate([1.1, 2.2, 3.1, 4.1, 5.1], 1.0) == True\n    assert candidate([1.1, 2.2, 3.1, 4.1, 5.1], 0.5) == False\n\n",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 20.5242,
+          "resource_stats": {
+            "samples": 41,
+            "cpu_percent_avg": 1.02,
+            "cpu_percent_peak": 6.0,
+            "mem_rss_avg_bytes": 191113765,
+            "mem_rss_peak_bytes": 191152128
+          },
+          "final_code": "def has_close_elements(numbers: list[float], threshold: float) -> bool:\n    \"\"\"\n    Check if in given list of numbers, are any two numbers closer to each other than given threshold.\n\n    Constraints:\n    - The function should handle empty lists gracefully\n    - The function should handle lists with only one element\n    - The threshold can be zero or positive\n    - The function should compare absolute differences between numbers\n    - The function should return False for empty lists or single element lists\n    - The function should return True as soon as any pair is found within threshold\n\n    Examples:\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n\n    Args:\n        numbers: A list of float numbers\n        threshold: A float representing the maximum allowed difference\n\n    Returns:\n        bool: True if any two numbers are closer than threshold, False otherwise\n    \"\"\"\n    # Handle empty lists or single element lists\n    if len(numbers) < 2:\n        return False\n\n    # Compare all pairs of numbers\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if abs(numbers[i] - numbers[j]) < threshold:\n                return True\n\n    return False\n",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/1",
+      "prompt": "from typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(())', '(()())']\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('(()()) ((())) () ((())()())') == [\n        '(()())', '((()))', '()', '((())()())'\n    ]\n    assert candidate('() (()) ((())) (((())))') == [\n        '()', '(())', '((()))', '(((())))'\n    ]\n    assert candidate('(()(())((())))') == [\n        '(()(())((())))'\n    ]\n    assert candidate('( ) (( )) (( )( ))') == ['()', '(())', '(()())']\n",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 17.0217,
+          "resource_stats": {
+            "samples": 34,
+            "cpu_percent_avg": 1.24,
+            "cpu_percent_peak": 4.0,
+            "mem_rss_avg_bytes": 191152128,
+            "mem_rss_peak_bytes": 191152128
+          },
+          "final_code": "def separate_paren_groups(paren_string: str) -> list[str]:\n    \"\"\"\n    Separates a string containing multiple groups of nested parentheses into individual balanced groups. Each group is returned as a separate string in a list.\n\n    Constraints:\n    - Input string contains only parentheses and spaces\n    - Groups are balanced (each opening parenthesis is properly closed)\n    - Groups are not nested within each other\n    - Spaces in the input string should be ignored\n    - Each returned group should be a contiguous sequence of parentheses with no spaces\n    - Return empty list for empty or whitespace-only input\n\n    Examples:\n    >>> separate_paren_groups({\"paren_string\": \"( ) (( )) (( )( ))\"})\n    ['()', '(())', '(()())']\n    >>> separate_paren_groups({\"paren_string\": \"()()\"})\n    ['()', '()']\n    >>> separate_paren_groups({\"paren_string\": \"((()))\"})\n    ['((()))']\n    >>> separate_paren_groups({\"paren_string\": \"\"})\n    []\n    >>> separate_paren_groups({\"paren_string\": \"   \"})\n    []\n\n    Exceptions:\n    - None\n    \"\"\"\n    # Remove all spaces from the input string\n    paren_string = paren_string.replace(\" \", \"\")\n\n    # Return empty list for empty input\n    if not paren_string:\n        return []\n\n    result = []\n    current_group = \"\"\n    balance = 0\n\n    for char in paren_string:\n        if char == \"(\":\n            current_group += char\n            balance += 1\n        elif char == \")\":\n            current_group += char\n            balance -= 1\n\n            # When balance reaches 0, we have a complete group\n            if balance == 0:\n                result.append(current_group)\n                current_group = \"\"\n\n    return result\n",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/2",
+      "prompt": "\n\ndef truncate_number(number: float) -> float:\n    \"\"\" Given a positive floating point number, it can be decomposed into\n    and integer part (largest integer smaller than given number) and decimals\n    (leftover part always smaller than 1).\n\n    Return the decimal part of the number.\n    >>> truncate_number(3.5)\n    0.5\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate(3.5) == 0.5\n    assert abs(candidate(1.33) - 0.33) < 1e-6\n    assert abs(candidate(123.456) - 0.456) < 1e-6\n",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 16.0229,
+          "resource_stats": {
+            "samples": 32,
+            "cpu_percent_avg": 1.12,
+            "cpu_percent_peak": 4.0,
+            "mem_rss_avg_bytes": 191152128,
+            "mem_rss_peak_bytes": 191152128
+          },
+          "final_code": "def truncate_number(number: float) -> float:\n    \"\"\"\n    Given a positive floating point number, decompose it into an integer part (the largest integer smaller than the given number) and a decimal part (the leftover part always smaller than 1). Return only the decimal part of the number.\n\n    Constraints:\n    - The input number must be a positive floating point number\n    - The function should return only the decimal part of the number\n    - The decimal part should always be smaller than 1\n    - The return value should be a float\n\n    Examples:\n    >>> truncate_number({\"number\": 3.5})\n    0.5\n    >>> truncate_number({\"number\": 7.25})\n    0.25\n    >>> truncate_number({\"number\": 10.0})\n    0.0\n    >>> truncate_number({\"number\": 0.75})\n    0.75\n\n    Exceptions:\n    - None specified\n    \"\"\"\n    # Extract number from dict if needed\n    if isinstance(number, dict):\n        number = number[\"number\"]\n\n    # Get the decimal part by subtracting the integer part\n    integer_part = int(number)\n    decimal_part = number - integer_part\n\n    return decimal_part\n",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/3",
+      "prompt": "from typing import List\n\n\ndef below_zero(operations: List[int]) -> bool:\n    \"\"\" You're given a list of deposit and withdrawal operations on a bank account that starts with\n    zero balance. Your task is to detect if at any point the balance of account fallls below zero, and\n    at that point function should return True. Otherwise it should return False.\n    >>> below_zero([1, 2, 3])\n    False\n    >>> below_zero([1, 2, -4, 5])\n    True\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([]) == False\n    assert candidate([1, 2, -3, 1, 2, -3]) == False\n    assert candidate([1, 2, -4, 5, 6]) == True\n    assert candidate([1, -1, 2, -2, 5, -5, 4, -4]) == False\n    assert candidate([1, -1, 2, -2, 5, -5, 4, -5]) == True\n    assert candidate([1, -2, 2, -2, 5, -5, 4, -4]) == True\n",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 14.0172,
+          "resource_stats": {
+            "samples": 28,
+            "cpu_percent_avg": 1.36,
+            "cpu_percent_peak": 4.0,
+            "mem_rss_avg_bytes": 191152128,
+            "mem_rss_peak_bytes": 191152128
+          },
+          "final_code": "def below_zero(operations: list[int]) -> bool:\n    \"\"\"\n    Detects if the balance of a bank account falls below zero during a series of deposit and withdrawal operations. The account starts with a zero balance. Returns True if the balance goes below zero at any point, otherwise returns False.\n\n    Constraints:\n    - The input is a list of integers representing deposit (positive) and withdrawal (negative) operations\n    - The account starts with a balance of zero\n    - The function should return True immediately when the balance falls below zero\n    - The function should return False if the balance never goes below zero\n    - Empty list should return False\n\n    Examples:\n    >>> below_zero([1, 2, 3])\n    False\n    >>> below_zero([1, 2, -4, 5])\n    True\n    >>> below_zero([])\n    False\n    >>> below_zero([-1])\n    True\n    >>> below_zero([5, -3, -1, -2])\n    True\n\n    Exceptions:\n    None\n    \"\"\"\n    balance = 0\n    for operation in operations:\n        balance += operation\n        if balance < 0:\n            return True\n    return False\n",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/4",
+      "prompt": "from typing import List\n\n\ndef mean_absolute_deviation(numbers: List[float]) -> float:\n    \"\"\" For a given list of input numbers, calculate Mean Absolute Deviation\n    around the mean of this dataset.\n    Mean Absolute Deviation is the average absolute difference between each\n    element and a centerpoint (mean in this case):\n    MAD = average | x - x_mean |\n    >>> mean_absolute_deviation([1.0, 2.0, 3.0, 4.0])\n    1.0\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert abs(candidate([1.0, 2.0, 3.0]) - 2.0/3.0) < 1e-6\n    assert abs(candidate([1.0, 2.0, 3.0, 4.0]) - 1.0) < 1e-6\n    assert abs(candidate([1.0, 2.0, 3.0, 4.0, 5.0]) - 6.0/5.0) < 1e-6\n\n",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 17.0232,
+          "resource_stats": {
+            "samples": 34,
+            "cpu_percent_avg": 1.29,
+            "cpu_percent_peak": 4.0,
+            "mem_rss_avg_bytes": 191159838,
+            "mem_rss_peak_bytes": 191283200
+          },
+          "final_code": "def mean_absolute_deviation(numbers: list[float]) -> float:\n    \"\"\"\n    Calculate the Mean Absolute Deviation (MAD) of a list of numbers. MAD is the average of the absolute differences between each element and the mean of the dataset.\n\n    Constraints:\n    - The input list must contain at least one element\n    - All elements in the list must be numeric (float or int)\n    - The function should return a float value representing the MAD\n    - For an empty list, the function behavior is undefined (no specific requirement)\n\n    Examples:\n    >>> mean_absolute_deviation([1.0, 2.0, 3.0, 4.0])\n    1.0\n    >>> mean_absolute_deviation([2.0, 2.0, 2.0])\n    0.0\n    >>> mean_absolute_deviation([1.0, 3.0, 5.0, 7.0, 9.0])\n    2.4\n\n    Exceptions:\n    - ZeroDivisionError: The input list is empty (division by zero when calculating mean)\n    - TypeError: The input is not a list or contains non-numeric elements\n    \"\"\"\n    if not isinstance(numbers, list):\n        raise TypeError(\"Input must be a list\")\n\n    if len(numbers) == 0:\n        raise ZeroDivisionError(\"Cannot calculate MAD of an empty list\")\n\n    for num in numbers:\n        if not isinstance(num, (int, float)):\n            raise TypeError(\"All elements must be numeric\")\n\n    mean = sum(numbers) / len(numbers)\n    absolute_deviations = [abs(x - mean) for x in numbers]\n    mad = sum(absolute_deviations) / len(absolute_deviations)\n\n    return float(mad)\n",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/5",
+      "prompt": "from typing import List\n\n\ndef intersperse(numbers: List[int], delimeter: int) -> List[int]:\n    \"\"\" Insert a number 'delimeter' between every two consecutive elements of input list `numbers'\n    >>> intersperse([], 4)\n    []\n    >>> intersperse([1, 2, 3], 4)\n    [1, 4, 2, 4, 3]\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([], 7) == []\n    assert candidate([5, 6, 3, 2], 8) == [5, 8, 6, 8, 3, 8, 2]\n    assert candidate([2, 2, 2], 2) == [2, 2, 2, 2, 2]\n",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 11.5159,
+          "resource_stats": {
+            "samples": 23,
+            "cpu_percent_avg": 1.13,
+            "cpu_percent_peak": 4.0,
+            "mem_rss_avg_bytes": 191283200,
+            "mem_rss_peak_bytes": 191283200
+          },
+          "final_code": "def intersperse(numbers: list[int], delimeter: int) -> list[int]:\n    \"\"\"\n    Insert a number 'delimeter' between every two consecutive elements of input list `numbers`\n\n    Constraints:\n    - If the input list is empty, return an empty list\n    - The delimeter should be inserted between each pair of consecutive elements\n    - The function should preserve the order of original elements\n    - The function should work with any integer values including negative numbers\n\n    Examples:\n    >>> intersperse({\"numbers\": [], \"delimeter\": 4})\n    []\n    >>> intersperse({\"numbers\": [1, 2, 3], \"delimeter\": 4})\n    [1, 4, 2, 4, 3]\n\n    Exceptions:\n    - None\n    \"\"\"\n    if not numbers:\n        return []\n\n    result = []\n    for i, num in enumerate(numbers):\n        result.append(num)\n        if i < len(numbers) - 1:\n            result.append(delimeter)\n\n    return result\n",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/6",
+      "prompt": "from typing import List\n\n\ndef parse_nested_parens(paren_string: str) -> List[int]:\n    \"\"\" Input to this function is a string represented multiple groups for nested parentheses separated by spaces.\n    For each of the group, output the deepest level of nesting of parentheses.\n    E.g. (()()) has maximum two levels of nesting while ((())) has three.\n\n    >>> parse_nested_parens('(()()) ((())) () ((())()())')\n    [2, 3, 1, 3]\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('(()()) ((())) () ((())()())') == [2, 3, 1, 3]\n    assert candidate('() (()) ((())) (((())))') == [1, 2, 3, 4]\n    assert candidate('(()(())((())))') == [4]\n",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 27.5337,
+          "resource_stats": {
+            "samples": 55,
+            "cpu_percent_avg": 0.76,
+            "cpu_percent_peak": 4.0,
+            "mem_rss_avg_bytes": 191283200,
+            "mem_rss_peak_bytes": 191283200
+          },
+          "final_code": "def parse_nested_parens(paren_string: str) -> list[int]:\n    \"\"\"\n    This function takes a string containing multiple groups of nested parentheses separated by spaces and returns a list of integers representing the maximum nesting depth for each group.\n\n    Constraints:\n    - Input string contains only parentheses characters '(' and ')' and spaces\n    - Each group of parentheses is well-formed (balanced)\n    - Groups are separated by single spaces\n    - Empty groups are not allowed\n    - Return type must be a List[int]\n\n    Examples:\n    >>> parse_nested_parens({\"paren_string\": \"(()()) ((())) () ((())()())\"})\n    [2, 3, 1, 3]\n    >>> parse_nested_parens({\"paren_string\": \"() (()) ((()))\"})\n    [1, 2, 3]\n    >>> parse_nested_parens({\"paren_string\": \"()\"})\n    [1]\n    \"\"\"\n    if isinstance(paren_string, dict):\n        paren_string = paren_string[\"paren_string\"]\n\n    groups = paren_string.split()\n    result = []\n\n    for group in groups:\n        max_depth = 0\n        current_depth = 0\n\n        for char in group:\n            if char == \"(\":\n                current_depth += 1\n                max_depth = max(max_depth, current_depth)\n            elif char == \")\":\n                current_depth -= 1\n\n        result.append(max_depth)\n\n    return result\n",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/7",
+      "prompt": "from typing import List\n\n\ndef filter_by_substring(strings: List[str], substring: str) -> List[str]:\n    \"\"\" Filter an input list of strings only for ones that contain given substring\n    >>> filter_by_substring([], 'a')\n    []\n    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')\n    ['abc', 'bacd', 'array']\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([], 'john') == []\n    assert candidate(['xxx', 'asd', 'xxy', 'john doe', 'xxxAAA', 'xxx'], 'xxx') == ['xxx', 'xxxAAA', 'xxx']\n    assert candidate(['xxx', 'asd', 'aaaxxy', 'john doe', 'xxxAAA', 'xxx'], 'xx') == ['xxx', 'aaaxxy', 'xxxAAA', 'xxx']\n    assert candidate(['grunt', 'trumpet', 'prune', 'gruesome'], 'run') == ['grunt', 'prune']\n",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 16.5229,
+          "resource_stats": {
+            "samples": 33,
+            "cpu_percent_avg": 0.91,
+            "cpu_percent_peak": 4.0,
+            "mem_rss_avg_bytes": 191283200,
+            "mem_rss_peak_bytes": 191283200
+          },
+          "final_code": "def filter_by_substring(strings: list[str], substring: str) -> list[str]:\n    \"\"\"\n    Filter an input list of strings only for ones that contain given substring\n\n    Constraints:\n    - Return an empty list if the input list is empty\n    - Return a new list containing only strings that contain the specified substring\n    - The substring matching should be case-sensitive\n    - The order of strings in the output should match their order in the input\n\n    Examples:\n    >>> filter_by_substring({\"strings\": [], \"substring\": \"a\"})\n    []\n    >>> filter_by_substring({\"strings\": [\"abc\", \"bacd\", \"cde\", \"array\"], \"substring\": \"a\"})\n    ['abc', 'bacd', 'array']\n\n    Exceptions:\n    - None\n    \"\"\"\n    if not isinstance(strings, list) or not isinstance(substring, str):\n        raise TypeError(\"Invalid input types\")\n\n    return [s for s in strings if substring in s]\n",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/8",
+      "prompt": "from typing import List, Tuple\n\n\ndef sum_product(numbers: List[int]) -> Tuple[int, int]:\n    \"\"\" For a given list of integers, return a tuple consisting of a sum and a product of all the integers in a list.\n    Empty sum should be equal to 0 and empty product should be equal to 1.\n    >>> sum_product([])\n    (0, 1)\n    >>> sum_product([1, 2, 3, 4])\n    (10, 24)\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([]) == (0, 1)\n    assert candidate([1, 1, 1]) == (3, 1)\n    assert candidate([100, 0]) == (100, 0)\n    assert candidate([3, 5, 7]) == (3 + 5 + 7, 3 * 5 * 7)\n    assert candidate([10]) == (10, 10)\n",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 15.023,
+          "resource_stats": {
+            "samples": 30,
+            "cpu_percent_avg": 0.93,
+            "cpu_percent_peak": 4.0,
+            "mem_rss_avg_bytes": 191283200,
+            "mem_rss_peak_bytes": 191283200
+          },
+          "final_code": "from typing import List, Tuple\n\ndef sum_product(numbers: List[int]) -> Tuple[int, int]:\n    \"\"\"\n    For a given list of integers, return a tuple consisting of a sum and a product of all the integers in a list.\n    \n    Constraints:\n    - Empty sum should be equal to 0\n    - Empty product should be equal to 1\n    - Input is a list of integers\n    - Output is a tuple with sum as first element and product as second element\n    \n    Examples:\n    >>> sum_product([])\n    (0, 1)\n    >>> sum_product([1, 2, 3, 4])\n    (10, 24)\n    \n    Exceptions:\n    - None\n    \"\"\"\n    if not numbers:\n        return (0, 1)\n    \n    total_sum = sum(numbers)\n    total_product = 1\n    for num in numbers:\n        total_product *= num\n    \n    return (total_sum, total_product)",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/9",
+      "prompt": "from typing import List, Tuple\n\n\ndef rolling_max(numbers: List[int]) -> List[int]:\n    \"\"\" From a given list of integers, generate a list of rolling maximum element found until given moment\n    in the sequence.\n    >>> rolling_max([1, 2, 3, 2, 3, 4, 2])\n    [1, 2, 3, 3, 3, 4, 4]\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([]) == []\n    assert candidate([1, 2, 3, 4]) == [1, 2, 3, 4]\n    assert candidate([4, 3, 2, 1]) == [4, 4, 4, 4]\n    assert candidate([3, 2, 3, 100, 3]) == [3, 3, 3, 100, 100]\n",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 12.015,
+          "resource_stats": {
+            "samples": 24,
+            "cpu_percent_avg": 1.5,
+            "cpu_percent_peak": 4.0,
+            "mem_rss_avg_bytes": 191376042,
+            "mem_rss_peak_bytes": 191545344
+          },
+          "final_code": "def rolling_max(numbers: list[int]) -> list[int]:\n    \"\"\"\n    From a given list of integers, generate a list of rolling maximum element found until given moment in the sequence.\n\n    Constraints:\n    - The input list can be empty\n    - The input list contains only integers\n    - The output list must have the same length as the input list\n    - Each element in the output list represents the maximum value encountered up to that position in the input list\n\n    Examples:\n    >>> rolling_max({\"numbers\": [1, 2, 3, 2, 3, 4, 2]})\n    [1, 2, 3, 3, 3, 4, 4]\n    >>> rolling_max({\"numbers\": []})\n    []\n    >>> rolling_max({\"numbers\": [5]})\n    [5]\n    >>> rolling_max({\"numbers\": [3, 1, 4, 1, 5, 9, 2, 6]})\n    [3, 3, 4, 4, 5, 9, 9, 9]\n\n    Exceptions:\n    - None\n    \"\"\"\n    if not numbers:\n        return []\n\n    result = []\n    current_max = numbers[0]\n    result.append(current_max)\n\n    for i in range(1, len(numbers)):\n        if numbers[i] > current_max:\n            current_max = numbers[i]\n        result.append(current_max)\n\n    return result\n",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    }
+  ]
+}

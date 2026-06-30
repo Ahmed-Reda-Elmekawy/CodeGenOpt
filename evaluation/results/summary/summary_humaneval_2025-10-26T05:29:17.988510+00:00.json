@@ -1,0 +1,83 @@
+{
+  "summary": {
+    "timestamp": "2025-10-26T05:29:17.988510+00:00",
+    "dataset": "humaneval",
+    "num_tasks": 1,
+    "attempts_per_task": 1,
+    "model_config": null,
+    "latency": {
+      "count": 1,
+      "mean": 19.5236,
+      "median": 19.5236,
+      "stdev": 0.0,
+      "p50": 19.5236,
+      "p90": 19.5236,
+      "p95": 19.5236
+    },
+    "resource": {
+      "cpu_percent_avg_mean": 1.38,
+      "cpu_percent_peak_max": 4.0,
+      "mem_rss_avg_mean_bytes": 209551254,
+      "mem_rss_peak_max_bytes": 209588224
+    },
+    "pass_stats": {
+      "total_tasks": 1,
+      "passed_at_1": 1,
+      "pass_at_1_pct": 100.0
+    },
+    "env": {
+      "timestamp": "2025-10-26T05:29:17.988474Z",
+      "git_commit": "ebd7e10e0af3d6e518336fbef9c66997ac4c2f98",
+      "git_branch": "eval-run/humaneval_20251026_082714",
+      "cpu_model": "x86_64",
+      "cpu_cores": 12,
+      "dependencies": [
+        "autoflake==2.3.1",
+        "autopep8==2.3.2",
+        "black==25.9.0",
+        "dirtyjson==1.0.8",
+        "fire==0.7.1",
+        "isort==7.0.0",
+        "json_repair==0.52.3",
+        "langchain==1.0.2",
+        "langchain_core==1.0.1",
+        "langchain_ollama==1.0.0",
+        "matplotlib==3.10.7",
+        "mypy==1.18.2",
+        "numpy==2.3.4",
+        "psutil==7.1.0",
+        "pydantic==2.12.3",
+        "pytest==8.4.2",
+        "pyupgrade==3.20.0",
+        "PyYAML==6.0.2",
+        "PyYAML==6.0.3",
+        "setuptools==80.9.0",
+        "tqdm==4.67.1"
+      ]
+    }
+  },
+  "results": [
+    {
+      "task_id": "HumanEval/0",
+      "prompt": "from typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.3) == True\n    assert candidate([1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.05) == False\n    assert candidate([1.0, 2.0, 5.9, 4.0, 5.0], 0.95) == True\n    assert candidate([1.0, 2.0, 5.9, 4.0, 5.0], 0.8) == False\n    assert candidate([1.0, 2.0, 3.0, 4.0, 5.0, 2.0], 0.1) == True\n    assert candidate([1.1, 2.2, 3.1, 4.1, 5.1], 1.0) == True\n    assert candidate([1.1, 2.2, 3.1, 4.1, 5.1], 0.5) == False\n\n",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 19.5236,
+          "resource_stats": {
+            "samples": 39,
+            "cpu_percent_avg": 1.38,
+            "cpu_percent_peak": 4.0,
+            "mem_rss_avg_bytes": 209551254,
+            "mem_rss_peak_bytes": 209588224
+          },
+          "final_code": "def generate_json(spec: dict) -> dict:\n    \"\"\"\n    Generate a JSON response based on the provided specification.\n    \n    This function processes a structured JSON specification and returns\n    a valid JSON response. It handles various data types and structures\n    as defined in the input specification.\n    \n    Args:\n        spec (dict): A dictionary containing the JSON specification\n                    with keys defining the structure and values\n                    defining the data.\n    \n    Returns:\n        dict: A valid JSON response generated from the specification.\n    \n    Raises:\n        TypeError: If spec is not a dictionary.\n        ValueError: If the specification contains invalid data.\n    \n    Examples:\n        >>> generate_json({\"name\": \"John\", \"age\": 30})\n        {'name': 'John', 'age': 30}\n        \n        >>> generate_json({\"items\": [1, 2, 3], \"active\": True})\n        {'items': [1, 2, 3], 'active': True}\n        \n        >>> generate_json({})\n        {}\n    \"\"\"\n    if not isinstance(spec, dict):\n        raise TypeError(\"spec must be a dictionary\")\n    \n    if \"error\" in spec and spec[\"error\"] == \"Failed to generate JSON after retries\":\n        raise ValueError(\"Failed to generate JSON after retries\")\n    \n    # Validate that all values are JSON serializable\n    def is_json_serializable(obj):\n        if isinstance(obj, (str, int, float, bool, type(None))):\n            return True\n        if isinstance(obj, list):\n            return all(is_json_serializable(item) for item in obj)\n        if isinstance(obj, dict):\n            return all(isinstance(k, str) and is_json_serializable(v) for k, v in obj.items())\n        return False\n    \n    # Check all values in spec\n    for key, value in spec.items():\n        if not isinstance(key, str):\n            raise ValueError(\"All keys must be strings\")\n        if not is_json_serializable(value):\n            raise ValueError(f\"Value for key '{key}' is not JSON serializable\")\n    \n    return dict(spec)",
+          "syntax_ok": true,
+          "passed": true,
+          "error": null
+        }
+      ]
+    }
+  ]
+}

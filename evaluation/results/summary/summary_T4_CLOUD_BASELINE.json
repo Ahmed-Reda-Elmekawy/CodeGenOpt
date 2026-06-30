@@ -1,0 +1,376 @@
+{
+  "summary": {
+    "timestamp": "2026-04-18T18:52:17.666356+00:00",
+    "experiment_name": "T4_CLOUD_BASELINE",
+    "experiment_id": "T4_CLOUD_BASELINE",
+    "test_config": {
+      "dataset": "humaneval",
+      "sample_indices": [
+        0,
+        2,
+        3,
+        11,
+        14,
+        16,
+        17,
+        18,
+        19,
+        30,
+        32,
+        38,
+        42,
+        43,
+        49,
+        52,
+        53,
+        54,
+        61,
+        63,
+        64,
+        65,
+        66,
+        67,
+        72,
+        75,
+        76,
+        88,
+        95,
+        99,
+        102,
+        104,
+        105,
+        109,
+        112,
+        115,
+        118,
+        121,
+        123,
+        124,
+        127,
+        128,
+        130,
+        132,
+        137,
+        144,
+        145,
+        154,
+        158,
+        159
+      ],
+      "num_tasks": 3,
+      "attempts_per_task": 3,
+      "use_translator": false,
+      "use_optimizer": false,
+      "shared_llm": false,
+      "cloud_llm": true
+    },
+    "model_config": null,
+    "latency": {
+      "count": 9,
+      "mean": 20.5132,
+      "median": 19.0122,
+      "stdev": 8.2712,
+      "p50": 19.0122,
+      "p90": 26.5162,
+      "p95": 26.5162
+    },
+    "resource": {
+      "cpu_percent_avg_mean": 0.17,
+      "cpu_percent_peak_max": 2.0,
+      "mem_rss_avg_mean_bytes": 190097921,
+      "mem_rss_peak_max_bytes": 190173184
+    },
+    "pass_stats": {
+      "total_tasks": 3,
+      "passed_at_1": 0,
+      "pass_at_1_pct": 0.0
+    },
+    "env_info": {
+      "timestamp": "2026-04-18T18:52:17.666338Z",
+      "git_commit": "7ec291d1dc72c196f0dc08a2551c2adebbc67bef",
+      "git_branch": "eval-run/T3_CLOUD_NO_OPT_20260418_204853",
+      "cpu_model": "x86_64",
+      "cpu_cores": 12,
+      "dependencies": [
+        "autoflake==2.3.1",
+        "autopep8==2.3.2",
+        "black==25.9.0",
+        "dirtyjson==1.0.8",
+        "fire==0.7.1",
+        "isort==7.0.0",
+        "json_repair==0.52.3",
+        "langchain==1.0.2",
+        "langchain_core==1.0.1",
+        "langchain_ollama==1.0.0",
+        "matplotlib==3.10.7",
+        "mypy==1.18.2",
+        "numpy==2.3.4",
+        "psutil==7.1.0",
+        "pydantic==2.12.3",
+        "pytest==8.4.2",
+        "pyupgrade==3.20.0",
+        "PyYAML==6.0.2",
+        "PyYAML==6.0.3",
+        "setuptools==80.9.0",
+        "tqdm==4.67.1"
+      ]
+    }
+  },
+  "results": [
+    {
+      "task_id": "HumanEval/0",
+      "task_index": 0,
+      "prompt": "from typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.3) == True\n    assert candidate([1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.05) == False\n    assert candidate([1.0, 2.0, 5.9, 4.0, 5.0], 0.95) == True\n    assert candidate([1.0, 2.0, 5.9, 4.0, 5.0], 0.8) == False\n    assert candidate([1.0, 2.0, 3.0, 4.0, 5.0, 2.0], 0.1) == True\n    assert candidate([1.1, 2.2, 3.1, 4.1, 5.1], 1.0) == True\n    assert candidate([1.1, 2.2, 3.1, 4.1, 5.1], 0.5) == False\n\n",
+      "canonical_solution": "    for idx, elem in enumerate(numbers):\n        for idx2, elem2 in enumerate(numbers):\n            if idx != idx2:\n                distance = abs(elem - elem2)\n                if distance < threshold:\n                    return True\n\n    return False\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 26.5162,
+          "total_pipeline_time_sec": 26.516285181045532,
+          "resource_stats": {
+            "samples": 53,
+            "cpu_percent_avg": 0.19,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 189977348,
+            "mem_rss_peak_bytes": 190025728
+          },
+          "final_code": "```python\ndef has_close_elements(numbers: list[float], threshold: float) -> bool:\n    \"\"\"\n    Check if in given list of numbers, are any two numbers closer to each other than given threshold.\n    \n    Constraints:\n    - The function should return False if the list is empty or contains only one element\n    - The function should compare the absolute difference between all pairs of numbers\n    - The function should return True if any pair of numbers has an absolute difference less than the threshold\n    - The function should handle both positive and negative numbers\n    - The threshold can be any non-negative float value\n    \n    Examples:\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    >>> has_close_elements([], 1.0)\n    False\n    >>> has_close_elements([5.0], 0.1)\n    False\n    >>> has_close_elements([-1.0, -2.0, 0.5], 1.0)\n    True\n    \n    Exceptions:\n    - None\n    \"\"\"\n    # Return False if list is empty or has only one element\n    if len(numbers) <= 1:\n        return False\n    \n    # Compare all pairs of numbers\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            # Check if absolute difference is less than threshold\n            if abs(numbers[i] - numbers[j]) < threshold:\n                return True\n    \n    # No close elements found\n    return False\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        },
+        {
+          "attempt_idx": 2,
+          "duration_sec": 18.011,
+          "total_pipeline_time_sec": 18.011154651641846,
+          "resource_stats": {
+            "samples": 36,
+            "cpu_percent_avg": 0.17,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190035968,
+            "mem_rss_peak_bytes": 190042112
+          },
+          "final_code": "```python\ndef has_close_elements(numbers: list[float], threshold: float) -> bool:\n    \"\"\"\n    Check if in given list of numbers, are any two numbers closer to each other than given threshold.\n\n    Constraints:\n    - The input list can contain duplicate values\n    - The threshold can be any positive float value including zero\n    - The function should return False for empty lists or lists with only one element\n    - Floating point comparison should consider exact numerical differences\n\n    Examples:\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n\n    Exceptions:\n    None\n    \"\"\"\n    # Return False for empty lists or lists with only one element\n    if len(numbers) <= 1:\n        return False\n    \n    # Check all pairs of numbers\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            # If the absolute difference is less than or equal to threshold, return True\n            if abs(numbers[i] - numbers[j]) <= threshold:\n                return True\n    \n    # If no close elements found, return False\n    return False\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        },
+        {
+          "attempt_idx": 3,
+          "duration_sec": 39.5241,
+          "total_pipeline_time_sec": 39.52426242828369,
+          "resource_stats": {
+            "samples": 79,
+            "cpu_percent_avg": 0.13,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190066013,
+            "mem_rss_peak_bytes": 190078976
+          },
+          "final_code": "```python\ndef has_close_elements(numbers: list[float], threshold: float) -> bool:\n    \"\"\"\n    Check if in given list of numbers, are any two numbers closer to each other than given threshold.\n    \n    Constraints:\n    - The function should handle empty lists gracefully\n    - The function should work with both positive and negative numbers\n    - The threshold can be zero or positive\n    - Floating point comparison should be exact (no epsilon needed)\n    - The function should return False for lists with less than 2 elements\n    \n    Examples:\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \n    Exceptions:\n    - None\n    \"\"\"\n    # Handle lists with less than 2 elements\n    if len(numbers) < 2:\n        return False\n    \n    # Compare every pair of numbers\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if abs(numbers[i] - numbers[j]) < threshold:\n                return True\n    \n    return False\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/2",
+      "task_index": 2,
+      "prompt": "\n\ndef truncate_number(number: float) -> float:\n    \"\"\" Given a positive floating point number, it can be decomposed into\n    and integer part (largest integer smaller than given number) and decimals\n    (leftover part always smaller than 1).\n\n    Return the decimal part of the number.\n    >>> truncate_number(3.5)\n    0.5\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate(3.5) == 0.5\n    assert abs(candidate(1.33) - 0.33) < 1e-6\n    assert abs(candidate(123.456) - 0.456) < 1e-6\n",
+      "canonical_solution": "    return number % 1.0\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 19.0122,
+          "total_pipeline_time_sec": 19.012389183044434,
+          "resource_stats": {
+            "samples": 38,
+            "cpu_percent_avg": 0.16,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190102689,
+            "mem_rss_peak_bytes": 190115840
+          },
+          "final_code": "```python\ndef truncate_number(number: float) -> float:\n    \"\"\"\n    Given a positive floating point number, decompose it into an integer part (largest integer smaller than the given number) and a decimal part (the leftover portion always smaller than 1). Return only the decimal part of the number.\n    \n    Constraints:\n    - The input must be a positive floating point number\n    - The function should return only the decimal portion of the number\n    - The decimal part should always be less than 1\n    - The integer part is defined as the largest integer smaller than the given number\n    \n    Examples:\n    >>> truncate_number({\"number\": 3.5})\n    0.5\n    >>> truncate_number({\"number\": 2.75})\n    0.75\n    >>> truncate_number({\"number\": 5.0})\n    0.0\n    >>> truncate_number({\"number\": 0.9})\n    0.9\n    \n    Exceptions:\n    - None specified\n    \"\"\"\n    # Get the integer part using int() which truncates towards zero\n    integer_part = int(number)\n    \n    # Calculate the decimal part by subtracting the integer part\n    decimal_part = number - integer_part\n    \n    return decimal_part\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        },
+        {
+          "attempt_idx": 2,
+          "duration_sec": 13.5104,
+          "total_pipeline_time_sec": 13.510521173477173,
+          "resource_stats": {
+            "samples": 27,
+            "cpu_percent_avg": 0.22,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190123121,
+            "mem_rss_peak_bytes": 190124032
+          },
+          "final_code": "```python\ndef truncate_number(number: float) -> float:\n    \"\"\"\n    Given a positive floating point number, decompose it into an integer part (largest integer smaller than given number) and decimals (leftover part always smaller than 1). Return the decimal part of the number.\n    \n    Constraints:\n    - The input must be a positive floating point number\n    - The output should be the decimal part of the number (always less than 1)\n    - The decimal part should be returned as a float\n    \n    Examples:\n    >>> truncate_number({\"number\": 3.5})\n    0.5\n    >>> truncate_number({\"number\": 4.75})\n    0.75\n    >>> truncate_number({\"number\": 10.0})\n    0.0\n    >>> truncate_number({\"number\": 0.99})\n    0.99\n    \n    Exceptions:\n    - None specified\n    \"\"\"\n    # Extract the decimal part by subtracting the integer part\n    return number - int(number)\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        },
+        {
+          "attempt_idx": 3,
+          "duration_sec": 8.5053,
+          "total_pipeline_time_sec": 8.505412578582764,
+          "resource_stats": {
+            "samples": 17,
+            "cpu_percent_avg": 0.24,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190129573,
+            "mem_rss_peak_bytes": 190132224
+          },
+          "final_code": "```python\ndef truncate_number(number: float) -> float:\n    \"\"\"\n    Given a positive floating point number, decompose it into an integer part (largest integer smaller than given number) and decimals (leftover part always smaller than 1), then return the decimal part of the number.\n\n    Constraints:\n    - The input must be a positive floating point number\n    - The function should return only the decimal part of the number\n    - The decimal part is always smaller than 1\n    - The integer part is the largest integer smaller than the given number\n\n    Examples:\n    >>> truncate_number({\"number\": 3.5})\n    0.5\n    >>> truncate_number({\"number\": 2.0})\n    0.0\n    >>> truncate_number({\"number\": 0.75})\n    0.75\n    >>> truncate_number({\"number\": 10.123})\n    0.123\n\n    Exceptions:\n    - None specified\n    \"\"\"\n    # Get the integer part using int() which truncates towards zero\n    integer_part = int(number)\n    \n    # Calculate the decimal part\n    decimal_part = number - integer_part\n    \n    return decimal_part\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    },
+    {
+      "task_id": "HumanEval/3",
+      "task_index": 3,
+      "prompt": "from typing import List\n\n\ndef below_zero(operations: List[int]) -> bool:\n    \"\"\" You're given a list of deposit and withdrawal operations on a bank account that starts with\n    zero balance. Your task is to detect if at any point the balance of account fallls below zero, and\n    at that point function should return True. Otherwise it should return False.\n    >>> below_zero([1, 2, 3])\n    False\n    >>> below_zero([1, 2, -4, 5])\n    True\n    \"\"\"\n",
+      "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([]) == False\n    assert candidate([1, 2, -3, 1, 2, -3]) == False\n    assert candidate([1, 2, -4, 5, 6]) == True\n    assert candidate([1, -1, 2, -2, 5, -5, 4, -4]) == False\n    assert candidate([1, -1, 2, -2, 5, -5, 4, -5]) == True\n    assert candidate([1, -2, 2, -2, 5, -5, 4, -4]) == True\n",
+      "canonical_solution": "    balance = 0\n\n    for op in operations:\n        balance += op\n        if balance < 0:\n            return True\n\n    return False\n",
+      "entry_point": "",
+      "attempts": [
+        {
+          "attempt_idx": 1,
+          "duration_sec": 17.011,
+          "total_pipeline_time_sec": 17.011130571365356,
+          "resource_stats": {
+            "samples": 34,
+            "cpu_percent_avg": 0.18,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190138127,
+            "mem_rss_peak_bytes": 190140416
+          },
+          "final_code": "```python\ndef below_zero(operations: list[int]) -> bool:\n    \"\"\"\n    Given a list of deposit and withdrawal operations on a bank account that starts with zero balance, \n    detect if at any point the balance falls below zero.\n\n    Constraints:\n    - The account starts with a balance of zero\n    - Positive integers represent deposits\n    - Negative integers represent withdrawals\n    - The function should return True if balance goes below zero at any point\n    - The function should return False if balance never goes below zero\n    - Operations are processed in order from left to right\n\n    Examples:\n    >>> below_zero([1, 2, 3])\n    False\n    >>> below_zero([1, 2, -4, 5])\n    True\n\n    Exceptions:\n    - None specified\n    \"\"\"\n    balance = 0\n    for operation in operations:\n        balance += operation\n        if balance < 0:\n            return True\n    return False\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        },
+        {
+          "attempt_idx": 2,
+          "duration_sec": 22.5136,
+          "total_pipeline_time_sec": 22.513744354248047,
+          "resource_stats": {
+            "samples": 45,
+            "cpu_percent_avg": 0.09,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190143055,
+            "mem_rss_peak_bytes": 190148608
+          },
+          "final_code": "```python\ndef below_zero(operations: list[int]) -> bool:\n    \"\"\"\n    Detects if the balance of a bank account falls below zero during a series of deposit and withdrawal operations. The account starts with a zero balance.\n\n    Constraints:\n    - The input is a list of integers representing deposits (positive) and withdrawals (negative)\n    - The function must return True if the balance goes below zero at any point\n    - The function must return False if the balance never goes below zero\n    - Operations are processed in the order they appear in the list\n\n    Examples:\n    >>> below_zero([1, 2, 3])\n    False\n    >>> below_zero([1, 2, -4, 5])\n    True\n\n    Exceptions:\n    None\n    \"\"\"\n    balance = 0\n    for operation in operations:\n        balance += operation\n        if balance < 0:\n            return True\n    return False\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        },
+        {
+          "attempt_idx": 3,
+          "duration_sec": 20.015,
+          "total_pipeline_time_sec": 20.01531481742859,
+          "resource_stats": {
+            "samples": 40,
+            "cpu_percent_avg": 0.15,
+            "cpu_percent_peak": 2.0,
+            "mem_rss_avg_bytes": 190165401,
+            "mem_rss_peak_bytes": 190173184
+          },
+          "final_code": "```python\ndef below_zero(operations: list[int]) -> bool:\n    \"\"\"\n    Detects if a bank account balance falls below zero during a series of deposit and withdrawal operations starting from zero balance.\n\n    Constraints:\n    - The account starts with a balance of zero\n    - Positive integers represent deposits\n    - Negative integers represent withdrawals\n    - The function should return True if the balance goes below zero at any point\n    - The function should return False if the balance never goes below zero\n    - Operations are processed in the order they appear in the list\n\n    Examples:\n    >>> below_zero([1, 2, 3])\n    False\n    >>> below_zero([1, 2, -4, 5])\n    True\n\n    Exceptions:\n    None\n    \"\"\"\n    balance = 0\n    for operation in operations:\n        balance += operation\n        if balance < 0:\n            return True\n    return False\n```",
+          "intermediate_outputs": {
+            "translated_prompt": "",
+            "problem_spec": "",
+            "generated_code_raw": "",
+            "optimization_steps": []
+          },
+          "syntax_ok": false,
+          "passed": false,
+          "test_output": "",
+          "error_type": "syntax_error",
+          "error_message": "Generated code has syntax errors",
+          "error": "Generated code has syntax errors"
+        }
+      ]
+    }
+  ]
+}
